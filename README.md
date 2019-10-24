@@ -92,6 +92,10 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
 
 4. It is not necessary, but we appreciate if you create an endpoint to add new areas.
 
+<h2> How to launch the project </h2>
+
+In the root of the project just run:
+`./gradlew bootRun`
 
 <h2> Open Weather API docs </h2>
 
