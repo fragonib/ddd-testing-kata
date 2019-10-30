@@ -2,7 +2,7 @@
 
 CleanTheForest is an activist group that helps to clean up the environment. To avoid unnecessary and time-consuming work they first examine the area using a drone before going to the field.
 
-GoodTime2Go is the application that helps CleanTheForest to know the weather status of the location before sending the drone with the programmed route. If the weather is bad the drone does not check out the area.
+GoodTime2Go is the application that helps CleanTheForest to know the weather status of the location before sending the drone with the programmed route. If the weather is bad the drone won't check out the area.
 
 <h2> To-do </h2>
 
@@ -14,7 +14,7 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
     - Name: Anboto Area, Lat: 43.089897, Lon: -2.595321
     - Name: Aizkorri Area, Lat: 42.951927, Lon: -2.347414
 
-    You can obtain the weather data in [Open Weather Map API](https://openweathermap.org/api).
+    You can obtain the weather data from [Open Weather Map API](https://openweathermap.org/api).
 
 2. The current entity model is not complete, so you need to update it with this data:
 
@@ -25,7 +25,7 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
 
     NOTE:
 
-    We consider good weather when the `main` field from openweathermap is equals `Clear`
+    We consider good weather when the `main` field from openweathermap is equals to `Clear`
     You can see an example here:
 
     https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1
