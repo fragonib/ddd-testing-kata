@@ -10,9 +10,9 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
 
 1. We need to know the weather data of the next locations:
 
-    - Name: Gorbea Area, Lat:43.04454, Lon:-2.776776
-    - Name: Anboto Area, Lat: 43.089897, Lon: -2.595321
-    - Name: Aizkorri Area, Lat: 42.951927, Lon: -2.347414
+    - Name: Ipiñaburu Area, Lat:43.07, Lon:-2.75, Country code: ES
+    - Name: Ibarra Area, Lat: 43.05, Lon: -2.57, Country code: ES
+    - Name: Zegama Area, Lat: 42.97, Lon: -2.29, Country code: ES
 
     You can obtain the weather data in [Open Weather Map API](https://openweathermap.org/api).
 
@@ -28,7 +28,7 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
     We consider good weather when the `main` field from openweathermap is equals `Clear`
     You can see an example here:
 
-    https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1
+    https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
 
 
 3. We need two endpoints:
@@ -41,25 +41,25 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
     GET: http://localhost:8080/weather
 
     {
-      "location": "Gorbea",
-      "coordinates_lat": "43.04454",
-      "coordinates_lon": "-2.776776",
+      "location": "Iñipaburu",
+      "coordinates_lat": "43.07",
+      "coordinates_lon": "-2.75",
       "weather": "Clouds",
-      "checkout": "true",
+      "checkout": "false",
       "report_date": "2019-10-23T10:00:00",
     },
     {
-      "location": "Anboto",
-      "coordinates_lat": "43.089897",
-      "coordinates_lon": "-2.595321",
+      "location": "Ibarra",
+      "coordinates_lat": "43.05",
+      "coordinates_lon": "-2.57",
       "weather": "Clear",
       "checkout": "true",
       "report_date": "2019-10-23T10:00:00",
     },
     {
-      "location": "Aizkorri",
-      "coordinates_lat": "42.951927",
-      "coordinates_lon": "-2.347414",
+      "location": "Zegama",
+      "coordinates_lat": "42.97",
+      "coordinates_lon": "-2.29",
       "weather": "Drizzle",
       "checkout": "false",
       "report_date": "2019-10-23T10:00:00",
@@ -70,14 +70,14 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
     - Another one to tell us if the location weather is ok to send there the drone.
 
     ```
-    GET: http://localhost:8080/weather?location=gorbea
+    GET: http://localhost:8080/weather?location=zegama
 
     {
-      "location": "Gorbea",
-      "coordinates_lat": "43.04454",
-      "coordinates_lon": "-2.776776",
-      "weather": "Clouds",
-      "checkout": "true",
+      "location": "Zegama",
+      "coordinates_lat": "42.97",
+      "coordinates_lon": "-2.29",
+      "weather": "Drizzle",
+      "checkout": "false",
       "report_date": "2019-10-23T10:00:00",
     } 
 
@@ -88,7 +88,7 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
     We consider good weather when the `main` field from openweathermap is equals `Clear`
     You can see an example here:
 
-    https://samples.openweathermap.org/data/2.5/weather?q=London&appid=b1b15e88fa797225412429c1c50c122a1
+    https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
 
 4. It is not necessary, but we appreciate if you create an endpoint to add new areas.
 
