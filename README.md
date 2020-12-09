@@ -2,7 +2,7 @@
 
 CleanTheForest is an activist group that helps to clean up the environment. To avoid unnecessary and time-consuming work they first examine the area using a drone before going to the field.
 
-GoodTime2Go is the application that helps CleanTheForest to know the weather status of the location before sending the drone with the programmed route. If the weather is bad the drone won't check out the area.
+We need a new service to help CleanTheForest to know the weather status of the location before sending the drone with the programmed route. If the weather is bad the drone won't check out the area.
 
 <h2> To-do </h2>
 
@@ -16,24 +16,10 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
 
     You can obtain the weather data from [Open Weather Map API](https://openweathermap.org/api).
 
-2. The current entity model is not complete, so you need to update it with this data:
 
-    - Location.
-    - Weather.
-    - Check out permission (Boolean, based on the logic of what good weather is for us).
-    - The report date (The date on which we obtained the data).
-
-    NOTE:
-
-    We consider good weather when the `main` field from openweathermap is equals to `Clear`
-    You can see an example here:
-
-    https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
-
-
-3. We need two endpoints:
-
-    - One to provide the current weather data of three areas.
+2. We need two endpoints:
+   
+- One to provide the current weather data of three areas.
 
     Example (you can create your own payload):
 
@@ -67,7 +53,7 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
 
     ```
 
-    - Another one to tell us if the location weather is ok to send there the drone.
+- Another one to tell us if the location weather is ok to send there the drone.
 
     ```
     GET: http://localhost:8080/weather?location=zegama
@@ -90,12 +76,8 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
 
     https://samples.openweathermap.org/data/2.5/weather?lat=35&lon=139&appid=b6907d289e10d714a6e88b30761fae22
 
-4. It is not necessary, but we appreciate if you create an endpoint to add new areas.
 
-<h2> How to launch the project </h2>
-
-In the root of the project just run:
-`./gradlew bootRun`
+3. It is not necessary, but we appreciate if you create an endpoint to add new areas.
 
 <h2> Open Weather API docs </h2>
 
@@ -106,9 +88,10 @@ In the root of the project just run:
 
 <h2> What we are looking for: </h2>
 
-- The base app is developed in Java with Spring Boot, but if you feel more comfortable with other language feel free to use it.
+- Feel free to use the language that you want.
 - Pay attention about how your code is organized.
 - How you are reflecting the domain in the code.
 - We love clean code.
+- Remember to document: how we can run the app, how we can launch the tests and more information if you think that is relevant.
 - You need to apply the testing techniques that you know. (unit, integration, contract, functional etc.)
-- We are looking forward to seeing your code and discuss with you your solution.
+- We are looking forward to seeing your code and discussing your solution with you.
