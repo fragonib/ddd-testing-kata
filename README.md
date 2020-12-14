@@ -14,8 +14,10 @@ Nowadays the application exposes an API with a dummy endpoint with fake data of 
     - Name: Ibarra Area, Lat: 43.05, Lon: -2.57, Country code: ES
     - Name: Zegama Area, Lat: 42.97, Lon: -2.29, Country code: ES
 
-    You can obtain the weather data from [Open Weather Map API](https://openweathermap.org/api).
 
+You can obtain the weather data from [Open Weather Map API](https://openweathermap.org/api).
+
+To simplify we have proposed these locations, but feel free if you prefer using other locations.
 
 2. We need two endpoints:
    
