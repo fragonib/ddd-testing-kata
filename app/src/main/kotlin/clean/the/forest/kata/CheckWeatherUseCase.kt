@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 
 class CheckWeatherUseCase {
 
-    fun checkWeather(area: Area): WeatherReport {
+    fun weatherReport(area: Area): WeatherReport {
         return WeatherReport(
             area = area,
             weather = "Dummy",

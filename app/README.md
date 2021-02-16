@@ -8,4 +8,4 @@
 ## Technologies used
 - Gradle (for building project)
 - Kotlin (for production code)
-- Groovy (for Testing with Spock)
+- Groovy (for testing with Spock)
