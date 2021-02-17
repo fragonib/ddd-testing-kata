@@ -1,4 +1,4 @@
-package clean.the.forest.weather
+package clean.the.forest.weather.model
 
 
 typealias AreaName = String
