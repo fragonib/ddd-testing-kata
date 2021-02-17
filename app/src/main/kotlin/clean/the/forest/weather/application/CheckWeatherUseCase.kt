@@ -1,10 +1,15 @@
-package clean.the.forest.kata
+package clean.the.forest.weather.application
 
+import clean.the.forest.weather.Area
+import clean.the.forest.weather.AreaName
+import clean.the.forest.weather.Country
+import clean.the.forest.weather.GeoPos
+import clean.the.forest.weather.model.WeatherCondition
+import clean.the.forest.weather.model.WeatherReport
 import java.time.LocalDateTime
 
 
 class CheckWeatherUseCase {
-
 
     private val iñapaburu = Area(
         name = "Ipiñaburu",
