@@ -1,6 +1,5 @@
 package clean.the.forest.weather.model
 
-import clean.the.forest.weather.Area
 import java.time.LocalDateTime
 
 
