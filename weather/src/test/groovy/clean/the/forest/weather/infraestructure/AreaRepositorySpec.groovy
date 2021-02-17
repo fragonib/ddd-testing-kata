@@ -21,7 +21,7 @@ class AreaRepositorySpec extends Specification {
         where:
         name        | lat   | lon   | countryCode
         "ipiñaburu" | 43.07 | -2.75 | "ES"
-        "ibarra"   | 43.05 | -2.57 | "ES"
+        "ibarra"    | 43.05 | -2.57 | "ES"
         "zegama"    | 42.97 | -2.29 | "ES"
     }
 
