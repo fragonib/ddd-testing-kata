@@ -1,5 +1,6 @@
-package clean.the.forest.kata
+package clean.the.forest.weather.application
 
+import clean.the.forest.weather.Area
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -13,7 +14,7 @@ class CheckWeatherUseCaseSpec extends Specification {
         CheckWeatherUseCase sut = new CheckWeatherUseCase()
 
         when:
-        def area = new Area(areaName, new GeoPos(lat, lon), new Country(countryCode))
+        def area = new Area(areaName, lat, lon, countryCode)
         def weatherReport = sut.report(area)
 
         then:
