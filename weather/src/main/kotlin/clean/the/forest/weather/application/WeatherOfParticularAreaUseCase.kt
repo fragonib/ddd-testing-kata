@@ -4,10 +4,13 @@ import clean.the.forest.weather.infraestructure.AreaRepository
 import clean.the.forest.weather.model.AreaName
 import clean.the.forest.weather.model.WeatherCondition
 import clean.the.forest.weather.model.WeatherReport
+import org.springframework.stereotype.Component
+import reactor.core.publisher.Mono
 import java.lang.IllegalStateException
 import java.time.LocalDateTime
 
 
+@Component
 class WeatherOfParticularAreaUseCase(
     private val areaRepository: AreaRepository
 ) {
@@ -19,14 +22,14 @@ class WeatherOfParticularAreaUseCase(
             "Zegama" to "Drizzle"
         )
 
-    fun report(name: AreaName): WeatherReport {
+    fun report(name: AreaName): Mono<WeatherReport> {
         return areaRepository.findByName(name)
-            .let { area ->
+            .map { area ->
                 val weatherCondition = (weatherConditions[area.name]
                     ?: throw IllegalStateException("There is no weather condition registered for [${area.name}]"))
                 Pair(area, weatherCondition)
             }
-            .let { (area, weatherCondition) ->
+            .map { (area, weatherCondition) ->
                 WeatherReport(
                     area = area,
                     weatherCondition = weatherCondition,

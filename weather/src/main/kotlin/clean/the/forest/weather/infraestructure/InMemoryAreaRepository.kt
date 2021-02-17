@@ -1,6 +1,7 @@
 package clean.the.forest.weather.infraestructure
 
 import clean.the.forest.weather.model.Area
+import reactor.core.publisher.Mono
 
 interface InMemoryAreaRepository {
 
@@ -13,6 +14,6 @@ interface InMemoryAreaRepository {
      *
      * @throws IllegalArgumentException If there is no area known with given name
      */
-    fun findByName(name: String): Area
+    fun findByName(name: String): Mono<Area>
 
 }

@@ -1,8 +1,11 @@
 package clean.the.forest.weather.infraestructure
 
 import clean.the.forest.weather.model.*
+import org.springframework.stereotype.Component
+import reactor.core.publisher.Mono
 
 
+@Component
 class AreaRepository : InMemoryAreaRepository {
 
     private var knownAreas: Map<AreaName, Area> =
@@ -24,9 +27,12 @@ class AreaRepository : InMemoryAreaRepository {
             )
         ).associateBy { areaKey(it) }
 
-    override fun findByName(name: String): Area {
-        return knownAreas[areaKey(name)]
-            ?: throw IllegalArgumentException("There is no area called [$name]")
+    override fun findByName(name: String): Mono<Area> {
+        return Mono.just(name)
+            .map { areaKey(name) }
+            .map { knownAreas[areaKey(name)] }
+            .switchIfEmpty(Mono.error { IllegalArgumentException("There is no area called [$name]") })
+            .map { it!! }
     }
 
     private fun areaKey(area: Area): String = areaKey(area.name)

@@ -15,7 +15,7 @@ class WeatherOfParticularAreaUseCaseSpec extends Specification {
         WeatherOfParticularAreaUseCase sut = new WeatherOfParticularAreaUseCase(new AreaRepository())
 
         when:
-        def weatherReport = sut.report(areaName)
+        def weatherReport = sut.report(areaName).block()
 
         then:
         weatherReport.area == new Area(areaName, expectedLat, expectedLon, expectedCountry)
