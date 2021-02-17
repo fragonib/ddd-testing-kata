@@ -9,3 +9,4 @@
 
 rootProject.name = "clean-the-forest"
 include("weather")
+include("edge")
