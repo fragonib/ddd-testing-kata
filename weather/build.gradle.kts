@@ -92,6 +92,13 @@ tasks {
         }
     }
 
+    bootJar {
+        enabled = false
+    }
+    jar {
+        enabled = true
+    }
+
 }
 
 tasks.withType<Test> {
