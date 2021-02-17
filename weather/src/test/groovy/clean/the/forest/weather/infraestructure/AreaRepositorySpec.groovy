@@ -12,7 +12,7 @@ class AreaRepositorySpec extends Specification {
     def 'area "#name" is known'() {
 
         when:
-        def foundArea = sut.findByName(name)
+        def foundArea = sut.findByName(name).block()
 
         then:
         foundArea.position == new GeoPos(lat, lon)

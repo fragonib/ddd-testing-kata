@@ -28,7 +28,7 @@ class OpenWeatherProvider(
      *
      * @return Weather condition
      */
-    override fun reportWeatherByGeoPos(geoPos: GeoPos): WeatherCondition {
+    override fun reportWeatherByGeoPos(geoPos: GeoPos): Mono<WeatherCondition> {
 
         return buildWebClient("https://api.openweathermap.org/data/2.5")
             .get()
@@ -45,7 +45,6 @@ class OpenWeatherProvider(
             .bodyToMono(typeReference<Map<String, Any>>())
             .map(::extractWeatherCondition)
             .switchIfEmpty(Mono.error { Throwable("There is no weather condition for location [$geoPos]") })
-            .block()!!
 
     }
 

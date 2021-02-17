@@ -20,7 +20,7 @@ class OpenWeatherProviderSpec extends Specification {
     def "weather of #name by geoposition"() {
 
         when:
-        def weatherCondition = provider.reportWeatherByGeoPos(new GeoPos(lat, lon))
+        def weatherCondition = provider.reportWeatherByGeoPos(new GeoPos(lat, lon)).block()
 
         then:
         weatherCondition == expectedWheaterCondition
