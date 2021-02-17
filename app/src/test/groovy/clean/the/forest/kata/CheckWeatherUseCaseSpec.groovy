@@ -14,11 +14,11 @@ class CheckWeatherUseCaseSpec extends Specification {
 
         when:
         def area = new Area(areaName, new GeoPos(lat, lon), new Country(countryCode))
-        def weatherReport = sut.weatherReport(area)
+        def weatherReport = sut.report(area)
 
         then:
         weatherReport.area == area
-        weatherReport.weather == expectedWeather
+        weatherReport.weatherCondition == expectedWeather
 
         where:
         areaName    | lat   | lon   | countryCode || expectedWeather
