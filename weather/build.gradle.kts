@@ -2,18 +2,15 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "1.4.30"
+    kotlin("plugin.spring") version "1.4.21"
+    id("org.springframework.boot") version "2.4.2"
+    id("io.spring.dependency-management") version "1.0.11.RELEASE"
     groovy
-    application
 }
 
-val compileKotlin: KotlinCompile by tasks
-compileKotlin.kotlinOptions {
-    jvmTarget = "11"
-}
-val compileTestKotlin: KotlinCompile by tasks
-compileTestKotlin.kotlinOptions {
-    jvmTarget = "11"
-}
+group = "clean.the.forest"
+version = "0.0.1-SNAPSHOT"
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 repositories {
     mavenCentral()
@@ -22,32 +19,83 @@ repositories {
 
 dependencies {
 
-    // Dependencies
+
+    // = Dependencies
+
+    // - Kotlin
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
+    implementation("org.jetbrains.kotlin:kotlin-reflect")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
-    // Testing
+    // - Spring
+    val openApiVersion = "1.5.4"
+    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
+    implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
+    runtimeOnly("org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion")
+
+    // = Testing
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // - JUnit 5
-    testImplementation("org.junit.jupiter:junit-jupiter-api:5.1.0")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.1.0")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:5.1.0")
-    testImplementation("org.assertj:assertj-core:3.11.1")
+    val junit5Version = "5.1.0"
+    val assertjVersion = "3.11.1"
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junit5Version")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:$junit5Version")
+    testImplementation("org.assertj:assertj-core:$assertjVersion")
 
     // - Spock
-    testImplementation("org.codehaus.groovy:groovy:3.0.7")
-    testImplementation(platform("org.spockframework:spock-bom:2.0-M4-groovy-3.0"))
+    val groovyVersion = "3.0.7"
+    val spockVersion = "2.0-M4-groovy-3.0"
+    testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
+    testImplementation(platform("org.spockframework:spock-bom:$spockVersion"))
     testImplementation("org.spockframework:spock-core")
+
+    // - SpringBoot
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("io.projectreactor:reactor-test")
 
 }
 
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "11"
+    }
+}
+
 tasks {
+
     test {
-        useJUnitPlatform()
-        testLogging {
-            events("passed", "skipped", "failed")
+        useJUnitPlatform {
+            excludeTags ("integration")
         }
+    }
+
+    register<Test>("integrationTest") {
+        useJUnitPlatform {
+            includeTags("integration")
+        }
+        shouldRunAfter("test")
+    }
+
+    check {
+        if (project.hasProperty("integrationTests")) {
+            dependsOn("integrationTest")
+        }
+    }
+
+}
+
+tasks.withType<Test> {
+    testLogging {
+        events("passed", "skipped", "failed")
     }
 }
