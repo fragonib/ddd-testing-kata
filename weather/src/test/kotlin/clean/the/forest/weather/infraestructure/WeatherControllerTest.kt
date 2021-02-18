@@ -10,6 +10,7 @@ import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.context.annotation.Import
 import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
@@ -18,7 +19,8 @@ import reactor.core.publisher.Mono
 
 
 @ExtendWith(SpringExtension::class)
-@WebFluxTest(controllers = [WeatherController::class])
+@WebFluxTest
+@Import(value = [WeatherController::class])
 @ContextConfiguration(classes = [WeatherConfig::class])
 class WeatherControllerTest {
 
@@ -61,7 +63,7 @@ class WeatherControllerTest {
             .expectHeader().contentType(APPLICATION_JSON)
             .expectBody()
             .jsonPath("$.area").isMap
-            .jsonPath("$.weatherCondition").isEqualTo("Clouds")
+            .jsonPath("$.weatherCondition").isEqualTo("Cloudy")
             .jsonPath("$.date").isNotEmpty
 
         verify(areaRepository, times(1)).findByName(locationString)
