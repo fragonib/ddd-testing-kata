@@ -1,6 +1,7 @@
 package clean.the.forest.weather.infrastructure
 
-import clean.the.forest.weather.application.WeatherOfParticularAreaUseCase
+import clean.the.forest.weather.application.ReportParticularAreaUseCase
+import clean.the.forest.weather.application.ReportAllKnownAreasUseCase
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -20,10 +21,19 @@ class WeatherConfig {
     }
 
     @Bean
-    fun weatherOfParticularAreaUseCase(
-        areaRepository: AreaRepository, weatherProvider: WeatherProvider
-    ): WeatherOfParticularAreaUseCase {
-        return WeatherOfParticularAreaUseCase(areaRepository, weatherProvider)
+    fun reportOfAllKnownAreasUseCase(
+        areaRepository: AreaRepository,
+        weatherProvider: WeatherProvider
+    ): ReportAllKnownAreasUseCase {
+        return ReportAllKnownAreasUseCase(areaRepository, weatherProvider)
+    }
+
+    @Bean
+    fun reportOfParticularAreaUseCase(
+        areaRepository: AreaRepository,
+        weatherProvider: WeatherProvider
+    ): ReportParticularAreaUseCase {
+        return ReportParticularAreaUseCase(areaRepository, weatherProvider)
     }
 
 }

@@ -9,4 +9,7 @@ data class WeatherReport(
     val area: Area,
     val weatherCondition: WeatherCondition,
     val date: LocalDateTime
-)
+) {
+    val checkable: Boolean
+        get() { return weatherCondition == "Clear" }
+}
