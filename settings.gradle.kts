@@ -8,5 +8,6 @@
  */
 
 rootProject.name = "clean-the-forest"
+include("shared")
 include("weather")
 include("edge")

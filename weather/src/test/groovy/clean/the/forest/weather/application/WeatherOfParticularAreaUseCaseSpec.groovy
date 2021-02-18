@@ -5,7 +5,7 @@ import clean.the.forest.weather.infrastructure.InMemoryAreaRepository
 import clean.the.forest.weather.infrastructure.WeatherProvider
 import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.GeoPos
-import clean.the.forest.weather.shared.TestClassification
+import clean.the.forest.weather.shared.testing.TestClassification
 import org.junit.jupiter.api.Tag
 import reactor.core.publisher.Mono
 import spock.lang.Specification

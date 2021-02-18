@@ -19,8 +19,10 @@ repositories {
 
 dependencies {
 
-
     // = Dependencies
+
+    // - Modules
+    implementation(project(":shared"))
 
     // - Kotlin
     implementation(platform("org.jetbrains.kotlin:kotlin-bom"))

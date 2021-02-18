@@ -1,5 +1,4 @@
-package clean.the.forest.weather.shared
-
+package clean.the.forest.weather.shared.testing
 
 interface TestClassification {
     companion object {
