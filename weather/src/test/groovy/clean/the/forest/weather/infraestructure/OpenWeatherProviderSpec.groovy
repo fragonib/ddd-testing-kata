@@ -9,7 +9,7 @@ import spock.lang.Specification
 @Tag(TestClassification.INTEGRATION)
 class OpenWeatherProviderSpec extends Specification {
 
-    OpenWeatherProvider sut
+    WeatherProvider sut
 
     def setup() {
         String apiKey = System.getenv('OPENWEATHER_APIKEY')

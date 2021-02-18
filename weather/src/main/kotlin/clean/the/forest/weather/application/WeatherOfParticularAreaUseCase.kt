@@ -3,11 +3,9 @@ package clean.the.forest.weather.application
 import clean.the.forest.weather.infraestructure.AreaRepository
 import clean.the.forest.weather.infraestructure.WeatherProvider
 import clean.the.forest.weather.model.AreaName
-import clean.the.forest.weather.model.WeatherCondition
 import clean.the.forest.weather.model.WeatherReport
 import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
-import java.lang.IllegalStateException
 import java.time.LocalDateTime
 
 

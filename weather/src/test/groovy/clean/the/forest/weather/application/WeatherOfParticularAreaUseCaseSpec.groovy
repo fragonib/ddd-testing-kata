@@ -1,6 +1,7 @@
 package clean.the.forest.weather.application
 
 import clean.the.forest.weather.infraestructure.AreaRepository
+import clean.the.forest.weather.infraestructure.InMemoryAreaRepository
 import clean.the.forest.weather.infraestructure.WeatherProvider
 import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.GeoPos
@@ -18,7 +19,7 @@ class WeatherOfParticularAreaUseCaseSpec extends Specification {
     def 'weather data of the location named "#areaName" should be "#expectedWeather"'() {
 
         given: "External weather provider is stubbed"
-        AreaRepository areaRepository = new AreaRepository()
+        AreaRepository areaRepository = new InMemoryAreaRepository()
 
         WeatherProvider weatherProvider = Stub()
         weatherProvider.reportWeatherByGeoPos(new GeoPos(expectedLat, expectedLon)) >> Mono.just(expectedWeather)
