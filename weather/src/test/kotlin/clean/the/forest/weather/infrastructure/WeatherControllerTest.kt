@@ -1,9 +1,10 @@
 package clean.the.forest.weather.infrastructure
 
-import clean.the.forest.weather.infrastructure.config.WeatherConfig
 import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.Country
 import clean.the.forest.weather.model.GeoPos
+import clean.the.forest.shared.testing.TestClassification
+import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.*
@@ -22,6 +23,7 @@ import reactor.core.publisher.Mono
 @WebFluxTest
 @Import(value = [WeatherController::class])
 @ContextConfiguration(classes = [WeatherConfig::class])
+@Tag(TestClassification.INTEGRATION)
 class WeatherControllerTest {
 
     @MockBean

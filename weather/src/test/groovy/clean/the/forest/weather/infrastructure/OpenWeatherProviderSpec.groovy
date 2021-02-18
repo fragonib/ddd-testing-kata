@@ -1,7 +1,7 @@
 package clean.the.forest.weather.infrastructure
 
 import clean.the.forest.weather.model.GeoPos
-import clean.the.forest.weather.shared.TestClassification
+import clean.the.forest.shared.testing.TestClassification
 import org.junit.jupiter.api.Tag
 import spock.lang.Specification
 
