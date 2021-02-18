@@ -19,15 +19,15 @@ class WeatherConfig {
     }
 
     @Bean
+    fun openWeatherProvider(@Value("\${OPENWEATHER_APIKEY}") apiKey: String): WeatherProvider {
+        return OpenWeatherProvider(apiKey)
+    }
+
+    @Bean
     fun weatherOfParticularAreaUseCase(
         areaRepository: AreaRepository, weatherProvider: WeatherProvider
     ): WeatherOfParticularAreaUseCase {
         return WeatherOfParticularAreaUseCase(areaRepository, weatherProvider)
-    }
-
-    @Bean
-    fun openWeatherProvider(@Value("\${OPENWEATHER_APIKEY}") apiKey: String): WeatherProvider {
-        return OpenWeatherProvider(apiKey)
     }
 
 }

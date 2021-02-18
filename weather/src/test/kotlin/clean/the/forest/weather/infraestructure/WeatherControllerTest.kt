@@ -1,6 +1,6 @@
 package clean.the.forest.weather.infraestructure
 
-import clean.the.forest.weather.application.WeatherOfParticularAreaUseCase
+import clean.the.forest.weather.infraestructure.config.WeatherConfig
 import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.Country
 import clean.the.forest.weather.model.GeoPos
@@ -10,6 +10,7 @@ import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.http.MediaType.APPLICATION_JSON
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -18,7 +19,7 @@ import reactor.core.publisher.Mono
 
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(controllers = [WeatherController::class])
-@ContextConfiguration(classes = [WeatherOfParticularAreaUseCase::class])
+@ContextConfiguration(classes = [WeatherConfig::class])
 class WeatherControllerTest {
 
     @MockBean
@@ -28,7 +29,7 @@ class WeatherControllerTest {
     lateinit var weatherProvider: WeatherProvider
 
     @Autowired
-    lateinit var testWebClient: WebTestClient
+    lateinit var webTestClient: WebTestClient
 
     @Test
     fun given_whenGetParticularAreaByLocation_thenWeatherReportExpected() {
@@ -46,7 +47,7 @@ class WeatherControllerTest {
             .thenReturn(Mono.just("Cloudy"))
 
         // When
-        testWebClient.get()
+        webTestClient.get()
             .uri { uriBuilder ->
                 uriBuilder
                     .path("/weather")
@@ -55,13 +56,13 @@ class WeatherControllerTest {
             }
             .exchange()
 
-        // Then
+            // Then
             .expectStatus().isOk
+            .expectHeader().contentType(APPLICATION_JSON)
             .expectBody()
-            .jsonPath("$.name").isNotEmpty
-            .jsonPath("$.id").isEqualTo(100)
-            .jsonPath("$.weatherCondition").isEqualTo("Cloudy")
-            .jsonPath("$.salary").isEqualTo(1000)
+            .jsonPath("$.area").isMap
+            .jsonPath("$.weatherCondition").isEqualTo("Clouds")
+            .jsonPath("$.date").isNotEmpty
 
         verify(areaRepository, times(1)).findByName(locationString)
         verify(weatherProvider, times(1)).reportWeatherByGeoPos(expectedArea.position)
