@@ -4,12 +4,10 @@ import clean.the.forest.weather.infraestructure.AreaRepository
 import clean.the.forest.weather.infraestructure.WeatherProvider
 import clean.the.forest.weather.model.AreaName
 import clean.the.forest.weather.model.WeatherReport
-import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 
 
-@Component
 class WeatherOfParticularAreaUseCase(
     private val areaRepository: AreaRepository,
     private val weatherProvider: WeatherProvider
