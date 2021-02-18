@@ -8,9 +8,9 @@ import spock.lang.Specification
 
 
 @Tag(TestClassification.INTEGRATION)
-class AreaRepositorySpec extends Specification {
+class InMemoryAreaRepositorySpec extends Specification {
 
-    AreaRepository sut = new AreaRepository()
+    AreaRepository sut = new InMemoryAreaRepository()
 
     def 'area "#areaName" is known'() {
 
