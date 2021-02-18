@@ -1,12 +1,14 @@
 package clean.the.forest.weather.infrastructure
 
-import clean.the.forest.weather.model.Area
-import clean.the.forest.weather.model.Country
-import clean.the.forest.weather.model.GeoPos
 import clean.the.forest.shared.testing.TestClassification
+import clean.the.forest.weather.infrastructure.MockitoHelper.anyObject
+import net.javacrumbs.jsonunit.assertj.JsonAssertions
+import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
+import net.javacrumbs.jsonunit.core.Option
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
+import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
@@ -19,6 +21,15 @@ import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Mono
 
 
+object MockitoHelper {
+    fun <T> anyObject(): T {
+        Mockito.any<T>()
+        return uninitialized()
+    }
+    @Suppress("UNCHECKED_CAST")
+    fun <T> uninitialized(): T =  null as T
+}
+
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(controllers = [WeatherController::class])
 @Import(value = [WeatherController::class])
@@ -27,50 +38,131 @@ import reactor.core.publisher.Mono
 class WeatherControllerTest {
 
     @MockBean
-    lateinit var areaRepository: AreaRepository
-
-    @MockBean
     lateinit var weatherProvider: WeatherProvider
 
     @Autowired
     lateinit var webTestClient: WebTestClient
 
     @Test
-    fun whenReportParticularAreaByName_thenWeatherReportExpected() {
+    fun whenReportAllKnownAreas_thenWeatherReportsExpected() {
 
         // Given
-        val locationString = "ipiñaburu"
-        val expectedArea = Area(
-            name = "Ipiñaburu",
-            position = GeoPos(lat = 43.07, lon = -2.75),
-            country = Country(code = "ES")
-        )
-        `when`(areaRepository.findByName(locationString))
-            .thenReturn(Mono.just(expectedArea))
-        `when`(weatherProvider.reportWeatherByGeoPos(expectedArea.position))
-            .thenReturn(Mono.just("Cloudy"))
+        `when`(weatherProvider.reportWeatherByGeoPos(anyObject()))
+            .thenReturn(Mono.just("Clouds"))
 
         // When
-        webTestClient.get()
-            .uri { uriBuilder ->
-                uriBuilder
-                    .path("/weather")
-                    .queryParam("location", locationString)
-                    .build()
-            }
-            .exchange()
-
-            // Then
+        val responseBody = webTestClient
+            .get().uri("/weather").exchange()
             .expectStatus().isOk
             .expectHeader().contentType(APPLICATION_JSON)
             .expectBody()
-            .jsonPath("$[0].area").isMap
-            .jsonPath("$[0].weatherCondition").isEqualTo("Cloudy")
-            .jsonPath("$[0].checkable").isEqualTo(false)
-            .jsonPath("$[0].date").isNotEmpty
+            .returnResult()
+            .responseBody!!.decodeToString()
 
-        verify(areaRepository, times(1)).findByName(locationString)
-        verify(weatherProvider, times(1)).reportWeatherByGeoPos(expectedArea.position)
+        // Then
+        assertThatJson(responseBody)
+            .`when`(Option.IGNORING_ARRAY_ORDER)
+            .whenIgnoringPaths("[*].date")
+            .isEqualTo(
+                """
+                [
+                    {
+                        "area": {
+                            "country": {
+                                "code": "ES"
+                            },
+                            "name": "Ibarra",
+                            "position": {
+                                "lat": 43.05,
+                                "lon": -2.57
+                            }
+                        },
+                        "weatherCondition": "Clouds",
+                        "checkable": false
+                    },
+                    {
+                        "area": {
+                            "country": {
+                                "code": "ES"
+                            },
+                            "name": "Zegama",
+                            "position": {
+                                "lat": 42.97,
+                                "lon": -2.29
+                            }
+                        },
+                        "weatherCondition": "Clouds",
+                        "checkable": false
+                    },
+                    {
+                        "area": {
+                            "country": {
+                                "code": "ES"
+                            },
+                            "name": "Ipiñaburu",
+                            "position": {
+                                "lat": 43.07,
+                                "lon": -2.75
+                            }
+                        },
+                        "weatherCondition": "Clouds",
+                        "checkable": false
+                    }
+                ]
+            """
+            )
+
+        verify(weatherProvider, times(3)).reportWeatherByGeoPos(anyObject())
+
+    }
+
+    @Test
+    fun whenReportParticularAreaByName_thenWeatherReportExpected() {
+
+        // Given
+        `when`(weatherProvider.reportWeatherByGeoPos(anyObject()))
+            .thenReturn(Mono.just("Clouds"))
+
+        // When
+        val responseBody = webTestClient.get()
+            .uri { uriBuilder ->
+                uriBuilder
+                    .path("/weather")
+                    .queryParam("location", "ipiñaburu")
+                    .build()
+            }
+            .exchange()
+            .expectStatus().isOk
+            .expectHeader().contentType(APPLICATION_JSON)
+            .expectBody()
+            .returnResult()
+            .responseBody!!.decodeToString()
+
+        // Then
+        assertThatJson(responseBody)
+            .whenIgnoringPaths("[*].date")
+            .isEqualTo(
+                """
+                [
+                    {
+                        "area": {
+                            "country": {
+                                "code": "ES"
+                            },
+                            "name": "Ipiñaburu",
+                            "position": {
+                                "lat": 43.07,
+                                "lon": -2.75
+                            }
+                        },
+                        "weatherCondition": "Clouds",
+                        "checkable": false
+                    }
+                ]
+                """.trimIndent()
+            )
+
+        verify(weatherProvider, times(1)).reportWeatherByGeoPos(anyObject())
 
     }
 

@@ -48,10 +48,12 @@ dependencies {
     // - JUnit 5
     val junit5Version = "5.1.0"
     val assertjVersion = "3.11.1"
+    val jsonUnitVersion = "2.24.0"
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junit5Version")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junit5Version")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
+    testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
     // - Spock
     val groovyVersion = "3.0.7"

@@ -16,7 +16,7 @@ import spock.lang.Unroll
 class ReportAllKnownAreasUseCaseSpec extends Specification {
 
     @Unroll
-    def 'checkable status of area named "#areaName" should be "#CheckableStatus"'() {
+    def 'checkable status of area named "#areaName" should be "#checkableStatus"'() {
 
         given:
         AreaRepository areaRepository = new InMemoryAreaRepository()
