@@ -1,11 +1,9 @@
 package clean.the.forest.weather.infraestructure
 
 import clean.the.forest.weather.model.*
-import org.springframework.stereotype.Component
 import reactor.core.publisher.Mono
 
 
-@Component
 class InMemoryAreaRepository : AreaRepository {
 
     private var knownAreas: Map<AreaName, Area> =
