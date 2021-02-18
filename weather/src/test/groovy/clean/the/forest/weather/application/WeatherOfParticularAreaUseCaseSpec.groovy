@@ -1,8 +1,8 @@
 package clean.the.forest.weather.application
 
-import clean.the.forest.weather.infraestructure.AreaRepository
-import clean.the.forest.weather.infraestructure.InMemoryAreaRepository
-import clean.the.forest.weather.infraestructure.WeatherProvider
+import clean.the.forest.weather.infrastructure.AreaRepository
+import clean.the.forest.weather.infrastructure.InMemoryAreaRepository
+import clean.the.forest.weather.infrastructure.WeatherProvider
 import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.GeoPos
 import clean.the.forest.weather.shared.TestClassification
