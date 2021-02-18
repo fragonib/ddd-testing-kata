@@ -26,7 +26,7 @@ class InMemoryAreaRepository : AreaRepository {
             )
         ).associateBy { areaKey(it) }
 
-    override fun findAll(): Flux<Area> {
+    override fun allKnown(): Flux<Area> {
         return Flux.fromIterable(knownAreas.values)
     }
 

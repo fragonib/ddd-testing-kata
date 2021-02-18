@@ -13,7 +13,7 @@ import spock.lang.Unroll
 
 
 @Tag(TestClassification.UNIT)
-class WeatherOfParticularAreaUseCaseSpec extends Specification {
+class ReportParticularAreaUseCaseSpec extends Specification {
 
     @Unroll
     def 'weather of area named "#areaName" should be "#expectedWeather"'() {
@@ -24,10 +24,8 @@ class WeatherOfParticularAreaUseCaseSpec extends Specification {
         WeatherProvider weatherProvider = Stub()
         weatherProvider.reportWeatherByGeoPos(new GeoPos(expectedLat, expectedLon)) >> Mono.just(expectedWeather)
 
-        WeatherOfParticularAreaUseCase sut =
-                new WeatherOfParticularAreaUseCase(areaRepository, weatherProvider)
-
         when: "request weather by area name"
+        def sut = new ReportParticularAreaUseCase(areaRepository, weatherProvider)
         def weatherReport = sut.report(areaName).block()
 
         then: "repost should has expected area and weather condition"

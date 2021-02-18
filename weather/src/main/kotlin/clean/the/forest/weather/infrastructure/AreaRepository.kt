@@ -11,7 +11,7 @@ interface AreaRepository {
      *
      * @return A stream of areas
      */
-    fun findAll(): Flux<Area>
+    fun allKnown(): Flux<Area>
 
     /**
      * Find a known area given its name

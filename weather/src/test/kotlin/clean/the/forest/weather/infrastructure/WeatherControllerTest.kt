@@ -36,7 +36,7 @@ class WeatherControllerTest {
     lateinit var webTestClient: WebTestClient
 
     @Test
-    fun given_whenGetParticularAreaByLocation_thenWeatherReportExpected() {
+    fun whenGetParticularAreaByLocation_thenWeatherReportExpected() {
 
         // Given
         val locationString = "ipiñaburu"

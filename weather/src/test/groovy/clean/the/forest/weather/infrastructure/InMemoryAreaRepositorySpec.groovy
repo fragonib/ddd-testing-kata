@@ -15,7 +15,7 @@ class InMemoryAreaRepositorySpec extends Specification {
     def 'area repository contains 3 areas "Ipiñaburu, Ibarra, Zegama"'() {
 
         when:
-        def knownAreas = sut.findAll()
+        def knownAreas = sut.allKnown()
                 .collectList()
                 .block()
 
