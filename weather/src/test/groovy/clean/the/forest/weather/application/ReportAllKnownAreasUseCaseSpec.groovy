@@ -32,11 +32,11 @@ class ReportAllKnownAreasUseCaseSpec extends Specification {
 
         then:
         def particularAreaReport = checkoutReports.find { it.area.name == areaName }
-        particularAreaReport.area == new Area(areaName, Lat, Lon, Country)
-        particularAreaReport.checkable == CheckableStatus
+        particularAreaReport.area == new Area(areaName, lat, lon, country)
+        particularAreaReport.checkable == checkableStatus
 
         where:
-        areaName    || Lat   | Lon   | Country | WeatherCondition | CheckableStatus
+        areaName    || lat   | lon   | country | weatherCondition | checkableStatus
         "Ipiñaburu" || 43.07 | -2.75 | "ES"    | "Clouds"         | false
         "Ibarra"    || 43.05 | -2.57 | "ES"    | "Clear"          | true
         "Zegama"    || 42.97 | -2.29 | "ES"    | "Drizzle"        | false
