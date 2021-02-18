@@ -1,4 +1,4 @@
-package clean.the.forest.weather.infraestructure
+package clean.the.forest.weather.infrastructure
 
 import clean.the.forest.weather.model.GeoPos
 import clean.the.forest.weather.model.WeatherCondition
