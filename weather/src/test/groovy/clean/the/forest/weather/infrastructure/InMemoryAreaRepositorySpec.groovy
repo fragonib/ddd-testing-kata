@@ -22,7 +22,7 @@ class InMemoryAreaRepositorySpec extends Specification {
         foundArea.position == new GeoPos(lat, lon)
 
         where:
-        areaName | lat | lon | countryCode
+        areaName    | lat   | lon   | countryCode
         "ipiñaburu" | 43.07 | -2.75 | "ES"
         "ibarra"    | 43.05 | -2.57 | "ES"
         "zegama"    | 42.97 | -2.29 | "ES"
@@ -38,8 +38,8 @@ class InMemoryAreaRepositorySpec extends Specification {
         ex.message == expectedMessage
 
         where:
-        areaName || expectedMessage
-        "unknown"   || "There is no area called [unknown]"
+        areaName  || expectedMessage
+        "unknown" || "There is no area called [unknown]"
     }
 
 }
