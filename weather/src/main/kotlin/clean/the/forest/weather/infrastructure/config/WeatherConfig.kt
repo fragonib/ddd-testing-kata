@@ -1,7 +1,7 @@
-package clean.the.forest.weather.infraestructure.config
+package clean.the.forest.weather.infrastructure.config
 
 import clean.the.forest.weather.application.WeatherOfParticularAreaUseCase
-import clean.the.forest.weather.infraestructure.*
+import clean.the.forest.weather.infrastructure.*
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.beans.factory.annotation.Value

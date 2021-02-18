@@ -1,6 +1,6 @@
-package clean.the.forest.weather.infraestructure
+package clean.the.forest.weather.infrastructure
 
-import clean.the.forest.weather.infraestructure.config.WeatherConfig
+import clean.the.forest.weather.infrastructure.config.WeatherConfig
 import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.Country
 import clean.the.forest.weather.model.GeoPos

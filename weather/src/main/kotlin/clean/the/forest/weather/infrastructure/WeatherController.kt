@@ -1,4 +1,4 @@
-package clean.the.forest.weather.infraestructure
+package clean.the.forest.weather.infrastructure
 
 import clean.the.forest.weather.application.WeatherOfParticularAreaUseCase
 import clean.the.forest.weather.model.WeatherReport

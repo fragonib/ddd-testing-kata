@@ -1,7 +1,7 @@
 package clean.the.forest.weather.application
 
-import clean.the.forest.weather.infraestructure.AreaRepository
-import clean.the.forest.weather.infraestructure.WeatherProvider
+import clean.the.forest.weather.infrastructure.AreaRepository
+import clean.the.forest.weather.infrastructure.WeatherProvider
 import clean.the.forest.weather.model.AreaName
 import clean.the.forest.weather.model.WeatherReport
 import reactor.core.publisher.Mono
