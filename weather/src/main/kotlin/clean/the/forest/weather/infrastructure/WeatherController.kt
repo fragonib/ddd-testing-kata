@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import reactor.core.publisher.Flux
-import reactor.core.publisher.Mono
+import reactor.kotlin.core.publisher.toFlux
 
 
 @RestController
@@ -19,13 +19,13 @@ class WeatherController(
 ) {
 
     @GetMapping
-    fun allKnownAreas(): Flux<WeatherReport> {
-        return reportAllKnownAreas.report()
-    }
-
-    @GetMapping
-    fun particularArea(@RequestParam("location") areaName: String): Mono<WeatherReport> {
-        return reportParticularAreaUseCase.report(areaName)
+    fun report(
+        @RequestParam(name = "location", required = false) particularAreaName: String?
+    ): Flux<WeatherReport> {
+        return if (particularAreaName == null)
+            reportAllKnownAreas.report()
+        else
+            reportParticularAreaUseCase.report(particularAreaName).toFlux()
     }
 
 }

@@ -20,7 +20,7 @@ import reactor.core.publisher.Mono
 
 
 @ExtendWith(SpringExtension::class)
-@WebFluxTest
+@WebFluxTest(controllers = [WeatherController::class])
 @Import(value = [WeatherController::class])
 @ContextConfiguration(classes = [WeatherConfig::class])
 @Tag(TestClassification.INTEGRATION)
@@ -36,7 +36,7 @@ class WeatherControllerTest {
     lateinit var webTestClient: WebTestClient
 
     @Test
-    fun whenGetParticularAreaByLocation_thenWeatherReportExpected() {
+    fun whenReportParticularAreaByName_thenWeatherReportExpected() {
 
         // Given
         val locationString = "ipiñaburu"
@@ -64,9 +64,10 @@ class WeatherControllerTest {
             .expectStatus().isOk
             .expectHeader().contentType(APPLICATION_JSON)
             .expectBody()
-            .jsonPath("$.area").isMap
-            .jsonPath("$.weatherCondition").isEqualTo("Cloudy")
-            .jsonPath("$.date").isNotEmpty
+            .jsonPath("$[0].area").isMap
+            .jsonPath("$[0].weatherCondition").isEqualTo("Cloudy")
+            .jsonPath("$[0].checkable").isEqualTo(false)
+            .jsonPath("$[0].date").isNotEmpty
 
         verify(areaRepository, times(1)).findByName(locationString)
         verify(weatherProvider, times(1)).reportWeatherByGeoPos(expectedArea.position)
