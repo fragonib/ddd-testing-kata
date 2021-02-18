@@ -2,40 +2,43 @@ package clean.the.forest.weather.infraestructure
 
 import clean.the.forest.weather.model.Country
 import clean.the.forest.weather.model.GeoPos
+import clean.the.forest.weather.shared.TestClassification
+import org.junit.jupiter.api.Tag
 import spock.lang.Specification
 
 
+@Tag(TestClassification.INTEGRATION)
 class AreaRepositorySpec extends Specification {
 
     AreaRepository sut = new AreaRepository()
 
-    def 'area "#name" is known'() {
+    def 'area "#areaName" is known'() {
 
         when:
-        def foundArea = sut.findByName(name).block()
+        def foundArea = sut.findByName(areaName).block()
 
         then:
-        foundArea.position == new GeoPos(lat, lon)
         foundArea.country == new Country(countryCode)
+        foundArea.position == new GeoPos(lat, lon)
 
         where:
-        name        | lat   | lon   | countryCode
+        areaName | lat | lon | countryCode
         "ipiñaburu" | 43.07 | -2.75 | "ES"
         "ibarra"    | 43.05 | -2.57 | "ES"
         "zegama"    | 42.97 | -2.29 | "ES"
     }
 
-    def 'area "#unknownName" is NOT known'() {
+    def 'area "#areaName" is NOT known'() {
 
         when:
-        sut.findByName(unknownName)
+        sut.findByName(areaName).block()
 
         then:
         IllegalArgumentException ex = thrown()
         ex.message == expectedMessage
 
         where:
-        unknownName || expectedMessage
+        areaName || expectedMessage
         "unknown"   || "There is no area called [unknown]"
     }
 

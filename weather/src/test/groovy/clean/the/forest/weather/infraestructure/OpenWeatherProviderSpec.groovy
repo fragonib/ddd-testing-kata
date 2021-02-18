@@ -1,26 +1,25 @@
 package clean.the.forest.weather.infraestructure
 
 import clean.the.forest.weather.model.GeoPos
+import clean.the.forest.weather.shared.TestClassification
 import org.junit.jupiter.api.Tag
-import org.junit.jupiter.api.Test
 import spock.lang.Specification
 
 
-@Tag("integration")
+@Tag(TestClassification.INTEGRATION)
 class OpenWeatherProviderSpec extends Specification {
 
-    OpenWeatherProvider provider
+    OpenWeatherProvider sut
 
     def setup() {
         String apiKey = System.getenv('OPENWEATHER_APIKEY')
-        provider = new OpenWeatherProvider(apiKey)
+        sut = new OpenWeatherProvider(apiKey)
     }
 
-    @Test
     def "weather of #name by geoposition"() {
 
         when:
-        def weatherCondition = provider.reportWeatherByGeoPos(new GeoPos(lat, lon)).block()
+        def weatherCondition = sut.reportWeatherByGeoPos(new GeoPos(lat, lon)).block()
 
         then:
         weatherCondition == expectedWheaterCondition
