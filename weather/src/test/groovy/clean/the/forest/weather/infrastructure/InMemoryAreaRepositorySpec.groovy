@@ -1,8 +1,8 @@
 package clean.the.forest.weather.infrastructure
 
+import clean.the.forest.shared.testing.TestClassification
 import clean.the.forest.weather.model.Country
 import clean.the.forest.weather.model.GeoPos
-import clean.the.forest.shared.testing.TestClassification
 import org.junit.jupiter.api.Tag
 import spock.lang.Specification
 
@@ -11,6 +11,22 @@ import spock.lang.Specification
 class InMemoryAreaRepositorySpec extends Specification {
 
     AreaRepository sut = new InMemoryAreaRepository()
+
+    def 'area repository contains 3 areas "Ipiñaburu, Ibarra, Zegama"'() {
+
+        when:
+        def knownAreas = sut.findAll()
+                .collectList()
+                .block()
+
+        then:
+        knownAreas.size() == 3
+        knownAreas.name == ["Ipiñaburu", "Ibarra", "Zegama"]
+        knownAreas.position.lat == [43.07d, 43.05d, 42.97d]
+        knownAreas.position.lon == [-2.75d, -2.57d, -2.29d]
+        knownAreas.country.code.every {it == "ES"}
+
+    }
 
     def 'area "#areaName" is known'() {
 
@@ -40,6 +56,7 @@ class InMemoryAreaRepositorySpec extends Specification {
         where:
         areaName  || expectedMessage
         "unknown" || "There is no area called [unknown]"
+        "ipiñabu" || "There is no area called [ipiñabu]"
     }
 
 }

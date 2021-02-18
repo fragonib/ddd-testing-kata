@@ -1,6 +1,7 @@
 package clean.the.forest.weather.infrastructure
 
 import clean.the.forest.weather.model.*
+import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 
 
@@ -24,6 +25,10 @@ class InMemoryAreaRepository : AreaRepository {
                 country = Country(code = "ES")
             )
         ).associateBy { areaKey(it) }
+
+    override fun findAll(): Flux<Area> {
+        return Flux.fromIterable(knownAreas.values)
+    }
 
     override fun findByName(name: String): Mono<Area> {
         return Mono.just(name)
