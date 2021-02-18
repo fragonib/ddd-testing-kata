@@ -16,7 +16,7 @@ import spock.lang.Unroll
 class WeatherOfParticularAreaUseCaseSpec extends Specification {
 
     @Unroll
-    def 'weather data of the location named "#areaName" should be "#expectedWeather"'() {
+    def 'weather of area named "#areaName" should be "#expectedWeather"'() {
 
         given: "External weather provider is stubbed"
         AreaRepository areaRepository = new InMemoryAreaRepository()
