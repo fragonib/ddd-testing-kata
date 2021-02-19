@@ -20,5 +20,9 @@ dependencies {
 
     implementation("org.mockito:mockito-core")
 
+    // - Functional testing
+    val cucumberVersion = "6.10.0"
+    implementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
+
 }
 
