@@ -11,9 +11,3 @@ import io.cucumber.junit.platform.engine.Cucumber
  */
 @Cucumber
 class BuildToolSupport
-
-
-object Step {
-    val PARAM_EXP = "\"([^\"]*)\""
-}
-
