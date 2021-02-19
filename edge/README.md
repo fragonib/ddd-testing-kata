@@ -12,13 +12,13 @@
 
 ## Run
 
-You need to set up you own OpenWeather APIKEY as environment variable
+You need to set up you own OpenWeather APIKEY as an environment variable
 
 ```shell
 export OPENWEATHER_APIKEY=%YOUR_API_KEY%
 ```
 
-Then you can run the tests:
+Then you can build and run the tests:
 
 ```shell
 ./gradlew check
@@ -34,6 +34,10 @@ Or the entire app with:
 
 - Factories for test data fixtures
 - BDD 
-- GITLAB CI
-- Limpiar dependencias
+- GITLAB CI (secrets) 
+- Clean dependencies
 - Gradle group test selector 
+- Refactor use cases
+- Time provider
+- Cuando no se encuentra la zona
+  

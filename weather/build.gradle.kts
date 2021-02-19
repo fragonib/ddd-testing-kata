@@ -58,6 +58,12 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
 
+    // - Functional testing
+    val cucumberVersion = "6.10.0"
+    testImplementation("io.cucumber:cucumber-java8:${cucumberVersion}")
+    testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
+    testImplementation("io.cucumber:cucumber-picocontainer:${cucumberVersion}")
+
 }
 
 tasks {
@@ -81,6 +87,17 @@ tasks {
             includeTags("integration")
         }
         shouldRunAfter("test")
+    }
+
+    register<Test>("functionalTest") {
+        ignoreFailures = true
+        systemProperties(project.gradle.startParameter.systemPropertiesArgs)
+        systemProperty("cucumber.execution.parallel.enabled", System.getProperty("test.parallel", "false"))
+        systemProperty("cucumber.plugin", "json:build/reports/cucumber.json")
+        systemProperty("cucumber.publish.quiet", "true")
+        useJUnitPlatform {
+            excludeTags("disabled")
+        }
     }
 
     check {
