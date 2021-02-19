@@ -1,14 +1,12 @@
 package clean.the.forest.weather.infrastructure
 
 import clean.the.forest.shared.testing.TestClassification
-import clean.the.forest.weather.infrastructure.MockitoHelper.anyObject
-import net.javacrumbs.jsonunit.assertj.JsonAssertions
+import clean.the.forest.shared.testing.MockitoHelper.anyObject
 import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
 import net.javacrumbs.jsonunit.core.Option
 import org.junit.jupiter.api.Tag
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
-import org.mockito.Mockito
 import org.mockito.Mockito.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
@@ -20,15 +18,6 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 import org.springframework.test.web.reactive.server.WebTestClient
 import reactor.core.publisher.Mono
 
-
-object MockitoHelper {
-    fun <T> anyObject(): T {
-        Mockito.any<T>()
-        return uninitialized()
-    }
-    @Suppress("UNCHECKED_CAST")
-    fun <T> uninitialized(): T =  null as T
-}
 
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(controllers = [WeatherController::class])
