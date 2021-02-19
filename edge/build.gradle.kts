@@ -1,5 +1,3 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
-
 plugins {
     kotlin("jvm")
     kotlin("plugin.spring")
@@ -9,12 +7,6 @@ plugins {
 
 group = "clean.the.forest"
 version = "0.0.1-SNAPSHOT"
-java.sourceCompatibility = JavaVersion.VERSION_11
-
-repositories {
-    mavenCentral()
-    jcenter()
-}
 
 dependencies {
 
@@ -40,11 +32,4 @@ dependencies {
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
     runtimeOnly("org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion")
 
-}
-
-tasks.withType<KotlinCompile> {
-    kotlinOptions {
-        freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "11"
-    }
 }
