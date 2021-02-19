@@ -1,9 +1,9 @@
 @functional
 @weather
 Feature: Know the weather status of the location before sending the drone with the programmed route
-  As Area checker to be clean
-  Want know area weather condition to fly a drone
-  In order to send a drone to inspect area
+  As An Area-Checker
+  Want to know area weather condition to fly a drone
+  In order to send a drone to inspect area before cleaning it
 
   Background:
     Given following "known areas":
@@ -20,18 +20,12 @@ Feature: Know the weather status of the location before sending the drone with t
   @regression
   Scenario: report weather of all known areas
     When request report for all known areas
-    Then report contains these areas:
-      | Ipiñaburu |
-      | Ibarra    |
-      | Zegama    |
-    And report contains weather condition:
-      | Ipiñaburu | Clouds  |
-      | Ibarra    | Clear   |
-      | Zegama    | Drizzle |
+    Then report should contain "known areas"
+    And report should contain "weather condition"
 
   @regression
-  Scenario Outline: check area "<areaName>" is currently suitable to fly the drone
-    When request area condition "<areaName>"
+  Scenario Outline: check if area "<areaName>" is currently suitable to fly the drone
+    When request area "<areaName>" report
     And report weather is "<weatherCondition>"
     And report checkable is "<checkable>"
 
