@@ -5,13 +5,20 @@ import clean.the.forest.weather.model.Area
 import clean.the.forest.weather.model.AreaName
 import clean.the.forest.weather.model.WeatherCondition
 import com.jayway.jsonpath.JsonPath
-import io.cucumber.datatable.DataTable
 import io.cucumber.java8.En
 import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
 import org.assertj.core.api.Assertions.assertThat
+import org.springframework.web.client.RestTemplate
+import org.springframework.web.util.UriComponentsBuilder
+import java.net.URLEncoder
 
 
-class WeatherScenarioSteps(private val scenarioState: ScenarioState) : En {
+class WeatherScenarioSteps(
+    private val scenarioState: ScenarioState,
+) : En {
+
+    private val testClient: RestTemplate = RestTemplate()
+    private val baseUrl = "http://localhost:8080/weather"
 
     init {
         allAreasReportScenario()
@@ -21,52 +28,9 @@ class WeatherScenarioSteps(private val scenarioState: ScenarioState) : En {
     private fun allAreasReportScenario() {
 
         When("request report for all known areas") {
-            scenarioState["jsonReport"] = """
-                [
-                    {
-                        "area": {
-                            "country": {
-                                "code": "ES"
-                            },
-                            "name": "Ibarra",
-                            "position": {
-                                "lat": 43.05,
-                                "lon": -2.57
-                            }
-                        },
-                        "weatherCondition": "Clear",
-                        "checkable": false
-                    },
-                    {
-                        "area": {
-                            "country": {
-                                "code": "ES"
-                            },
-                            "name": "Zegama",
-                            "position": {
-                                "lat": 42.97,
-                                "lon": -2.29
-                            }
-                        },
-                        "weatherCondition": "Drizzle",
-                        "checkable": false
-                    },
-                    {
-                        "area": {
-                            "country": {
-                                "code": "ES"
-                            },
-                            "name": "Ipiñaburu",
-                            "position": {
-                                "lat": 43.07,
-                                "lon": -2.75
-                            }
-                        },
-                        "weatherCondition": "Clouds",
-                        "checkable": false
-                    }
-                ]
-            """.trimIndent()
+            val jsonReport = testClient
+                .getForObject(baseUrl, String::class.java)!!
+            scenarioState["jsonReport"] = jsonReport
         }
 
         Then("report should contain \"known areas\"") {
@@ -85,7 +49,8 @@ class WeatherScenarioSteps(private val scenarioState: ScenarioState) : En {
             val weatherConditions: List<String> = reports.read("$[*].weatherCondition")
 
             areaNames.zip(weatherConditions).forEach { (areaName, weatherCondition) ->
-                val expectedWeatherConditions = scenarioState["weatherConditions"] as Map<String, String>
+                val expectedWeatherConditions =
+                    scenarioState["weatherConditions"] as Map<String, String>
                 assertThat(weatherCondition).isEqualTo(expectedWeatherConditions[areaName])
             }
         }
@@ -95,24 +60,11 @@ class WeatherScenarioSteps(private val scenarioState: ScenarioState) : En {
     private fun particularAreaCheckableScenario() {
 
         When("request area {string} report") { areaName: AreaName ->
-            scenarioState["jsonReport"] = """
-                [
-                    {
-                        "area": {
-                            "country": {
-                                "code": "ES"
-                            },
-                            "name": "Ibarra",
-                            "position": {
-                                "lat": 43.05,
-                                "lon": -2.57
-                            }
-                        },
-                        "weatherCondition": "Clear",
-                        "checkable": false
-                    }
-                ]
-            """.trimIndent()
+            val jsonReport = testClient
+                .getForObject(UriComponentsBuilder.fromHttpUrl(baseUrl)
+                    .queryParam("location", URLEncoder.encode(areaName, "UTF-8"))
+                    .toUriString(), String::class.java)!!
+            scenarioState["jsonReport"] = jsonReport
         }
 
         Then("reported weather should be {string}") { expectedWeatherCondition: WeatherCondition ->
@@ -124,7 +76,7 @@ class WeatherScenarioSteps(private val scenarioState: ScenarioState) : En {
         Then("reported checkable should be {string}") { expectedCheckable: String ->
             val reports = JsonPath.parse(scenarioState["jsonReport"] as String)
             val actualCheckable = reports.read<List<Boolean>?>("$[0].checkable")
-            assertThat(actualCheckable).isEqualTo(expectedCheckable)
+            assertThat(actualCheckable).isEqualTo(expectedCheckable.toBoolean())
         }
 
     }

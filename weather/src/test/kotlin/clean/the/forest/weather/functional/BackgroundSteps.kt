@@ -16,7 +16,7 @@ class BackgroundSteps(private val state: ScenarioState) : En {
 
         Given("following \"known areas\":") { data: DataTable ->
             val knownAreas = data.cells()
-                .drop(/* header */ 1)
+                .drop(/* header size */ 1)
                 .map { (areaName, lat, lon, country) ->
                     Area(areaName, lat.toDouble(), lon.toDouble(), country)
                 }
@@ -26,7 +26,7 @@ class BackgroundSteps(private val state: ScenarioState) : En {
 
         Given("following \"weather condition\":") { data: DataTable ->
             val weatherConditions = data.cells()
-                .drop(/* header */ 1)
+                .drop(/* header size */ 1)
                 .map { (areaName, weatherCondition) -> Pair(areaName, weatherCondition) }
                 .associate { it }
             state["weatherConditions"] = weatherConditions
