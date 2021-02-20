@@ -115,13 +115,13 @@ class WeatherScenarioSteps(private val scenarioState: ScenarioState) : En {
             """.trimIndent()
         }
 
-        Then("report weather is {string}") { expectedWeatherCondition: WeatherCondition ->
+        Then("reported weather should be {string}") { expectedWeatherCondition: WeatherCondition ->
             val reports = JsonPath.parse(scenarioState["jsonReport"] as String)
             val actualWeatherCondition = reports.read<String>("$[0].weatherCondition")
             assertThat(actualWeatherCondition).isEqualTo(expectedWeatherCondition)
         }
 
-        Then("report checkable is {string}") { expectedCheckable: String ->
+        Then("reported checkable should be {string}") { expectedCheckable: String ->
             val reports = JsonPath.parse(scenarioState["jsonReport"] as String)
             val actualCheckable = reports.read<List<Boolean>?>("$[0].checkable")
             assertThat(actualCheckable).isEqualTo(expectedCheckable)
