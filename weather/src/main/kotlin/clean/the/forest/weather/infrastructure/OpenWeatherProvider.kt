@@ -49,6 +49,7 @@ class OpenWeatherProvider(
     }
 
     private fun extractWeatherCondition(responseBody: JsonObject): WeatherCondition {
+        @Suppress("UNCHECKED_CAST")
         val list = responseBody["weather"] as List<JsonObject>
         return list.first()["main"] as String
     }
