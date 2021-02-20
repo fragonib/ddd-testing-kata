@@ -34,8 +34,8 @@ class WeatherScenarioSteps(
         }
 
         Then("report should contain \"known areas\"") {
-            val jsonReport = scenarioState["jsonReport"] as String
-            val knownAreas = scenarioState["knownAreas"] as Map<AreaName, Area>
+            val jsonReport: String = scenarioState["jsonReport"]!!
+            val knownAreas: Map<AreaName, Area> = scenarioState["knownAreas"]!!
             assertThatJson(jsonReport)
                 .inPath("[*].area.name")
                 .isArray
@@ -43,14 +43,14 @@ class WeatherScenarioSteps(
         }
 
         Then("report should contain \"weather condition\"") {
-            val jsonReport = scenarioState["jsonReport"] as String
+            val jsonReport: String = scenarioState["jsonReport"]!!
             val reports = JsonPath.parse(jsonReport)
             val areaNames: List<String> = reports.read("$[*].area.name")
             val weatherConditions: List<String> = reports.read("$[*].weatherCondition")
 
             areaNames.zip(weatherConditions).forEach { (areaName, weatherCondition) ->
-                val expectedWeatherConditions =
-                    scenarioState["weatherConditions"] as Map<String, String>
+                val expectedWeatherConditions: Map<String, String> =
+                    scenarioState["weatherConditions"]!!
                 assertThat(weatherCondition).isEqualTo(expectedWeatherConditions[areaName])
             }
         }
@@ -68,13 +68,15 @@ class WeatherScenarioSteps(
         }
 
         Then("reported weather should be {string}") { expectedWeatherCondition: WeatherCondition ->
-            val reports = JsonPath.parse(scenarioState["jsonReport"] as String)
+            val jsonReport: String = scenarioState["jsonReport"]!!
+            val reports = JsonPath.parse(jsonReport)
             val actualWeatherCondition = reports.read<String>("$[0].weatherCondition")
             assertThat(actualWeatherCondition).isEqualTo(expectedWeatherCondition)
         }
 
         Then("reported checkable should be {string}") { expectedCheckable: String ->
-            val reports = JsonPath.parse(scenarioState["jsonReport"] as String)
+            val jsonReport: String = scenarioState["jsonReport"]!!
+            val reports = JsonPath.parse(jsonReport)
             val actualCheckable = reports.read<List<Boolean>?>("$[0].checkable")
             assertThat(actualCheckable).isEqualTo(expectedCheckable.toBoolean())
         }
