@@ -1,13 +1,27 @@
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
+import org.springframework.cloud.contract.verifier.config.TestMode.EXPLICIT
+
 plugins {
+    groovy
     kotlin("jvm")
     kotlin("plugin.spring")     // SpringBoot visibility over Kotlin classes
     id("org.springframework.boot")  // SpringBoot task to manage project
     id("io.spring.dependency-management") // Dependency management (from SpringBoot crew)
-    groovy
+    id("org.springframework.cloud.contract") // Contract verifier tasks
+    id("maven-publish")
 }
 
 group = "clean.the.forest"
 version = "0.0.1-SNAPSHOT"
+
+dependencyManagement {
+    val BOM_VERSION: String by project
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$BOM_VERSION")
+    }
+}
 
 dependencies {
 
@@ -38,12 +52,11 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // - JUnit 5
-    val junit5Version = "5.1.0"
     val assertjVersion = "3.11.1"
     val jsonUnitVersion = "2.24.0"
-    testImplementation("org.junit.jupiter:junit-jupiter-api:$junit5Version")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:$junit5Version")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:$junit5Version")
+    testImplementation("org.junit.jupiter:junit-jupiter-api")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
+    testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
@@ -55,8 +68,15 @@ dependencies {
     testImplementation("org.spockframework:spock-core")
 
     // - SpringBoot
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
+    testImplementation("org.springframework.boot:spring-boot-starter-test") {
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+        exclude(group = "junit", module = "junit")
+    }
     testImplementation("io.projectreactor:reactor-test")
+
+    // - Contract testing
+    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
+    testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
 
     // - Functional testing
     val cucumberVersion = "6.10.0"
@@ -64,6 +84,12 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
     testImplementation("io.cucumber:cucumber-picocontainer:${cucumberVersion}")
 
+}
+
+contracts {
+    testFramework.set(JUNIT5)
+    testMode.set(EXPLICIT)
+    packageWithBaseClasses.set("clean.the.forest.weather.contract")
 }
 
 tasks {
@@ -100,10 +126,55 @@ tasks {
         }
     }
 
+    contractTest {
+        useJUnitPlatform()
+        systemProperty("spring.profiles.active", "gradle")
+        testLogging {
+            exceptionFormat = TestExceptionFormat.FULL
+        }
+        afterSuite(KotlinClosure2({ desc: TestDescriptor, result: TestResult ->
+            if (desc.parent == null) {
+                if (result.testCount == 0L) {
+                    throw IllegalStateException("No tests were found. Failing the build")
+                }
+                else {
+                    println("Results: (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)")
+                }
+            } else { /* Nothing to do here */ }
+        }))
+    }
+
     check {
         if (project.hasProperty("integrationTests")) {
             dependsOn("integrationTest")
         }
     }
 
+    withType<Delete> {
+        doFirst {
+            delete("~/.m2/repository/com/example/clean-the-forest-gradle")
+        }
+    }
+
 }
+
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+
+            artifact(tasks.named("bootJar"))
+            artifact(tasks.named("verifierStubsJar"))
+
+            // https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/273
+            versionMapping {
+                usage("java-api") {
+                    fromResolutionOf("runtimeClasspath")
+                }
+                usage("java-runtime") {
+                    fromResolutionResult()
+                }
+            }
+        }
+    }
+}
+
