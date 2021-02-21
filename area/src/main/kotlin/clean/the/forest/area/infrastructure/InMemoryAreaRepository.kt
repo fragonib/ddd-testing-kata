@@ -32,8 +32,8 @@ class InMemoryAreaRepository : AreaRepository {
 
     override fun findByName(name: String): Mono<Area> {
         return Mono.just(name)
-            .map { areaKey(name) }
-            .map { knownAreas[areaKey(name)] ?: throw IllegalArgumentException("There is no area called [$name]") }
+            .map { areaKey(it) }
+            .map { knownAreas[it] ?: throw IllegalArgumentException("There is no area called [$name]") }
     }
 
     override fun addArea(area: Area): Mono<Area> {
