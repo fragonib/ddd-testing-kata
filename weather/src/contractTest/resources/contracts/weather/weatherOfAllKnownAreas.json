@@ -1,0 +1,44 @@
+[
+  {
+    "area": {
+      "country": {
+        "code": "ES"
+      },
+      "name": "Ibarra",
+      "position": {
+        "lat": 43.05,
+        "lon": -2.57
+      }
+    },
+    "weatherCondition": "Clouds",
+    "checkable": false
+  },
+  {
+    "area": {
+      "country": {
+        "code": "ES"
+      },
+      "name": "Zegama",
+      "position": {
+        "lat": 42.97,
+        "lon": -2.29
+      }
+    },
+    "weatherCondition": "Clouds",
+    "checkable": false
+  },
+  {
+    "area": {
+      "country": {
+        "code": "ES"
+      },
+      "name": "Ipiñaburu",
+      "position": {
+        "lat": 43.07,
+        "lon": -2.75
+      }
+    },
+    "weatherCondition": "Clouds",
+    "checkable": false
+  }
+]

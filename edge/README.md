@@ -33,11 +33,10 @@ Or the entire app with:
 ## What could be improved
 
 - Factories for test data fixtures
-- BDD 
 - GITLAB CI (secrets) 
 - Clean dependencies
 - Gradle group test selector 
 - Refactor use cases
 - Time provider
-- Cuando no se encuentra la zona
+- Test edge cases
   
