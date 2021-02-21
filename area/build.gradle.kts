@@ -9,11 +9,31 @@ plugins {
     id("org.springframework.boot")  // SpringBoot task to manage project
     id("io.spring.dependency-management") // Dependency management (from SpringBoot crew)
     id("org.springframework.cloud.contract") // Contract verifier tasks
+    id ("com.patdouble.cucumber-jvm").version("0.19") // Functional tests with cucumber
     id("maven-publish")
 }
 
 group = "clean.the.forest"
 version = "0.0.1-SNAPSHOT"
+
+//cucumber {
+////    formats = listOf("pretty","json:build/cucumber.json","junit:build/cucumber.xml")
+//    glueDirs = listOf("src/test/resources/env",
+//        "src/test/resources/support",
+//        "src/test/resources/step_definitions")
+//    featureDirs = listOf("src/test/resources/features")
+//    tags = listOf("@billing", "@important")
+//    monochrome = false
+//    strict = false
+//    dryRun = false
+//    ignoreFailures = false
+//}
+
+cucumber {
+    suite("cucumberTest")
+    maxParallelForks = 1
+    stepDefinitionRoots = listOf("clean.the.forest.area.functional")
+}
 
 dependencyManagement {
     val BOM_VERSION: String by project
@@ -21,6 +41,8 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$BOM_VERSION")
     }
 }
+
+//va¿l cucumberTestCompile by configurations.creating
 
 dependencies {
 
@@ -82,6 +104,14 @@ dependencies {
     testImplementation("io.cucumber:cucumber-java8:${cucumberVersion}")
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
     testImplementation("io.cucumber:cucumber-picocontainer:${cucumberVersion}")
+
+    add("cucumberTestImplementation", project(":shared"))
+    add("cucumberTestImplementation", "io.cucumber:cucumber-java8:${cucumberVersion}")
+    add("cucumberTestImplementation", "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
+    add("cucumberTestImplementation", "io.cucumber:cucumber-picocontainer:${cucumberVersion}")
+    add("cucumberTestImplementation", "org.assertj:assertj-core:$assertjVersion")
+    add("cucumberTestImplementation", "com.jayway.jsonpath:json-path")
+    add("cucumberTestImplementation", "net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
 }
 
@@ -160,7 +190,11 @@ tasks {
         }
     }
 
+
 }
+
+
+
 
 publishing {
     publications {
