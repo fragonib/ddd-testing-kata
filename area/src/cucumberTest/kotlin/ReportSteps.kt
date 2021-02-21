@@ -5,6 +5,7 @@ import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.AreaName
 import clean.the.forest.area.model.WeatherCondition
 import com.jayway.jsonpath.JsonPath
+import io.cucumber.datatable.DataTable
 import io.cucumber.java8.En
 import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
 import org.assertj.core.api.Assertions.assertThat
@@ -13,7 +14,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.net.URLEncoder
 
 
-class WeatherScenarioSteps(
+class ReportSteps(
     private val scenarioState: ScenarioState,
 ) : En {
 
@@ -21,17 +22,41 @@ class WeatherScenarioSteps(
     private val baseUrl = "http://localhost:8080/weather"
 
     init {
-        allAreasReportScenario()
-        particularAreaCheckableScenario()
+        preconditions()
+        actions()
+        assertions()
     }
 
-    private fun allAreasReportScenario() {
+    private fun preconditions() {
+        Given("following \"weather condition\":") { data: DataTable ->
+            val weatherConditions = data.cells()
+                .drop(/* header size */ 1)
+                .map { (areaName, weatherCondition) -> Pair(areaName, weatherCondition) }
+                .associate { it }
+            scenarioState["weatherConditions"] = weatherConditions
+        }
+    }
+
+    private fun actions() {
 
         When("request report for all known areas") {
             val jsonReport = testClient
                 .getForObject(baseUrl, String::class.java)!!
             scenarioState["jsonReport"] = jsonReport
         }
+
+        When("request area {string} report") { areaName: AreaName ->
+            val jsonReport = testClient
+                .getForObject(UriComponentsBuilder.fromHttpUrl(baseUrl)
+                    .queryParam("location", URLEncoder.encode(areaName, "UTF-8"))
+                    .toUriString(), String::class.java)!!
+            scenarioState["jsonReport"] = jsonReport
+        }
+
+
+    }
+
+    private fun assertions() {
 
         Then("report should contain \"known areas\"") {
             val jsonReport: String = scenarioState["jsonReport"]!!
@@ -53,18 +78,6 @@ class WeatherScenarioSteps(
                     scenarioState["weatherConditions"]!!
                 assertThat(weatherCondition).isEqualTo(expectedWeatherConditions[areaName])
             }
-        }
-
-    }
-
-    private fun particularAreaCheckableScenario() {
-
-        When("request area {string} report") { areaName: AreaName ->
-            val jsonReport = testClient
-                .getForObject(UriComponentsBuilder.fromHttpUrl(baseUrl)
-                    .queryParam("location", URLEncoder.encode(areaName, "UTF-8"))
-                    .toUriString(), String::class.java)!!
-            scenarioState["jsonReport"] = jsonReport
         }
 
         Then("reported weather should be {string}") { expectedWeatherCondition: WeatherCondition ->
