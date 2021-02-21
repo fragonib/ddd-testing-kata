@@ -97,3 +97,7 @@ To simplify we have proposed these locations, but feel free if you prefer using 
 - Remember to document: how we can run the app, how we can launch the tests and more information if you think that is relevant.
 - You need to apply the testing techniques that you know. (unit, integration, contract, functional etc.)
 - We are looking forward to seeing your code and discussing your solution with you.
+
+# Implementation details
+
+To get insights about this particular implementation please read this [document](app/README.md)
