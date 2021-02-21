@@ -19,6 +19,7 @@ class InMemoryAreaRepositoryTest extends Specification {
         when:
         def knownAreas = sut.allKnown().collectList().block()
 
+
         then:
         knownAreas.size() == 3
         knownAreas.name == ["Ipiñaburu", "Ibarra", "Zegama"]
@@ -90,7 +91,7 @@ class InMemoryAreaRepositoryTest extends Specification {
         sut.addArea(areaName).block()
 
         then:
-        IllegalStateException ex = thrown()
+        ConflictWithExistingArea ex = thrown()
         ex.message == "There is yet known area called [Ipiñaburu]"
 
     }
