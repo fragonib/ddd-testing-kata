@@ -1,25 +1,25 @@
 package clean.the.forest.area.contract
 
-import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.application.ReportCheckabilityOfParticularAreaUseCase
+import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.infrastructure.WeatherController
 import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.WeatherCondition
 import clean.the.forest.area.model.WeatherReport
 import io.restassured.RestAssured
 import org.junit.jupiter.api.BeforeEach
-import org.junit.runner.RunWith
+import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.`when`
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.boot.web.server.LocalServerPort
-import org.springframework.test.context.junit4.SpringRunner
+import org.springframework.test.context.junit.jupiter.SpringExtension
 import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 
 
-@RunWith(SpringRunner::class)
+@ExtendWith(SpringExtension::class)
 @SpringBootTest(classes = [WeatherController::class],
     webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT,
     properties = ["server.port=0"])
