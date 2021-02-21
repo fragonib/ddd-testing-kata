@@ -8,12 +8,12 @@ import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 
 
-class ReportParticularAreaUseCase(
+open class ReportParticularAreaUseCase(
     private val areaRepository: AreaRepository,
     private val weatherProvider: WeatherProvider
 ) {
 
-    fun report(name: AreaName): Mono<WeatherReport> {
+    open fun report(name: AreaName): Mono<WeatherReport> {
 
         return areaRepository.findByName(name)
             .flatMap { area ->

@@ -14,12 +14,12 @@ response:
   status: 200
   body:
     - area:
-      name: checkable_area
-      position:
-        lat: 43.07
-        lon: -2.75
-      country:
-        code: ES
+        name: checkable_area
+        position:
+          lat: 43.07
+          lon: -2.75
+        country:
+          code: ES
       checkable: true
       weatherCondition: Clear
   headers:
