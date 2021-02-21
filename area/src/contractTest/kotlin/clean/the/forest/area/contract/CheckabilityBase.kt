@@ -40,6 +40,7 @@ abstract class CheckabilityBase {
         RestAssured.baseURI = "http://localhost:$port"
         stubResponseOnGivenArea("checkable_area", "Clear")
         stubResponseOnGivenArea("non_checkable_area", "Clouds")
+        stubResponseOnNonKnownArea("not_known_area")
     }
 
     private fun stubResponseOnGivenArea(areaName: String, weatherCondition: WeatherCondition) {
@@ -49,6 +50,11 @@ abstract class CheckabilityBase {
                 weatherCondition = weatherCondition,
                 date = LocalDateTime.now()
             )))
+    }
+
+    private fun stubResponseOnNonKnownArea(areaName: String,) {
+        `when`(reportCheckabilityOfParticularAreaUseCase.report(areaName))
+            .thenReturn(Mono.error(IllegalArgumentException("There is no area called [$areaName]")))
     }
 
 }

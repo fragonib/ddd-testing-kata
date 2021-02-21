@@ -1,0 +1,10 @@
+description: |
+  Report particular area is NOT KNOWN
+request:
+  method: GET
+  url: /weather?location=not_known_area
+  headers:
+    Content-Type: application/json
+response:
+  status: 404
+

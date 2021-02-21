@@ -1,10 +1,5 @@
 description: |
-  Report if particular area "<areaName>" is currently suitable to fly the drone
-  ```
-    When request area "<areaName>" report
-    And reported weather should be "<weatherCondition>"
-    And reported checkable should be "<checkable>"
-  ```
+  Report particular area is currently NON suitable to fly the drone
 request:
   method: GET
   url: /weather?location=checkable_area
