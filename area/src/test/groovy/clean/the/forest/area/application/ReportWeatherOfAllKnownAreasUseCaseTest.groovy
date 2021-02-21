@@ -27,9 +27,9 @@ class ReportWeatherOfAllKnownAreasUseCaseTest extends Specification {
         )
 
         WeatherProvider weatherProvider = Stub()
-        weatherProvider.reportWeatherByGeoPos(new GeoPos(43.07, -2.75)) >> Mono.just("Clouds")
-        weatherProvider.reportWeatherByGeoPos(new GeoPos(43.05, -2.57)) >> Mono.just("Clear")
-        weatherProvider.reportWeatherByGeoPos(new GeoPos(42.97, -2.29)) >> Mono.just("Drizzle")
+        weatherProvider.byGeoPosition(new GeoPos(43.07, -2.75)) >> Mono.just("Clouds")
+        weatherProvider.byGeoPosition(new GeoPos(43.05, -2.57)) >> Mono.just("Clear")
+        weatherProvider.byGeoPosition(new GeoPos(42.97, -2.29)) >> Mono.just("Drizzle")
 
         when: "request weather of all known areas"
         def sut = new ReportWeatherOfAllKnownAreasUseCase(areaRepository, weatherProvider)

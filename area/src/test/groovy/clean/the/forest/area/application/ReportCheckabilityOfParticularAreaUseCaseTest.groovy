@@ -24,7 +24,7 @@ class ReportCheckabilityOfParticularAreaUseCaseTest extends Specification {
         )
 
         WeatherProvider weatherProvider = Stub()
-        weatherProvider.reportWeatherByGeoPos(new GeoPos(expectedLat, expectedLon)) >> Mono.just(expectedWeather)
+        weatherProvider.byGeoPosition(new GeoPos(expectedLat, expectedLon)) >> Mono.just(expectedWeather)
 
         when: "request weather by area name"
         def sut = new ReportCheckabilityOfParticularAreaUseCase(areaRepository, weatherProvider)

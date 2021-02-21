@@ -6,6 +6,6 @@ import reactor.core.publisher.Mono
 
 interface WeatherProvider {
 
-    fun reportWeatherByGeoPos(geoPos: GeoPos): Mono<WeatherCondition>
+    fun byGeoPosition(geoPos: GeoPos): Mono<WeatherCondition>
 
 }

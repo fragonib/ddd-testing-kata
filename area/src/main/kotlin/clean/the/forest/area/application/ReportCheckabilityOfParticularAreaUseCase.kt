@@ -17,7 +17,7 @@ open class ReportCheckabilityOfParticularAreaUseCase(
 
         return areaRepository.findByName(name)
             .flatMap { area ->
-                weatherProvider.reportWeatherByGeoPos(area.position)
+                weatherProvider.byGeoPosition(area.position)
                     .map { weatherCondition -> Pair(area, weatherCondition) }
             }
             .map { (area, weatherCondition) ->

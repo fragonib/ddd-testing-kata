@@ -7,7 +7,7 @@ import spock.lang.Specification
 
 
 @Tag(TestClassification.INTEGRATION)
-class OpenWeatherProviderSpec extends Specification {
+class OpenWeatherProviderTest extends Specification {
 
     WeatherProvider sut
 
@@ -19,7 +19,7 @@ class OpenWeatherProviderSpec extends Specification {
     def "weather of #name by geoposition"() {
 
         when:
-        def weatherCondition = sut.reportWeatherByGeoPos(new GeoPos(lat, lon)).block()
+        def weatherCondition = sut.byGeoPosition(new GeoPos(lat, lon)).block()
 
         then:
         weatherCondition == expectedWheaterCondition

@@ -16,7 +16,7 @@ open class ReportWeatherOfAllKnownAreasUseCase(
 
         return areaRepository.allKnown()
             .flatMap { area ->
-                weatherProvider.reportWeatherByGeoPos(area.position)
+                weatherProvider.byGeoPosition(area.position)
                     .map { weatherCondition -> Pair(area, weatherCondition) }
             }
             .map { (area, weatherCondition) ->

@@ -28,7 +28,7 @@ class OpenWeatherProvider(
      *
      * @return Weather condition
      */
-    override fun reportWeatherByGeoPos(geoPos: GeoPos): Mono<WeatherCondition> {
+    override fun byGeoPosition(geoPos: GeoPos): Mono<WeatherCondition> {
 
         return buildWebClient("https://api.openweathermap.org/data/2.5")
             .get()
