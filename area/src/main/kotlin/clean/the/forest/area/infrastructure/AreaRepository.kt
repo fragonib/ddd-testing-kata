@@ -31,8 +31,10 @@ interface AreaRepository {
      *
      * @return Area data if known
      *
-     * @throws IllegalStateException If there is any previous area with given name
+     * @throws ConflictWithExistingArea If there is any previous area with given name
      */
     fun addArea(area: Area): Mono<Area>
 
 }
+
+class ConflictWithExistingArea(message:String): RuntimeException(message)
