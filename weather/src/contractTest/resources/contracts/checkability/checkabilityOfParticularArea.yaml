@@ -7,12 +7,21 @@ description: |
   ```
 request:
   method: GET
-  url: /weather?location=Ipiñaburu
+  url: /weather?location=checkable_area
   headers:
     Content-Type: application/json
 response:
   status: 200
-  bodyFromFile: checkabilityOfParticularArea.json
+  body:
+    - area:
+      name: checkable_area
+      position:
+        lat: 43.07
+        lon: -2.75
+      country:
+        code: ES
+      checkable: true
+      weatherCondition: Clear
   headers:
     Content-Type: application/json
   matchers:
