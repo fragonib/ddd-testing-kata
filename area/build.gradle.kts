@@ -16,21 +16,15 @@ plugins {
 group = "clean.the.forest"
 version = "0.0.1-SNAPSHOT"
 
-//cucumber {
-////    formats = listOf("pretty","json:build/cucumber.json","junit:build/cucumber.xml")
-//    glueDirs = listOf("src/test/resources/env",
-//        "src/test/resources/support",
-//        "src/test/resources/step_definitions")
-//    featureDirs = listOf("src/test/resources/features")
-//    tags = listOf("@billing", "@important")
-//    monochrome = false
-//    strict = false
-//    dryRun = false
-//    ignoreFailures = false
-//}
+
+contracts {
+    testFramework.set(JUNIT5)
+    testMode.set(EXPLICIT)
+    packageWithBaseClasses.set("clean.the.forest.area.contract")
+}
 
 cucumber {
-    suite("cucumberTest")
+    suite("functionalTest")
     maxParallelForks = 1
     stepDefinitionRoots = listOf("clean.the.forest.area.functional")
 }
@@ -41,8 +35,6 @@ dependencyManagement {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$BOM_VERSION")
     }
 }
-
-//va¿l cucumberTestCompile by configurations.creating
 
 dependencies {
 
@@ -105,20 +97,14 @@ dependencies {
     testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
     testImplementation("io.cucumber:cucumber-picocontainer:${cucumberVersion}")
 
-    add("cucumberTestImplementation", project(":shared"))
-    add("cucumberTestImplementation", "io.cucumber:cucumber-java8:${cucumberVersion}")
-    add("cucumberTestImplementation", "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
-    add("cucumberTestImplementation", "io.cucumber:cucumber-picocontainer:${cucumberVersion}")
-    add("cucumberTestImplementation", "org.assertj:assertj-core:$assertjVersion")
-    add("cucumberTestImplementation", "com.jayway.jsonpath:json-path")
-    add("cucumberTestImplementation", "net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
+    add("functionalTestImplementation", project(":shared"))
+    add("functionalTestImplementation", "io.cucumber:cucumber-java8:${cucumberVersion}")
+    add("functionalTestImplementation", "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
+    add("functionalTestImplementation", "io.cucumber:cucumber-picocontainer:${cucumberVersion}")
+    add("functionalTestImplementation", "org.assertj:assertj-core:$assertjVersion")
+    add("functionalTestImplementation", "com.jayway.jsonpath:json-path")
+    add("functionalTestImplementation", "net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
-}
-
-contracts {
-    testFramework.set(JUNIT5)
-    testMode.set(EXPLICIT)
-    packageWithBaseClasses.set("clean.the.forest.area.contract")
 }
 
 tasks {
@@ -147,17 +133,6 @@ tasks {
             includeTags("integration")
         }
         shouldRunAfter("test")
-    }
-
-    register<Test>("functionalTest") {
-        ignoreFailures = true
-        systemProperties(project.gradle.startParameter.systemPropertiesArgs)
-        systemProperty("cucumber.execution.parallel.enabled", System.getProperty("test.parallel", "false"))
-        systemProperty("cucumber.plugin", "json:build/reports/cucumber.json")
-        systemProperty("cucumber.publish.quiet", "true")
-        useJUnitPlatform {
-            excludeTags("disabled")
-        }
     }
 
     contractTest {
@@ -190,11 +165,7 @@ tasks {
         }
     }
 
-
 }
-
-
-
 
 publishing {
     publications {
