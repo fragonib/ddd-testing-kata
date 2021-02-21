@@ -1,0 +1,20 @@
+description: |
+  Add an freshly new area to known areas
+  ```
+    When add a area "" for
+    Then report should contain "known areas"
+    And report should contain "weather condition"
+  ```
+request:
+  method: POST
+  url: /area
+  headers:
+    Content-Type: application/json
+  body:
+    name: existing area
+    lat: 40.0
+    lon: -2.0
+    countryCode: ES
+response:
+  status: 409
+

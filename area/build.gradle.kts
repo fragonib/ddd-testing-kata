@@ -9,13 +9,12 @@ plugins {
     id("org.springframework.boot")  // SpringBoot task to manage project
     id("io.spring.dependency-management") // Dependency management (from SpringBoot crew)
     id("org.springframework.cloud.contract") // Contract verifier tasks
-    id ("com.patdouble.cucumber-jvm").version("0.19") // Functional tests with cucumber
+    id ("com.patdouble.cucumber-jvm").version("0.19") // Functional tests with Cucumber
     id("maven-publish")
 }
 
 group = "clean.the.forest"
 version = "0.0.1-SNAPSHOT"
-
 
 contracts {
     testFramework.set(JUNIT5)
@@ -49,20 +48,16 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
+    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
 
     // - Spring
-    val openApiVersion = "1.5.4"
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    runtimeOnly("org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion")
 
     // = Testing
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // - JUnit 5
     val assertjVersion = "3.11.1"
@@ -70,8 +65,13 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
+    testImplementation("junit:junit:4.12")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
+
+    // - Kotlin
+    testImplementation("org.jetbrains.kotlin:kotlin-test")
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // - Spock
     val groovyVersion = "3.0.7"
@@ -93,10 +93,6 @@ dependencies {
 
     // - Functional testing
     val cucumberVersion = "6.10.0"
-    testImplementation("io.cucumber:cucumber-java8:${cucumberVersion}")
-    testImplementation("io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
-    testImplementation("io.cucumber:cucumber-picocontainer:${cucumberVersion}")
-
     add("functionalTestImplementation", project(":shared"))
     add("functionalTestImplementation", "io.cucumber:cucumber-java8:${cucumberVersion}")
     add("functionalTestImplementation", "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
