@@ -1,5 +1,4 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
 import org.springframework.cloud.contract.verifier.config.TestMode.EXPLICIT
 
@@ -94,12 +93,17 @@ contracts {
 
 tasks {
 
-    bootJar {
-        enabled = false
-    }
-
     jar {
         enabled = true
+    }
+
+    bootJar {
+        enabled = false
+        archiveClassifier.set("boot")
+    }
+
+    java {
+        withSourcesJar()
     }
 
     test {
@@ -152,7 +156,7 @@ tasks {
 
     withType<Delete> {
         doFirst {
-            delete("~/.m2/repository/com/example/clean-the-forest-gradle")
+            delete("~/.m2/repository/clean/the/forest/clean-the-forest-gradle")
         }
     }
 
@@ -177,4 +181,3 @@ publishing {
         }
     }
 }
-
