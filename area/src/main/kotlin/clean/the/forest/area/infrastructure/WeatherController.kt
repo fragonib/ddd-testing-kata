@@ -14,18 +14,18 @@ import reactor.kotlin.core.publisher.toFlux
 @RestController
 @RequestMapping("/weather")
 class WeatherController(
-    val reportAllKnownAreas: ReportWeatherOfAllKnownAreasUseCase,
-    val reportCheckabilityOfParticularAreaUseCase: ReportCheckabilityOfParticularAreaUseCase
+    val reportWeatherOfAllKnownAreas: ReportWeatherOfAllKnownAreasUseCase,
+    val reportCheckabilityOfParticularArea: ReportCheckabilityOfParticularAreaUseCase
 ) {
 
     @GetMapping
     fun report(
         @RequestParam(name = "location", required = false) particularAreaName: String?
-    ): Flux<WeatherReport> {
+    ): Flux<out WeatherReport> {
         return if (particularAreaName == null)
-            reportAllKnownAreas.report()
+            reportWeatherOfAllKnownAreas.report()
         else
-            reportCheckabilityOfParticularAreaUseCase.report(particularAreaName).toFlux()
+            reportCheckabilityOfParticularArea.report(particularAreaName).toFlux()
     }
 
 }

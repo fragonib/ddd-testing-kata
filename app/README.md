@@ -1,14 +1,14 @@
 # Design decisions
 
-## Focus on
-- Design patterns
-- SOLID
-- Testing
-
 ## Technologies used
 - Gradle (for building project)
 - Kotlin (for production code)
 - Groovy (for testing with Spock)
+
+## Focused on
+- Design patterns
+- SOLID
+- Testing
 
 ## Run
 
@@ -18,13 +18,13 @@ You need to set up you own OpenWeather APIKEY as an environment variable
 export OPENWEATHER_APIKEY=%YOUR_API_KEY%
 ```
 
-Then you can build and run the tests:
+Then you can build and run all the tests:
 
 ```shell
 ./gradlew check
 ```
 
-Or the entire app with:
+And run the entire app with:
 
 ```shell
 ./gradlew bootRun

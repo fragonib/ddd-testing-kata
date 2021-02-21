@@ -16,16 +16,16 @@ class OpenWeatherProviderTest extends Specification {
         sut = new OpenWeatherProvider(apiKey)
     }
 
-    def "weather of #name by geoposition"() {
+    def "weather of #name by geo position"() {
 
         when:
         def weatherCondition = sut.byGeoPosition(new GeoPos(lat, lon)).block()
 
         then:
-        weatherCondition == expectedWheaterCondition
+        weatherCondition == expectedWeather
 
         where:
-        name        | lat    | lon    || expectedWheaterCondition
+        name        | lat    | lon    || expectedWeather
         "ipiñaburu" | 43.07d | -2.75d || "Clouds"
         "ibarra"    | 43.05d | -2.57d || "Clouds"
         "zegama"    | 42.97d | -2.29d || "Clouds"
