@@ -7,12 +7,12 @@ import reactor.core.publisher.Flux
 import java.time.LocalDateTime
 
 
-class ReportAllKnownAreasUseCase(
+open class ReportAllKnownAreasUseCase(
     private val areaRepository: AreaRepository,
     private val weatherProvider: WeatherProvider
 ) {
 
-    fun report(): Flux<WeatherReport> {
+    open fun report(): Flux<WeatherReport> {
 
         return areaRepository.allKnown()
             .flatMap { area ->
