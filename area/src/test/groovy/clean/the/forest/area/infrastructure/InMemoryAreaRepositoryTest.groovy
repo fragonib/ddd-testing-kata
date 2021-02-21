@@ -7,6 +7,7 @@ import clean.the.forest.shared.testing.TestClassification
 import org.junit.jupiter.api.Tag
 import spock.lang.Specification
 
+
 @Tag(TestClassification.INTEGRATION)
 class InMemoryAreaRepositoryTest extends Specification {
 

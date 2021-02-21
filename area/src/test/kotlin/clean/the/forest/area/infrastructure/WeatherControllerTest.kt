@@ -36,7 +36,7 @@ class WeatherControllerTest {
     fun whenReportAllKnownAreas_thenWeatherReportsExpected() {
 
         // Given
-        `when`(weatherProvider.reportWeatherByGeoPos(anyObject()))
+        `when`(weatherProvider.byGeoPosition(anyObject()))
             .thenReturn(Mono.just("Clouds"))
 
         // When
@@ -101,7 +101,7 @@ class WeatherControllerTest {
             """
             )
 
-        verify(weatherProvider, times(3)).reportWeatherByGeoPos(anyObject())
+        verify(weatherProvider, times(3)).byGeoPosition(anyObject())
 
     }
 
@@ -109,7 +109,7 @@ class WeatherControllerTest {
     fun whenReportParticularAreaByName_thenWeatherReportExpected() {
 
         // Given
-        `when`(weatherProvider.reportWeatherByGeoPos(anyObject()))
+        `when`(weatherProvider.byGeoPosition(anyObject()))
             .thenReturn(Mono.just("Clouds"))
 
         // When
@@ -151,7 +151,7 @@ class WeatherControllerTest {
                 """.trimIndent()
             )
 
-        verify(weatherProvider, times(1)).reportWeatherByGeoPos(anyObject())
+        verify(weatherProvider, times(1)).byGeoPosition(anyObject())
 
     }
 
