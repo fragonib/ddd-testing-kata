@@ -8,8 +8,7 @@ import org.junit.jupiter.api.Tag
 import spock.lang.Specification
 
 @Tag(TestClassification.INTEGRATION)
-class InMemoryAreaRepositorySpec extends Specification {
-
+class InMemoryAreaRepositoryTest extends Specification {
 
     def 'all known areas contains "Ipiñaburu, Ibarra, Zegama"'() {
 

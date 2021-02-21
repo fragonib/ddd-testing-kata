@@ -3,6 +3,7 @@ package clean.the.forest.area.infrastructure
 import clean.the.forest.area.model.*
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+import java.lang.IllegalStateException
 
 
 class InMemoryAreaRepository : AreaRepository {
@@ -36,7 +37,11 @@ class InMemoryAreaRepository : AreaRepository {
             .map { knownAreas[areaKey(name)] ?: throw IllegalArgumentException("There is no area called [$name]") }
     }
 
-    fun addArea(area: Area): Mono<Area> {
+    override fun addArea(area: Area): Mono<Area> {
+        val areaKey = areaKey(area)
+        if (knownAreas.containsKey(areaKey))
+            throw IllegalStateException("There is yet known area called [${area.name}]")
+        knownAreas = knownAreas + (areaKey to area)
         return Mono.just(area)
     }
 
