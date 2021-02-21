@@ -36,6 +36,10 @@ class InMemoryAreaRepository : AreaRepository {
             .map { knownAreas[areaKey(name)] ?: throw IllegalArgumentException("There is no area called [$name]") }
     }
 
+    fun addArea(area: Area): Mono<Area> {
+        return Mono.just(area)
+    }
+
     private fun areaKey(area: Area): String = areaKey(area.name)
 
     private fun areaKey(name: String): String = name.toLowerCase()

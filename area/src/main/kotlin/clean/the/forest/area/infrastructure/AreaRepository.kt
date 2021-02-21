@@ -23,4 +23,16 @@ interface AreaRepository {
      * @throws IllegalArgumentException If there is no area known with given name
      */
     fun findByName(name: String): Mono<Area>
+
+    /**
+     * Add an area to the known area collection
+     *
+     * @param area Area name
+     *
+     * @return Area data if known
+     *
+     * @throws IllegalStateException If there is any previous area with given name
+     */
+    fun addArea(area: Area): Mono<Area>
+
 }
