@@ -1,7 +1,7 @@
 package clean.the.forest.area.contract
 
-import clean.the.forest.area.application.ReportAllKnownAreasUseCase
-import clean.the.forest.area.application.ReportParticularAreaUseCase
+import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
+import clean.the.forest.area.application.ReportCheckabilityOfParticularAreaUseCase
 import clean.the.forest.area.infrastructure.WeatherController
 import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.WeatherCondition
@@ -27,10 +27,10 @@ import java.time.LocalDateTime
 abstract class CheckabilityBase {
 
     @MockBean
-    private lateinit var reportAllKnownAreasUseCase: ReportAllKnownAreasUseCase
+    private lateinit var reportAllKnownAreasUseCase: ReportWeatherOfAllKnownAreasUseCase
 
     @MockBean
-    private lateinit var reportParticularAreaUseCase: ReportParticularAreaUseCase
+    private lateinit var reportCheckabilityOfParticularAreaUseCase: ReportCheckabilityOfParticularAreaUseCase
 
     @LocalServerPort
     var port = 0
@@ -43,7 +43,7 @@ abstract class CheckabilityBase {
     }
 
     private fun stubResponseOnGivenArea(areaName: String, weatherCondition: WeatherCondition) {
-        `when`(reportParticularAreaUseCase.report(areaName))
+        `when`(reportCheckabilityOfParticularAreaUseCase.report(areaName))
             .thenReturn(Mono.just(WeatherReport(
                 area = Area(areaName, 43.07, -2.75, "ES"),
                 weatherCondition = weatherCondition,

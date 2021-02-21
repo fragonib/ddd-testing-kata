@@ -1,7 +1,7 @@
 package clean.the.forest.area.infrastructure
 
-import clean.the.forest.area.application.ReportParticularAreaUseCase
-import clean.the.forest.area.application.ReportAllKnownAreasUseCase
+import clean.the.forest.area.application.ReportCheckabilityOfParticularAreaUseCase
+import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,16 +24,16 @@ class WeatherConfig {
     fun reportOfAllKnownAreasUseCase(
         areaRepository: AreaRepository,
         weatherProvider: WeatherProvider
-    ): ReportAllKnownAreasUseCase {
-        return ReportAllKnownAreasUseCase(areaRepository, weatherProvider)
+    ): ReportWeatherOfAllKnownAreasUseCase {
+        return ReportWeatherOfAllKnownAreasUseCase(areaRepository, weatherProvider)
     }
 
     @Bean
     fun reportOfParticularAreaUseCase(
         areaRepository: AreaRepository,
         weatherProvider: WeatherProvider
-    ): ReportParticularAreaUseCase {
-        return ReportParticularAreaUseCase(areaRepository, weatherProvider)
+    ): ReportCheckabilityOfParticularAreaUseCase {
+        return ReportCheckabilityOfParticularAreaUseCase(areaRepository, weatherProvider)
     }
 
 }

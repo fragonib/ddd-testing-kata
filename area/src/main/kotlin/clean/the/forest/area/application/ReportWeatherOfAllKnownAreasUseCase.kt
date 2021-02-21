@@ -2,20 +2,19 @@ package clean.the.forest.area.application
 
 import clean.the.forest.area.infrastructure.AreaRepository
 import clean.the.forest.area.infrastructure.WeatherProvider
-import clean.the.forest.area.model.AreaName
 import clean.the.forest.area.model.WeatherReport
-import reactor.core.publisher.Mono
+import reactor.core.publisher.Flux
 import java.time.LocalDateTime
 
 
-open class ReportParticularAreaUseCase(
+open class ReportWeatherOfAllKnownAreasUseCase(
     private val areaRepository: AreaRepository,
     private val weatherProvider: WeatherProvider
 ) {
 
-    open fun report(name: AreaName): Mono<WeatherReport> {
+    open fun report(): Flux<WeatherReport> {
 
-        return areaRepository.findByName(name)
+        return areaRepository.allKnown()
             .flatMap { area ->
                 weatherProvider.reportWeatherByGeoPos(area.position)
                     .map { weatherCondition -> Pair(area, weatherCondition) }

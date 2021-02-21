@@ -31,7 +31,8 @@ class InMemoryAreaRepositorySpec extends Specification {
     def 'area "#areaName" is known'() {
 
         when:
-        def foundArea = sut.findByName(areaName).block()
+        def foundArea = sut.findByName(areaName)
+                .block()
 
         then:
         foundArea.country == new Country(countryCode)
@@ -47,7 +48,8 @@ class InMemoryAreaRepositorySpec extends Specification {
     def 'area "#areaName" is NOT known'() {
 
         when:
-        sut.findByName(areaName).block()
+        sut.findByName(areaName)
+                .block()
 
         then:
         IllegalArgumentException ex = thrown()
