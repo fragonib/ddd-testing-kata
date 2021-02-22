@@ -7,10 +7,10 @@ Feature: Manage the set of known areas
 
   Background:
     Given following "known areas":
-      | areaName  | lat   | lon   | country |
-      | Ipiñaburu | 43.07 | -2.75 | ES      |
-      | Ibarra    | 43.05 | -2.57 | ES      |
-      | Zegama    | 42.97 | -2.29 | ES      |
+      | areaName  | lat   | lon   | countryCode |
+      | Ipiñaburu | 43.07 | -2.75 | ES          |
+      | Ibarra    | 43.05 | -2.57 | ES          |
+      | Zegama    | 42.97 | -2.29 | ES          |
 
   Scenario: add an area that is freshly new
     When add area "new area" with data:

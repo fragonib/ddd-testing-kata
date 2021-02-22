@@ -16,9 +16,9 @@ import java.net.URLEncoder
 
 class ReportSteps(
     private val scenarioState: ScenarioState,
+    private val testClient: RestTemplate
 ) : En {
 
-    private val testClient: RestTemplate = RestTemplate()
     private val baseUrl = "http://localhost:8080/weather"
 
     init {
@@ -28,7 +28,7 @@ class ReportSteps(
     }
 
     private fun preconditions() {
-        Given("following \"weather condition\":") { data: DataTable ->
+        Given("following \"weather conditions\":") { data: DataTable ->
             val weatherConditions = data.cells()
                 .drop(/* header size */ 1)
                 .map { (areaName, weatherCondition) -> Pair(areaName, weatherCondition) }
@@ -68,14 +68,12 @@ class ReportSteps(
         }
 
         Then("report should contain \"weather condition\"") {
+            val expectedWeatherConditions: Map<String, String> = scenarioState["weatherConditions"]!!
             val jsonReport: String = scenarioState["jsonReport"]!!
             val reports = JsonPath.parse(jsonReport)
             val areaNames: List<String> = reports.read("$[*].area.name")
             val weatherConditions: List<String> = reports.read("$[*].weatherCondition")
-
             areaNames.zip(weatherConditions).forEach { (areaName, weatherCondition) ->
-                val expectedWeatherConditions: Map<String, String> =
-                    scenarioState["weatherConditions"]!!
                 assertThat(weatherCondition).isEqualTo(expectedWeatherConditions[areaName])
             }
         }

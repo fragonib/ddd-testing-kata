@@ -7,11 +7,11 @@ Feature: Know the weather status of the location before sending the drone with t
 
   Background:
     Given following "known areas":
-      | areaName  | lat   | lon   | country |
-      | Ipiñaburu | 43.07 | -2.75 | ES      |
-      | Ibarra    | 43.05 | -2.57 | ES      |
-      | Zegama    | 42.97 | -2.29 | ES      |
-    And following "weather condition":
+      | areaName  | lat   | lon   | countryCode |
+      | Ipiñaburu | 43.07 | -2.75 | ES          |
+      | Ibarra    | 43.05 | -2.57 | ES          |
+      | Zegama    | 42.97 | -2.29 | ES          |
+    And following "weather conditions":
       | areaName  | weatherCondition |
       | Ipiñaburu | Clouds           |
       | Ibarra    | Clear            |
