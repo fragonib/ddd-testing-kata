@@ -9,7 +9,7 @@ plugins {
     id("org.springframework.boot")  // SpringBoot task to manage project
     id("io.spring.dependency-management") // Dependency management (from SpringBoot crew)
     id("org.springframework.cloud.contract") // Contract verifier tasks
-    id ("com.patdouble.cucumber-jvm").version("0.19") // Functional tests with Cucumber
+    id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
     id("maven-publish")
 }
 
@@ -29,9 +29,9 @@ cucumber {
 }
 
 dependencyManagement {
-    val BOM_VERSION: String by project
+    val springCloudVersion: String by project
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$BOM_VERSION")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
 
