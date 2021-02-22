@@ -23,7 +23,7 @@ Feature: Know the weather status of the location before sending the drone with t
     And report should contain "weather conditions"
 
   Scenario Outline: report if particular area "<areaName>" is currently suitable to fly the drone
-    When request area "<areaName>" report
+    When request report for area "<areaName>"
     And reported weather should be "<weatherCondition>"
     And reported checkable should be "<checkable>"
 
