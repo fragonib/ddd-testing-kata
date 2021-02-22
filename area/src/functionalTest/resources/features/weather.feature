@@ -20,7 +20,7 @@ Feature: Know the weather status of the location before sending the drone with t
   Scenario: report weather of all known areas
     When request report for all known areas
     Then report should contain "known areas"
-    And report should contain "weather condition"
+    And report should contain "weather conditions"
 
   Scenario Outline: report if particular area "<areaName>" is currently suitable to fly the drone
     When request area "<areaName>" report
