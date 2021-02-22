@@ -8,7 +8,6 @@ import com.jayway.jsonpath.JsonPath
 import io.cucumber.datatable.DataTable
 import io.cucumber.java8.En
 import net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson
-import org.assertj.core.api.Assertions.assertThat
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.net.URLEncoder
@@ -48,8 +47,9 @@ class ReportSteps(
         When("request report for area {string}") { areaName: AreaName ->
             val jsonReport = testClient
                 .getForObject(UriComponentsBuilder.fromHttpUrl(baseUrl)
-                    .queryParam("location", areaName)
-                    .toUriString(), String::class.java)!!
+                    .queryParam("location", URLEncoder.encode(areaName, "UTF-8"))
+                    .build(true)
+                    .toUri(), String::class.java)!!
             scenarioState["jsonReport"] = jsonReport
         }
 
