@@ -18,15 +18,17 @@
 
 1. Has at least JVM 11 to build and run the project 
    
-2. You'd set up you own OpenWeather APIKEY as an environment variable
+2. You should set up you own OpenWeather APIKEY as an environment variable:
 
     ```shell
-    export OPENWEATHER_APIKEY=%YOUR_API_KEY%
+    export OPEN_WEATHER_MAP_API_KEY=yourapikey
     ```
     
     You'll need this to define to: 
      - Run integration tests
-     - Run complete application
+     - Run complete application 
+       
+NOTE: You can create you onw key [here](https://home.openweathermap.org/api_keys)
 
 # Running
 

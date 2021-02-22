@@ -12,7 +12,7 @@ class OpenWeatherProviderTest extends Specification {
     WeatherProvider sut
 
     def setup() {
-        String apiKey = System.getenv('OPENWEATHER_APIKEY')
+        String apiKey = System.getenv('OPEN_WEATHER_MAP_API_KEY')
         sut = new OpenWeatherProvider(apiKey)
     }
 

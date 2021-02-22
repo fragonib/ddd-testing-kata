@@ -17,7 +17,7 @@ class WeatherConfig {
     }
 
     @Bean
-    fun openWeatherProvider(@Value("\${OPENWEATHER_APIKEY}") apiKey: String): WeatherProvider {
+    fun openWeatherProvider(@Value("\${OPEN_WEATHER_MAP_API_KEY}") apiKey: String): WeatherProvider {
         return OpenWeatherProvider(apiKey)
     }
 
