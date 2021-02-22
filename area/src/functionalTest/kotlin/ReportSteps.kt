@@ -48,7 +48,7 @@ class ReportSteps(
         When("request report for area {string}") { areaName: AreaName ->
             val jsonReport = testClient
                 .getForObject(UriComponentsBuilder.fromHttpUrl(baseUrl)
-                    .queryParam("location", URLEncoder.encode(areaName, "UTF-8"))
+                    .queryParam("location", areaName)
                     .toUriString(), String::class.java)!!
             scenarioState["jsonReport"] = jsonReport
         }
