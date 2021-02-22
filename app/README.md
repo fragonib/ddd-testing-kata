@@ -36,7 +36,7 @@ To build the entire app with:
 ./gradlew build
 ```
 
-To build the entire app but without running tests:
+To build the entire app but without running any tests:
 
 ```shell
 ./gradlew clean build -x test -x contractTest
@@ -89,4 +89,4 @@ Once up & running you can check and interact with the REST API using [this web U
 - Use Factories for test data fixtures
 - Embrace variability (ie.: _Time provider_, Variable Weather conditions)
 - Use `TestContainers` (to up & run application) and `WireMock` (to double third parties) whe running _Functional_ tests
-- Review the possibility of [mixing Contract and API definition](https://springframework.guru/defining-spring-cloud-contracts-in-open-api/) (both in a single source of truth
+- Review the possibility of [mixing Contract and API definition](https://springframework.guru/defining-spring-cloud-contracts-in-open-api/) both in a single source of truth
