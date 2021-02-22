@@ -36,7 +36,7 @@ To build the entire app with:
 ./gradlew build
 ```
 
-To build the entire app but without running tests:
+To build the entire app but without running any tests:
 
 ```shell
 ./gradlew clean build -x test -x contractTest
