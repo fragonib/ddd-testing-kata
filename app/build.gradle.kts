@@ -33,3 +33,15 @@ dependencies {
     runtimeOnly("org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion")
 
 }
+
+tasks {
+
+    bootJar {
+        enabled = true
+    }
+
+    bootBuildImage{
+        imageName = "clean-the-forest/" + rootProject.name + '-' + project.name
+    }
+
+}
