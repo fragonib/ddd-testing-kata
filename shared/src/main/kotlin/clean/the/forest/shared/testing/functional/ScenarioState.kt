@@ -1,4 +1,4 @@
-package clean.the.forest.shared.testing
+package clean.the.forest.shared.testing.functional
 
 /**
  * An instance of this class will be injected in each scenario, thus allowing all scenarios to be run in parallel.
