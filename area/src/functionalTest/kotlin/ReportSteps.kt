@@ -75,6 +75,10 @@ class ReportSteps(
             val areaNames: List<String> = reports.read("$[*].area.name")
             val weatherConditions: List<String> = reports.read("$[*].weatherCondition")
 
+            assertThatJson(jsonReport)
+                .inPath("[*].weatherCondition")
+                .isPresent
+
             // TODO: When third parties can be mocked
             // areaNames.zip(weatherConditions).forEach { (areaName, weatherCondition) ->
             //     assertThat(weatherCondition).isEqualTo(expectedWeatherConditions[areaName])
