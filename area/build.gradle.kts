@@ -41,8 +41,7 @@ cucumber {
     suite("functionalTest")
     maxParallelForks = 1
     stepDefinitionRoots = listOf(
-        "clean.the.forest.area.functional",
-        "clean.the.forest.shared.testing.functional"
+        "clean.the.forest.area.functional"
     )
     plugins = listOf(
         "pretty",
