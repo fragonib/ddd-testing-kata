@@ -1,6 +1,6 @@
 package clean.the.forest.area.functional
 
-import clean.the.forest.shared.testing.ScenarioState
+import clean.the.forest.shared.testing.functional.ScenarioState
 import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.AreaName
 import clean.the.forest.area.model.WeatherCondition
