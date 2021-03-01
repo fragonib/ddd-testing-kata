@@ -10,11 +10,26 @@ plugins {
     id("io.spring.dependency-management") // Dependency management (from SpringBoot crew)
     id("org.springframework.cloud.contract") // Contract verifier tasks
     id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
-    id("maven-publish")
+    id("maven-publish")     // To publish contract artifacts
 }
 
 group = "clean.the.forest"
 version = "0.0.1-SNAPSHOT"
+
+ext {
+    set("assertjVersion", "3.11.1")
+    set("jsonUnitVersion", "2.24.0")
+    set("groovyVersion", "3.0.7")
+    set("spockVersion", "2.0-M4-groovy-3.0")
+    set("cucumberVersion", "6.10.0")
+}
+
+dependencyManagement {
+    val springCloudVersion: String by project
+    imports {
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
+    }
+}
 
 contracts {
     testFramework.set(JUNIT5)
@@ -25,19 +40,19 @@ contracts {
 cucumber {
     suite("functionalTest")
     maxParallelForks = 1
-    stepDefinitionRoots = listOf("clean.the.forest.area.functional")
-}
-
-dependencyManagement {
-    val springCloudVersion: String by project
-    imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-    }
+    stepDefinitionRoots = listOf(
+        "clean.the.forest.area.functional",
+        "clean.the.forest.shared.testing.functional"
+    )
+    plugins = listOf(
+        "pretty",
+        "clean.the.forest.shared.testing.functional.AppContainerLifeCycle"
+    )
 }
 
 dependencies {
 
-    // = Dependencies
+    // = Production
 
     // - Modules
     implementation(project(":shared"))
@@ -60,8 +75,8 @@ dependencies {
     // = Testing
 
     // - JUnit 5
-    val assertjVersion = "3.11.1"
-    val jsonUnitVersion = "2.24.0"
+    val assertjVersion: String by project.ext
+    val jsonUnitVersion: String by project.ext
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
@@ -74,8 +89,8 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
     // - Spock
-    val groovyVersion = "3.0.7"
-    val spockVersion = "2.0-M4-groovy-3.0"
+    val groovyVersion: String by project.ext
+    val spockVersion: String by project.ext
     testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
     testImplementation(platform("org.spockframework:spock-bom:$spockVersion"))
     testImplementation("org.spockframework:spock-core")
@@ -92,7 +107,7 @@ dependencies {
     testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
 
     // - Functional testing
-    val cucumberVersion = "6.10.0"
+    val cucumberVersion: String by project.ext
     add("functionalTestImplementation", project(":shared"))
     add("functionalTestImplementation", "io.cucumber:cucumber-java8:${cucumberVersion}")
     add("functionalTestImplementation", "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
