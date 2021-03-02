@@ -11,6 +11,7 @@ import reactor.netty.http.client.HttpClient
 
 
 class OpenWeatherProvider(
+    private val baseUrl: String,
     private val apiKey: String
 ) : WeatherProvider {
 
@@ -30,7 +31,7 @@ class OpenWeatherProvider(
      */
     override fun byGeoPosition(geoPos: GeoPos): Mono<WeatherCondition> {
 
-        return buildWebClient("https://api.openweathermap.org/data/2.5")
+        return buildWebClient(baseUrl)
             .get()
             .uri { uriBuilder ->
                 uriBuilder

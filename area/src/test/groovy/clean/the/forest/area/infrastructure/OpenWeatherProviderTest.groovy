@@ -13,7 +13,8 @@ class OpenWeatherProviderTest extends Specification {
 
     def setup() {
         String apiKey = System.getenv('OPEN_WEATHER_MAP_API_KEY')
-        sut = new OpenWeatherProvider(apiKey)
+        String baseUrl = "https://api.openweathermap.org/data/2.5"
+        sut = new OpenWeatherProvider(baseUrl, apiKey)
     }
 
     def "weather of #name by geo position"() {
