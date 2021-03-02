@@ -18,7 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(controllers = [AreaController::class])
 @Import(value = [AreaController::class])
-@ContextConfiguration(classes = [WeatherConfig::class])
+@ContextConfiguration(classes = [AreaConfig::class])
 @Tag(TestClassification.INTEGRATION)
 class AreaControllerTest {
 

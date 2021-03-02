@@ -22,7 +22,7 @@ import reactor.core.publisher.Mono
 @ExtendWith(SpringExtension::class)
 @WebFluxTest(controllers = [WeatherController::class])
 @Import(value = [WeatherController::class])
-@ContextConfiguration(classes = [WeatherConfig::class])
+@ContextConfiguration(classes = [AreaConfig::class])
 @Tag(TestClassification.INTEGRATION)
 class WeatherControllerTest {
 

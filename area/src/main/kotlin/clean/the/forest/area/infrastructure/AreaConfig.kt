@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
 
 
 @Configuration
-class WeatherConfig {
+class AreaConfig {
 
     @Bean
     fun inMemoryAreaRepository(): InMemoryAreaRepository {
