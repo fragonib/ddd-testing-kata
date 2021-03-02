@@ -45,6 +45,7 @@ cucumber {
     )
     plugins = listOf(
         "pretty",
+        "clean.the.forest.shared.testing.functional.WireMockLifeCycle",
         "clean.the.forest.shared.testing.functional.AppContainerLifeCycle"
     )
 }
@@ -79,7 +80,6 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-api")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
-    testImplementation("junit:junit:4.12")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
