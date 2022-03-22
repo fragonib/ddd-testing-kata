@@ -32,6 +32,7 @@ open class AppContainerLifeCycle : Plugin, EventListener {
     }
 
     private val setup = EventHandler { event: TestRunStarted ->
+        println("********* ${ProcessHandle.current().pid()}")
         container.start()
     }
 

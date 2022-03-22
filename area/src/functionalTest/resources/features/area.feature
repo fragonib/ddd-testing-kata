@@ -16,7 +16,7 @@ Feature: Manage the set of known areas
     When add area "new area" with data:
       | areaName | lat  | lon  | countryCode |
       | new area | 40.0 | -2.0 | ES          |
-    Then known areas should contain "new area" and previous ones
+    Then known areas should contain "new area" and "known areas"
 
   Scenario: add an area with same name than previous known one
     When add area "new area" with data:

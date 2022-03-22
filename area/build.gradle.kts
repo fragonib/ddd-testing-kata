@@ -40,6 +40,9 @@ contracts {
 cucumber {
     suite("functionalTest")
     maxParallelForks = 1
+    featureRoots = listOf(
+        "features"
+    )
     stepDefinitionRoots = listOf(
         "clean.the.forest.area.functional"
     )
@@ -48,6 +51,7 @@ cucumber {
         "clean.the.forest.shared.testing.functional.WireMockLifeCycle",
         "clean.the.forest.shared.testing.functional.AppContainerLifeCycle"
     )
+    ignoreFailures = false
 }
 
 dependencies {
@@ -108,9 +112,9 @@ dependencies {
     // - Functional testing
     val cucumberVersion: String by project.ext
     add("functionalTestImplementation", project(":shared"))
-    add("functionalTestImplementation", "io.cucumber:cucumber-java8:${cucumberVersion}")
-    add("functionalTestImplementation", "io.cucumber:cucumber-junit-platform-engine:${cucumberVersion}")
-    add("functionalTestImplementation", "io.cucumber:cucumber-picocontainer:${cucumberVersion}")
+    add("functionalTestImplementation", "io.cucumber:cucumber-java8:$cucumberVersion")
+    add("functionalTestImplementation", "io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
+    add("functionalTestImplementation", "io.cucumber:cucumber-picocontainer:$cucumberVersion")
     add("functionalTestImplementation", "org.assertj:assertj-core:$assertjVersion")
     add("functionalTestImplementation", "com.jayway.jsonpath:json-path")
     add("functionalTestImplementation", "net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
@@ -175,6 +179,16 @@ tasks {
         }
     }
 
+}
+
+gradle.taskGraph.whenReady {
+    println ("Tasks")
+    allTasks.forEachIndexed { n, task ->
+        println("${n + 1} $task")
+        task.dependsOn.forEachIndexed { m, depObj ->
+            println("  ${ m + 1 } $depObj")
+        }
+    }
 }
 
 publishing {
