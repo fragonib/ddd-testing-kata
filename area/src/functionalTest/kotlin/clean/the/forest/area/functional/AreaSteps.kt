@@ -54,8 +54,6 @@ class AreaSteps(
                     .headers(e.getResponseHeaders())
                     .body(e.getResponseBodyAsString());
             }
-
-
         }
 
         Then("known areas should contain {string} and previous ones") { newAreaLocator: String ->

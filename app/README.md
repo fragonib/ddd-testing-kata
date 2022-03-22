@@ -84,11 +84,11 @@ Once up & running you can check and interact with the REST API using [this web U
 - Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration)
 - `SpringCloudContract` isn't detecting contracts written in `Groovy` or `Kotlin`, only in YAML. Until fixing that, contracts are written with YAML limitations which is less expressive.
 
-## What could be improved
+## What could be improved?
 
 - Docker file to containerize app
 - GITLAB CI (providing _secrets_ in a secured way)
 - Use Factories for test data fixtures
 - Embrace variability (ie.: _Time provider_, Variable Weather conditions)
-- Use `TestContainers` (to up & run application) and `WireMock` (to double third parties) whe running _Functional_ tests
-- Review the possibility of [mixing Contract and API definition](https://springframework.guru/defining-spring-cloud-contracts-in-open-api/) both in a single source of truth
+- Use `TestContainers` (to up & run application) and `WireMock` (to double third parties) when running _Functional_ tests
+- Review the possibility of [mixing both Contract and API definition](https://springframework.guru/defining-spring-cloud-contracts-in-open-api/) in a single source of truth
