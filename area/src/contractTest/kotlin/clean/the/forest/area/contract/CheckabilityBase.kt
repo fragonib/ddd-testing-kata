@@ -46,7 +46,7 @@ abstract class CheckabilityBase {
     private fun stubResponseOnGivenArea(areaName: String, weatherCondition: WeatherCondition) {
         `when`(reportCheckabilityOfParticularAreaUseCase.report(areaName))
             .thenReturn(Mono.just(WeatherReport(
-                area = Area(areaName, 43.07, -2.75, "ES"),
+                area = Area(areaName, 39.67, -0.43, "ES"),
                 weatherCondition = weatherCondition,
                 date = LocalDateTime.now()
             )))

@@ -11,7 +11,7 @@ import spock.lang.Specification
 @Tag(TestClassification.INTEGRATION)
 class InMemoryAreaRepositoryTest extends Specification {
 
-    def 'all known areas contains "Ipiñaburu, Ibarra, Zegama"'() {
+    def 'all known areas contains "Calderona, Mariola, Penyagolosa"'() {
 
         given:
         AreaRepository sut = new InMemoryAreaRepository()
@@ -22,9 +22,9 @@ class InMemoryAreaRepositoryTest extends Specification {
 
         then:
         knownAreas.size() == 3
-        knownAreas.name == ["Ipiñaburu", "Ibarra", "Zegama"]
-        knownAreas.position.lat == [43.07d, 43.05d, 42.97d]
-        knownAreas.position.lon == [-2.75d, -2.57d, -2.29d]
+        knownAreas.name == ["Calderona", "Mariola", "Penyagolosa"]
+        knownAreas.position.lat == [39.67d, 38.72d, 40.23d]
+        knownAreas.position.lon == [-0.43d, -0.53d, -0.29d]
         knownAreas.country.code.every { it == "ES" }
 
     }
@@ -42,10 +42,10 @@ class InMemoryAreaRepositoryTest extends Specification {
         foundArea.position == new GeoPos(lat, lon)
 
         where:
-        areaName    | lat   | lon   | countryCode
-        "ipiñaburu" | 43.07 | -2.75 | "ES"
-        "ibarra"    | 43.05 | -2.57 | "ES"
-        "zegama"    | 42.97 | -2.29 | "ES"
+        areaName      | lat   | lon   | countryCode
+        "Calderona"   | 39.67 | -0.43 | "ES"
+        "Mariola"     | 38.72 | -0.53 | "ES"
+        "Penyagolosa" | 40.23 | -0.29 | "ES"
     }
 
     def 'finding area "#areaName" is NOT known'() {
@@ -72,7 +72,7 @@ class InMemoryAreaRepositoryTest extends Specification {
         AreaRepository sut = new InMemoryAreaRepository()
 
         when:
-        def newArea = new Area("newArea", 40, -2, "ES")
+        def newArea = new Area("newArea", 40, 0, "ES")
         sut.addArea(newArea).block()
 
         then:
@@ -87,12 +87,12 @@ class InMemoryAreaRepositoryTest extends Specification {
         AreaRepository sut = new InMemoryAreaRepository()
 
         when:
-        def areaName = new Area("Ipiñaburu", 40, -2, "ES")
+        def areaName = new Area("Calderona", 40, 0, "ES")
         sut.addArea(areaName).block()
 
         then:
         ConflictWithExistingArea ex = thrown()
-        ex.message == "There is yet known area called [Ipiñaburu]"
+        ex.message == "There is yet known area called [Calderona]"
 
     }
 

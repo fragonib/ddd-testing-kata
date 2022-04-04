@@ -11,8 +11,8 @@ response:
     - area:
         name: checkable_area
         position:
-          lat: 43.07
-          lon: -2.75
+          lat: 39.67
+          lon: -0.43
         country:
           code: ES
       checkable: true

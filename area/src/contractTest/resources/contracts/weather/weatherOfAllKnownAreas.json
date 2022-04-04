@@ -6,8 +6,8 @@
       },
       "name": "One area",
       "position": {
-        "lat": 43.05,
-        "lon": -2.57
+        "lat": 38.72,
+        "lon": -0.53
       }
     },
     "weatherCondition": "Clouds",
@@ -20,8 +20,8 @@
       },
       "name": "Other area",
       "position": {
-        "lat": 42.97,
-        "lon": -2.29
+        "lat": 40.23,
+        "lon": -0.29
       }
     },
     "weatherCondition": "Clear",
