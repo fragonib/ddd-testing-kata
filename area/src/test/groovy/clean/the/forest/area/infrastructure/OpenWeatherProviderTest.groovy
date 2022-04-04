@@ -26,10 +26,10 @@ class OpenWeatherProviderTest extends Specification {
         weatherCondition == expectedWeather
 
         where:
-        name        | lat    | lon    || expectedWeather
-        "ipiñaburu" | 43.07d | -2.75d || "Clouds"
-        "ibarra"    | 43.05d | -2.57d || "Clouds"
-        "zegama"    | 42.97d | -2.29d || "Clouds"
+        name          | lat    | lon    || expectedWeather
+        "Calderona"   | 39.67d | -0.43d || "Clouds"
+        "Mariola"     | 38.72d | -0.53d || "Clouds"
+        "Penyagolosa" | 40.23d | -0.29d || "Clouds"
     }
 
 }

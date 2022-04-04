@@ -48,18 +48,17 @@ class AreaControllerTest {
 
         assertThatJson(responseBody)
             .whenIgnoringPaths("[*].date")
-            .isEqualTo(
-                """
-                    {
-                        "country": {
-                            "code": "ES"
-                        },
-                        "name": "new area",
-                        "position": {
-                            "lat": 40.0,
-                            "lon": -2.0
-                        }
+            .isEqualTo("""
+                {
+                    "country": {
+                        "code": "ES"
+                    },
+                    "name": "new area",
+                    "position": {
+                        "lat": 40.0,
+                        "lon": -2.0
                     }
+                }
                 """.trimIndent()
             )
 
@@ -72,7 +71,7 @@ class AreaControllerTest {
         webTestClient
             .post().uri("/area")
             .bodyValue(AreaDTO(
-                name = "Ipiñaburu",
+                name = "Calderona",
                 lat = 40.0,
                 lon = -2.0,
                 countryCode = "ES"

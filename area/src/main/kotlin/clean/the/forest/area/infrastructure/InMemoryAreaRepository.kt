@@ -10,18 +10,18 @@ class InMemoryAreaRepository : AreaRepository {
     private var knownAreas: Map<AreaName, Area> =
         listOf(
             Area(
-                name = "Ipiñaburu",
-                position = GeoPos(lat = 43.07, lon = -2.75),
+                name = "Calderona",
+                position = GeoPos(lat = 39.67, lon = -0.43),
                 country = Country(code = "ES")
             ),
             Area(
-                name = "Ibarra",
-                position = GeoPos(lat = 43.05, lon = -2.57),
+                name = "Mariola",
+                position = GeoPos(lat = 38.72, lon = -0.53),
                 country = Country(code = "ES")
             ),
             Area(
-                name = "Zegama",
-                position = GeoPos(lat = 42.97, lon = -2.29),
+                name = "Penyagolosa",
+                position = GeoPos(lat = 40.23, lon = -0.29),
                 country = Country(code = "ES")
             )
         ).associateBy { areaKey(it) }

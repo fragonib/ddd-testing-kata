@@ -41,12 +41,12 @@ abstract class WeatherBase {
         Mockito.`when`(reportAllKnownAreasUseCase.report())
             .thenReturn(Flux.just(
                 WeatherReport(
-                    area = Area("One area", 43.05, -2.57, "ES"),
+                    area = Area("One area", 38.72, -0.53, "ES"),
                     weatherCondition = "Clouds",
                     date = LocalDateTime.now()
                 ),
                 WeatherReport(
-                    area = Area("Other area", 42.97, -2.29, "ES"),
+                    area = Area("Other area", 40.23, -0.29, "ES"),
                     weatherCondition = "Clear",
                     date = LocalDateTime.now()
                 )
