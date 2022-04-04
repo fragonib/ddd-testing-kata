@@ -14,7 +14,7 @@ open class AppContainerLifeCycle : Plugin, EventListener {
 
     companion object {
 
-        const val APP_TEST_PORT = 8080
+        private const val APP_TEST_PORT = 8080
         private val container: KGenericContainer =
             KGenericContainer(DockerImageName.parse("clean-the-forest/clean-the-forest-app:latest"))
                 .withEnv(System.getenv())
