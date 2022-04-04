@@ -21,15 +21,15 @@ class ReportWeatherOfAllKnownAreasUseCaseTest extends Specification {
         given: "External dependencies stubbed"
         AreaRepository areaRepository = Stub()
         areaRepository.allKnown() >> Flux.just(
-                new Area("Ipiñaburu", 43.07, -2.75, "ES"),
-                new Area("Ibarra", 43.05, -2.57, "ES"),
-                new Area("Zegama", 42.97, -2.29, "ES")
+                new Area("Calderona", 39.67, -0.43, "ES"),
+                new Area("Mariola", 38.72, -0.53, "ES"),
+                new Area("Penyagolosa", 40.23, -0.29, "ES")
         )
 
         WeatherProvider weatherProvider = Stub()
-        weatherProvider.byGeoPosition(new GeoPos(43.07, -2.75)) >> Mono.just("Clouds")
-        weatherProvider.byGeoPosition(new GeoPos(43.05, -2.57)) >> Mono.just("Clear")
-        weatherProvider.byGeoPosition(new GeoPos(42.97, -2.29)) >> Mono.just("Drizzle")
+        weatherProvider.byGeoPosition(new GeoPos(39.67, -0.43)) >> Mono.just("Clouds")
+        weatherProvider.byGeoPosition(new GeoPos(38.72, -0.53)) >> Mono.just("Clear")
+        weatherProvider.byGeoPosition(new GeoPos(40.23, -0.29)) >> Mono.just("Drizzle")
 
         when: "request weather of all known areas"
         def sut = new ReportWeatherOfAllKnownAreasUseCase(areaRepository, weatherProvider)
@@ -41,10 +41,10 @@ class ReportWeatherOfAllKnownAreasUseCaseTest extends Specification {
         particularAreaReport.weatherCondition == expectedWeather
 
         where:
-        areaName    || expectedLat | expectedLon | expectedCountry | expectedWeather
-        "Ipiñaburu" || 43.07       | -2.75       | "ES"            | "Clouds"
-        "Ibarra"    || 43.05       | -2.57       | "ES"            | "Clear"
-        "Zegama"    || 42.97       | -2.29       | "ES"            | "Drizzle"
+        areaName      || expectedLat | expectedLon | expectedCountry | expectedWeather
+        "Calderona"   || 39.67       | -0.43       | "ES"            | "Clouds"
+        "Mariola"     || 38.72       | -0.53       | "ES"            | "Clear"
+        "Penyagolosa" || 40.23       | -0.29       | "ES"            | "Drizzle"
 
     }
 

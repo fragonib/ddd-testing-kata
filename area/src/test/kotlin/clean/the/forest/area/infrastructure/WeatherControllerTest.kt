@@ -60,10 +60,10 @@ class WeatherControllerTest {
                             "country": {
                                 "code": "ES"
                             },
-                            "name": "Ibarra",
+                            "name": "Mariola",
                             "position": {
-                                "lat": 43.05,
-                                "lon": -2.57
+                                "lat": 38.72,
+                                "lon": -0.53
                             }
                         },
                         "weatherCondition": "Clouds",
@@ -74,10 +74,10 @@ class WeatherControllerTest {
                             "country": {
                                 "code": "ES"
                             },
-                            "name": "Zegama",
+                            "name": "Penyagolosa",
                             "position": {
-                                "lat": 42.97,
-                                "lon": -2.29
+                                "lat": 40.23,
+                                "lon": -0.29
                             }
                         },
                         "weatherCondition": "Clouds",
@@ -88,10 +88,10 @@ class WeatherControllerTest {
                             "country": {
                                 "code": "ES"
                             },
-                            "name": "Ipiñaburu",
+                            "name": "Calderona",
                             "position": {
-                                "lat": 43.07,
-                                "lon": -2.75
+                                "lat": 39.67,
+                                "lon": -0.43
                             }
                         },
                         "weatherCondition": "Clouds",
@@ -117,7 +117,7 @@ class WeatherControllerTest {
             .uri { uriBuilder ->
                 uriBuilder
                     .path("/weather")
-                    .queryParam("location", "ipiñaburu")
+                    .queryParam("location", "Calderona")
                     .build()
             }
             .exchange()
@@ -138,10 +138,10 @@ class WeatherControllerTest {
                             "country": {
                                 "code": "ES"
                             },
-                            "name": "Ipiñaburu",
+                            "name": "Calderona",
                             "position": {
-                                "lat": 43.07,
-                                "lon": -2.75
+                                "lat": 39.67,
+                                "lon": -0.43
                             }
                         },
                         "weatherCondition": "Clouds",

@@ -35,10 +35,10 @@ class ReportCheckabilityOfParticularAreaUseCaseTest extends Specification {
         weatherReport.weatherCondition == expectedWeather
 
         where:
-        areaName    || expectedLat | expectedLon | expectedCountry | expectedWeather | expectedCheckability
-        "Ipiñaburu" || 43.07       | -2.75       | "ES"            | "Clouds"        | false
-        "Ibarra"    || 43.05       | -2.57       | "ES"            | "Clear"         | true
-        "Zegama"    || 42.97       | -2.29       | "ES"            | "Drizzle"       | false
+        areaName      || expectedLat | expectedLon | expectedCountry | expectedWeather | expectedCheckability
+        "Calderona"   || 39.67       | -0.43       | "ES"            | "Clouds"        | false
+        "Mariola"     || 38.72       | -0.53       | "ES"            | "Clear"         | true
+        "Penyagolosa" || 40.23       | -0.29       | "ES"            | "Drizzle"       | false
 
     }
 

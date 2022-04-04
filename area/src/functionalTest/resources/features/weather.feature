@@ -7,15 +7,15 @@ Feature: Know the weather status of the location before sending the drone with t
 
   Background:
     Given following "known areas":
-      | areaName  | lat   | lon   | countryCode |
-      | Ipiñaburu | 43.07 | -2.75 | ES          |
-      | Ibarra    | 43.05 | -2.57 | ES          |
-      | Zegama    | 42.97 | -2.29 | ES          |
+      | areaName    | lat   | lon   | countryCode |
+      | Calderona   | 39.67 | -0.43 | ES          |
+      | Mariola     | 38.72 | -0.53 | ES          |
+      | Penyagolosa | 40.23 | -0.29 | ES          |
     And following "weather conditions":
-      | areaName  | weatherCondition |
-      | Ipiñaburu | Clouds           |
-      | Ibarra    | Clear            |
-      | Zegama    | Drizzle          |
+      | areaName    | weatherCondition |
+      | Calderona   | Clouds           |
+      | Mariola     | Clear            |
+      | Penyagolosa | Drizzle          |
 
   Scenario: report weather of all known areas
     When request report for all known areas
@@ -28,7 +28,7 @@ Feature: Know the weather status of the location before sending the drone with t
     And reported checkable should be "<checkable>"
 
     Examples:
-      | areaName  | weatherCondition | checkable |
-      | Ipiñaburu | Clouds           | false     |
-      | Ibarra    | Clear            | true      |
-      | Zegama    | Drizzle          | false     |
+      | areaName    | weatherCondition | checkable |
+      | Calderona   | Clouds           | false     |
+      | Mariola     | Clear            | true      |
+      | Penyagolosa | Drizzle          | false     |
