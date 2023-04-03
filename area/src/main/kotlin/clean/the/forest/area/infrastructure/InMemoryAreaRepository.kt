@@ -51,6 +51,6 @@ class InMemoryAreaRepository : AreaRepository {
 
     private fun areaKey(area: Area): String = areaKey(area.name)
 
-    private fun areaKey(name: String): String = name.toLowerCase()
+    private fun areaKey(name: String): String = name.lowercase()
 
 }

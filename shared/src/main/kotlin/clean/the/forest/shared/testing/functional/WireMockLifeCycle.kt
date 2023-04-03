@@ -25,11 +25,11 @@ open class WireMockLifeCycle : Plugin, EventListener {
         publisher.registerHandlerFor(TestRunFinished::class.java, teardown)
     }
 
-    private val setup = EventHandler { event: TestRunStarted ->
+    private val setup = EventHandler { _: TestRunStarted ->
         wireMockServer.start()
     }
 
-    private val teardown = EventHandler { event: TestRunFinished ->
+    private val teardown = EventHandler { _: TestRunFinished ->
         wireMockServer.stop()
     }
 
