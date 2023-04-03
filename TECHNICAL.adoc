@@ -1,0 +1,102 @@
+= Technical aspects
+
+== Design decisions
+
+=== Technologies used
+
+* Gradle (for building project)
+* Kotlin (for production code)
+* Groovy (for testing with Spock)
+* Cucumber (for functional test)
+* Spring Cloud Contract (for contract testing)
+* Hexagonal architecture
+* Reactive modules
+
+=== Focused on
+
+* Design patterns
+* SOLID
+* Testing techniques
+
+=== Requirements
+
+. Has at least JVM 11 to build and run the project
+
+. You should set up you own OpenWeather APIKEY as an environment variable:
+
+[source,shell script]
+----
+export OPEN_WEATHER_MAP_API_KEY=yourapikey
+----
+
+NOTE: You can create you onw key https://home.openweathermap.org/api_keys[here]
+
+== Running
+
+To build the entire app with:
+
+[source,shell]
+----
+./gradlew build
+----
+
+To build the entire app but without running any tests:
+
+[source,shell]
+----
+./gradlew clean build -x test -x contractTest
+----
+
+To publish artifacts (including app fat jar and server stubs):
+
+[source,shell]
+----
+./gradlew build publishToMavenLocal
+----
+
+To run integration tests (right now they depend on third parties):
+
+[source,shell]
+----
+./gradlew check -DintegrationTests
+----
+
+To run contract tests:
+
+[source,shell]
+----
+./gradlew contractTest
+----
+
+To run functional tests (cucumber base):
+
+[source,shell]
+----
+./gradlew functionalTest
+----
+
+NOTE: Requires application running on localhost
+
+To run the entire app (in localhost):
+
+[source,shell]
+----
+./gradlew bootRun
+----
+
+Once up &amp; running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[this web UI]:
+
+=== KNOWN errors
+
+* Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration)
+* `SpringCloudContract` isn't detecting contracts written in `Groovy` or `Kotlin`, only in YAML. Until fixing that, contracts are written with YAML limitations which is less expressive.
+
+=== What could be improved?
+
+* Docker file to containerize app
+* GITHUB base CI pipeline
+* Providing _secrets_ in a secured way
+* Use Factories for test data fixtures
+* Embrace variability (ie.: _Time provider_, Variable Weather conditions)
+* Use `TestContainers` (to up &amp; run application) and `WireMock` (to double third parties) when running _Functional_ tests
+* Review the possibility of https://springframework.guru/defining-spring-cloud-contracts-in-open-api/[mixing both Contract and API definition] as single source of truth
