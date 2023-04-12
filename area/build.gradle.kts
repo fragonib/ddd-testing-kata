@@ -4,24 +4,23 @@ import org.springframework.cloud.contract.verifier.config.TestMode.EXPLICIT
 
 plugins {
     groovy
-    kotlin("jvm")
-    kotlin("plugin.spring")     // SpringBoot visibility over Kotlin classes
-    id("org.springframework.boot")  // SpringBoot task to manage project
-    id("io.spring.dependency-management") // Dependency management (from SpringBoot crew)
+    kotlin("plugin.spring")          // SpringBoot visibility (open) over Kotlin classes
+    id("org.springframework.boot")   // SpringBoot task to manage project
     id("org.springframework.cloud.contract") // Contract verifier tasks
+    id("maven-publish")                      // To publish contract artifacts
     id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
-    id("maven-publish")     // To publish contract artifacts
 }
 
-group = "clean.the.forest"
-version = "0.0.1-SNAPSHOT"
-
 ext {
+    set("kotlin.version", "1.8.20")
+    set("groovyVersion", "4.0.5")
+    set("spockVersion", "2.3-groovy-4.0")
+    set("byteBuddyVersion", "1.12.17")
+    set("objenesisVersion", "3.3")
+    set("cucumberVersion", "6.10.0")
+    set("springCloudVersion", "2020.0.3")
     set("assertjVersion", "3.11.1")
     set("jsonUnitVersion", "2.24.0")
-    set("groovyVersion", "3.0.7")
-    set("spockVersion", "2.0-M4-groovy-3.0")
-    set("cucumberVersion", "6.10.0")
 }
 
 dependencyManagement {
@@ -61,14 +60,6 @@ dependencies {
     // - Modules
     implementation(project(":shared"))
 
-    // - Kotlin
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-
     // - Spring
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -93,10 +84,16 @@ dependencies {
 
     // - Spock
     val groovyVersion: String by project.ext
+    implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
+    implementation("org.apache.groovy:groovy")
+
     val spockVersion: String by project.ext
-    testImplementation("org.codehaus.groovy:groovy:$groovyVersion")
+    val byteBuddyVersion: String by project.ext
+    val objenesisVersion: String by project.ext
     testImplementation(platform("org.spockframework:spock-bom:$spockVersion"))
     testImplementation("org.spockframework:spock-core")
+    testRuntimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
+    testRuntimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
 
     // - SpringBoot
     testImplementation("org.springframework.boot:spring-boot-starter-test") {
@@ -138,7 +135,7 @@ tasks {
 
     test {
         useJUnitPlatform {
-            excludeTags ("integration")
+            excludeTags("integration")
         }
     }
 
@@ -159,11 +156,11 @@ tasks {
             if (desc.parent == null) {
                 if (result.testCount == 0L) {
                     throw IllegalStateException("No tests were found. Failing the build")
-                }
-                else {
+                } else {
                     println("Results: (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)")
                 }
-            } else { /* Nothing to do here */ }
+            } else { /* Nothing to do here */
+            }
         }))
     }
 
@@ -179,16 +176,6 @@ tasks {
         }
     }
 
-}
-
-gradle.taskGraph.whenReady {
-    println ("Tasks")
-    allTasks.forEachIndexed { n, task ->
-        println("${n + 1} $task")
-        task.dependsOn.forEachIndexed { m, depObj ->
-            println("  ${ m + 1 } $depObj")
-        }
-    }
 }
 
 publishing {

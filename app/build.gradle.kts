@@ -1,12 +1,11 @@
 plugins {
-    kotlin("jvm")
     kotlin("plugin.spring")
     id("org.springframework.boot")
-    id("io.spring.dependency-management")
 }
 
-group = "clean.the.forest"
-version = "0.0.1-SNAPSHOT"
+ext {
+    set("kotlin.version", "1.8.20")
+}
 
 dependencies {
 
@@ -14,13 +13,6 @@ dependencies {
 
     // - Modules
     runtimeOnly(project(":area"))
-
-    // - Kotlin
-    implementation(platform("org.jetbrains.kotlin:kotlin-bom"))
-    implementation("org.jetbrains.kotlin:kotlin-stdlib")
-    implementation("org.jetbrains.kotlin:kotlin-reflect")
-    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
 
     // - Spring
     val openApiVersion = "1.5.4"
@@ -40,8 +32,9 @@ tasks {
         enabled = true
     }
 
-    bootBuildImage{
+    bootBuildImage {
         imageName = "clean-the-forest/" + rootProject.name + '-' + project.name
     }
 
 }
+
