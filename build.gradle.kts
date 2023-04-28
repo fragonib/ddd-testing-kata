@@ -64,6 +64,16 @@ subprojects {
         description = "Prints all dependencies of the project."
     }
 
+}
+
+configurations {
+    all {
+        // Globally exclude JUnit4 from classpath in favor of JUnit5
+        exclude(group = "junit", module = "junit")
+        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
+    }
+}
+
 //    tasks.register<TaskReportTask>("taskGraph") {
 //        println("Tasks")
 //        gradle.taskGraph.whenReady { graph: TaskExecutionGraph  ->
@@ -85,6 +95,4 @@ subprojects {
 //        }
 //    }
 //}
-
-}
 

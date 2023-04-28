@@ -55,51 +55,45 @@ cucumber {
 
 dependencies {
 
-    // = Production
+    // # Production
 
-    // - Modules
+    // ## Modules
     implementation(project(":shared"))
 
-    // - Spring
+    // ## Spring
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
 
-    // = Testing
+    // # Testing
 
-    // - JUnit 5
+    // ## JUnit 5
     val assertjVersion: String by project.ext
     val jsonUnitVersion: String by project.ext
-    testImplementation("org.junit.jupiter:junit-jupiter-api")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine")
     testImplementation("org.junit.jupiter:junit-jupiter-params")
     testImplementation("org.assertj:assertj-core:$assertjVersion")
     testImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
-    // - Kotlin
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+    // # Kotlin
+    testImplementation(kotlin("test"))
+    testImplementation(kotlin("test-junit5"))
 
-    // - Spock
+    // # Spock
     val groovyVersion: String by project.ext
-    implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
-    implementation("org.apache.groovy:groovy")
-
     val spockVersion: String by project.ext
     val byteBuddyVersion: String by project.ext
     val objenesisVersion: String by project.ext
+    testImplementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
+    testImplementation("org.apache.groovy:groovy")
     testImplementation(platform("org.spockframework:spock-bom:$spockVersion"))
-    testImplementation("org.spockframework:spock-core")
+    testImplementation("org.spockframework:spock-core:$spockVersion")
     testRuntimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
     testRuntimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
 
-    // - SpringBoot
-    testImplementation("org.springframework.boot:spring-boot-starter-test") {
-        exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
-        exclude(group = "junit", module = "junit")
-    }
+    // # SpringBoot
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
 
     // - Contract testing
@@ -108,13 +102,14 @@ dependencies {
 
     // - Functional testing
     val cucumberVersion: String by project.ext
-    add("functionalTestImplementation", project(":shared"))
-    add("functionalTestImplementation", "io.cucumber:cucumber-java8:$cucumberVersion")
-    add("functionalTestImplementation", "io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
-    add("functionalTestImplementation", "io.cucumber:cucumber-picocontainer:$cucumberVersion")
-    add("functionalTestImplementation", "org.assertj:assertj-core:$assertjVersion")
-    add("functionalTestImplementation", "com.jayway.jsonpath:json-path")
-    add("functionalTestImplementation", "net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
+    val functionalTestImplementation by configurations
+    functionalTestImplementation(project(":shared"))
+    functionalTestImplementation("io.cucumber:cucumber-java8:$cucumberVersion")
+    functionalTestImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
+    functionalTestImplementation("io.cucumber:cucumber-picocontainer:$cucumberVersion")
+    functionalTestImplementation("org.assertj:assertj-core:$assertjVersion")
+    functionalTestImplementation("com.jayway.jsonpath:json-path")
+    functionalTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
 
 }
 
