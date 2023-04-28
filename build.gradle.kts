@@ -7,7 +7,6 @@ plugins {
     kotlin("plugin.spring") version "1.7.22" apply false
     id("org.springframework.boot") version "3.0.5" apply false
     id("io.spring.dependency-management") version "1.1.0"
-    id("org.springframework.cloud.contract") version "4.0.2" apply false
     id("com.patdouble.cucumber-jvm") version "0.20" apply false
 }
 

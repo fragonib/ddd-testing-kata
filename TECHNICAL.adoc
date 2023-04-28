@@ -8,7 +8,7 @@
 * Kotlin (for production code)
 * Groovy (for testing with Spock)
 * Cucumber (for functional test)
-* Spring Cloud Contract (for contract testing)
+* PACT (for contract testing)
 * Hexagonal architecture
 * Reactive modules
 
@@ -89,7 +89,6 @@ Once up &amp; running you can check and interact with the REST API using http://
 === KNOWN errors
 
 * Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration)
-* `SpringCloudContract` isn't detecting contracts written in `Groovy` or `Kotlin`, only in YAML. Until fixing that, contracts are written with YAML limitations which is less expressive.
 
 === What could be improved?
 

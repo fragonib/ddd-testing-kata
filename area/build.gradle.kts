@@ -1,13 +1,9 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
-import org.springframework.cloud.contract.verifier.config.TestFramework.JUNIT5
-import org.springframework.cloud.contract.verifier.config.TestMode.EXPLICIT
 
 plugins {
     groovy
     kotlin("plugin.spring")          // SpringBoot visibility (open) over Kotlin classes
     id("org.springframework.boot")   // SpringBoot task to manage project
-    id("org.springframework.cloud.contract") // Contract verifier tasks
-    id("maven-publish")                      // To publish contract artifacts
     id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
 }
 
@@ -28,12 +24,6 @@ dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
-}
-
-contracts {
-    testFramework.set(JUNIT5)
-    testMode.set(EXPLICIT)
-    packageWithBaseClasses.set("clean.the.forest.area.contract")
 }
 
 cucumber {
@@ -96,10 +86,6 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("io.projectreactor:reactor-test")
 
-    // - Contract testing
-    testImplementation("org.springframework.cloud:spring-cloud-starter-contract-verifier")
-    testImplementation("org.springframework.cloud:spring-cloud-contract-spec-kotlin")
-
     // - Functional testing
     val cucumberVersion: String by project.ext
     val functionalTestImplementation by configurations
@@ -141,24 +127,6 @@ tasks {
         shouldRunAfter("test")
     }
 
-    contractTest {
-        useJUnitPlatform()
-        systemProperty("spring.profiles.active", "gradle")
-        testLogging {
-            exceptionFormat = TestExceptionFormat.FULL
-        }
-        afterSuite(KotlinClosure2({ desc: TestDescriptor, result: TestResult ->
-            if (desc.parent == null) {
-                if (result.testCount == 0L) {
-                    throw IllegalStateException("No tests were found. Failing the build")
-                } else {
-                    println("Results: (${result.testCount} tests, ${result.successfulTestCount} successes, ${result.failedTestCount} failures, ${result.skippedTestCount} skipped)")
-                }
-            } else { /* Nothing to do here */
-            }
-        }))
-    }
-
     check {
         if (project.hasProperty("integrationTests")) {
             dependsOn("integrationTest")
@@ -171,24 +139,4 @@ tasks {
         }
     }
 
-}
-
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-
-            artifact(tasks.named("bootJar"))
-            artifact(tasks.named("verifierStubsJar"))
-
-            // https://github.com/spring-gradle-plugins/dependency-management-plugin/issues/273
-            versionMapping {
-                usage("java-api") {
-                    fromResolutionOf("runtimeClasspath")
-                }
-                usage("java-runtime") {
-                    fromResolutionResult()
-                }
-            }
-        }
-    }
 }
