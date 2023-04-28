@@ -2,7 +2,7 @@
 
 You're working in organization that fights fires in forest areas in a preventive way.
 
-They manage several forest areas and want to use technology to improve their effectiveness. 
+They manage several forest areas and want to use technology to improve their effectiveness.
 
 The goal is to design some services that help to improve preparations before preventive works in the area itself.
 

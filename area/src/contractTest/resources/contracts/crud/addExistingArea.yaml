@@ -17,4 +17,3 @@ request:
     countryCode: ES
 response:
   status: 409
-

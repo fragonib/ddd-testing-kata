@@ -30,4 +30,3 @@ response:
     headers:
       - key: Content-Type
         regex: "application/json.*"
-
