@@ -8,6 +8,7 @@ plugins {
     id("org.springframework.boot") version "3.0.5" apply false
     id("io.spring.dependency-management") version "1.1.0"
     id("com.patdouble.cucumber-jvm") version "0.20" apply false
+    id("au.com.dius.pact") version "4.3.10" apply false
 }
 
 subprojects {

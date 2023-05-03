@@ -3,13 +3,10 @@ package clean.the.forest.area.infrastructure
 import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.Country
 import clean.the.forest.area.model.GeoPos
-import clean.the.forest.shared.testing.TestClassification
-import org.junit.jupiter.api.Tag
 import spock.lang.Specification
 
 
-@Tag(TestClassification.INTEGRATION)
-class InMemoryAreaRepositoryTest extends Specification {
+class InMemoryAreaRepositoryIT extends Specification {
 
     def 'all known areas contains "Calderona, Mariola, Penyagolosa"'() {
 
