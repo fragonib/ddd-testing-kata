@@ -64,6 +64,20 @@ subprojects {
         description = "Prints all dependencies of the project."
     }
 
+    val printTaskGraph = { graph: TaskExecutionGraph ->
+        graph.allTasks.forEachIndexed { n, task ->
+            println("${n + 1} $task")
+            task.dependsOn.forEachIndexed { m, depObj ->
+                println("  ${m + 1} $depObj")
+            }
+        }
+    }
+
+    tasks.register<TaskReportTask>("taskGraph") {
+        println("Tasks")
+        gradle.taskGraph.whenReady(printTaskGraph)
+    }
+
 }
 
 configurations {
@@ -73,25 +87,3 @@ configurations {
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
 }
-
-//    tasks.register<TaskReportTask>("taskGraph") {
-//        println("Tasks")
-//        gradle.taskGraph.whenReady { graph: TaskExecutionGraph  ->
-//            graph.forEachIndexed { n, task ->
-//                println("${n + 1} $task")
-//                task.dependsOn.forEachIndexed { m, depObj ->
-//                    println("  ${m + 1} $depObj")
-//                }
-//            }
-//        }
-//    }
-
-//gradle.taskGraph.whenReady {
-//    println ("Tasks")
-//    allTasks.forEachIndexed { n, task ->
-//        println("${n + 1} $task")
-//        task.dependsOn.forEachIndexed { m, depObj ->
-//            println("  ${ m + 1 } $depObj")
-//        }
-//    }
-//}
