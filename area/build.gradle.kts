@@ -1,4 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 plugins {
     groovy
@@ -143,7 +144,7 @@ testing {
                             isFailOnNoMatchingTests = false
                         }
                         testLogging {
-                            exceptionFormat = TestExceptionFormat.FULL
+                            exceptionFormat = FULL
                             showExceptions = true
                             showStandardStreams = true
                             events(PASSED, FAILED, SKIPPED, STANDARD_OUT, STANDARD_ERROR)
