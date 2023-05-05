@@ -19,6 +19,6 @@ pluginManagement {
 
 rootProject.name = "clean-the-forest"
 
-include("shared")
-include("area")
 include("app")
+include("area")
+include("shared-testing")

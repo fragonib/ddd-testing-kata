@@ -31,7 +31,7 @@ dependencyManagement {
 dependencies {
 
     // Modules
-    implementation(project(":shared"))
+    implementation(project(":shared-testing"))
 
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -51,7 +51,7 @@ testing {
             suite.dependencies {
 
                 implementation(project())
-                implementation(project(":shared"))
+                implementation(project(":shared-testing"))
 
                 // JUnit 5
                 val assertjVersion: String by project.ext
@@ -131,7 +131,7 @@ testing {
 
             dependencies {
                 val pactVersion: String by project.ext
-                implementation(project(":shared"))
+                implementation(project(":shared-testing"))
                 implementation("au.com.dius.pact.consumer:junit5:$pactVersion")
                 implementation("au.com.dius.pact.provider:spring:$pactVersion")
             }
@@ -179,7 +179,7 @@ cucumber {
         val assertjVersion: String by project.ext
         val jsonUnitVersion: String by project.ext
         val functionalTestImplementation by configurations
-        functionalTestImplementation(project(":shared"))
+        functionalTestImplementation(project(":shared-testing"))
         functionalTestImplementation("io.cucumber:cucumber-java8:$cucumberVersion")
         functionalTestImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
         functionalTestImplementation("io.cucumber:cucumber-picocontainer:$cucumberVersion")
