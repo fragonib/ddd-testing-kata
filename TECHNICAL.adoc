@@ -86,9 +86,19 @@ To run the entire app (in localhost):
 
 Once up &amp; running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[this web UI]:
 
+
+=== Insights
+
+To print what will be the task graph planned by gradle when targeting a specific task:
+
+[source,shell]
+----
+./gradlew tiTree [target task]
+----
+
 === KNOWN errors
 
-* Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration)
+* Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration). As a workaorunf
 
 === What could be improved?
 

@@ -9,6 +9,7 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     id("com.patdouble.cucumber-jvm") version "0.20" apply false
     id("au.com.dius.pact") version "4.3.10" apply false
+    id("org.barfuin.gradle.taskinfo") version "2.1.0"
 }
 
 subprojects {
@@ -59,25 +60,6 @@ subprojects {
         }
     }
 
-    tasks.register<DependencyReportTask>("allDeps") {
-        group = "help"
-        description = "Prints all dependencies of the project."
-    }
-
-    val printTaskGraph = { graph: TaskExecutionGraph ->
-        graph.allTasks.forEachIndexed { n, task ->
-            println("${n + 1} $task")
-            task.dependsOn.forEachIndexed { m, depObj ->
-                println("  ${m + 1} $depObj")
-            }
-        }
-    }
-
-    tasks.register<TaskReportTask>("taskGraph") {
-        println("Tasks")
-        gradle.taskGraph.whenReady(printTaskGraph)
-    }
-
 }
 
 configurations {
@@ -86,4 +68,12 @@ configurations {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
+}
+
+// Task info plugin configuration
+taskinfo {
+    isClipped = false
+    isColor = true
+    isShowTaskTypes = true
+    isInternal = false
 }

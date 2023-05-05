@@ -7,6 +7,7 @@ plugins {
     id("org.springframework.boot")   // SpringBoot task to manage project
     id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
     id("au.com.dius.pact")           // Contract tests with Pact
+    id("project-report")
 }
 
 ext {
