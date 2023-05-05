@@ -70,7 +70,7 @@ testing {
                 implementation("org.apache.groovy:groovy")
                 implementation(platform("org.spockframework:spock-bom:$spockVersion"))
                 implementation("org.spockframework:spock-core:$spockVersion") // Versión needed to enforce Spock
-                implementation("org.spockframework:spock-spring)
+                implementation("org.spockframework:spock-spring")
                 runtimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
                 runtimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
                 val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")

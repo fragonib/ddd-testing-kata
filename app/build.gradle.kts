@@ -5,6 +5,7 @@ plugins {
 
 ext {
     set("kotlin.version", "1.8.20")
+    set("openApiVersion", "1.5.4")
 }
 
 dependencies {
@@ -15,7 +16,7 @@ dependencies {
     runtimeOnly(project(":area"))
 
     // - Spring
-    val openApiVersion = "1.5.4"
+    val openApiVersion: String by project.extra
     implementation("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
@@ -33,7 +34,7 @@ tasks {
     }
 
     bootBuildImage {
-        imageName = "clean-the-forest/" + rootProject.name + '-' + project.name
+        imageName.set("clean-the-forest/${rootProject.name}-${project.name}")
     }
 
 }

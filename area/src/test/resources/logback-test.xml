@@ -6,12 +6,12 @@
         </encoder>
     </appender>
 
-    <!-- Log HTTP client traffic -->
-    <!-- <logger name="org.springframework.web.reactive.function.client" level="DEBUG" /> -->
-    <!-- <logger name="reactor.netty.http.client" level="DEBUG" /> -->
-
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
+
+    <!-- Log HTTP client traffic -->
+    <!-- <logger name="org.springframework.web.reactive.function.client" level="DEBUG" /> -->
+    <!-- <logger name="reactor.netty.http.client" level="DEBUG" /> -->
 
 </configuration>
