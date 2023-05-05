@@ -236,6 +236,7 @@ tasks {
 
     check {
         dependsOn(testing.suites.named("integrationTest"))
+        dependsOn(testing.suites.named("contractTest"))
     }
 
     withType<Delete> {
