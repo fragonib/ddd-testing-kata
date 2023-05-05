@@ -1,0 +1,24 @@
+{
+  "id" : "5d65432c-b461-4dbf-9235-b36545bd6588",
+  "name" : "weather",
+  "request" : {
+    "url" : "/weather?appid=670201786404627341aa3affe4a0ca2b&lat=-0.43&lon=39.67",
+    "method" : "GET"
+  },
+  "response" : {
+    "status" : 200,
+    "body" : "{\"coord\":{\"lon\":39.67,\"lat\":-0.43},\"weather\":[{\"id\":803,\"main\":\"Clear\",\"description\":\"broken clouds\",\"icon\":\"04n\"}],\"base\":\"stations\",\"main\":{\"temp\":300.97,\"feels_like\":302.77,\"temp_min\":300.97,\"temp_max\":300.97,\"pressure\":1014,\"humidity\":64,\"sea_level\":1014,\"grnd_level\":993},\"visibility\":10000,\"wind\":{\"speed\":7.51,\"deg\":144,\"gust\":9.65},\"clouds\":{\"all\":58},\"dt\":1683310811,\"sys\":{\"country\":\"KE\",\"sunrise\":1683256503,\"sunset\":1683300058},\"timezone\":10800,\"id\":197745,\"name\":\"Garissa\",\"cod\":200}",
+    "headers" : {
+      "Server" : "openresty",
+      "Date" : "Fri, 05 May 2023 18:20:11 GMT",
+      "Content-Type" : "application/json; charset=utf-8",
+      "X-Cache-Key" : "/data/2.5/weather?lat=-0.43&lon=39.67",
+      "Access-Control-Allow-Origin" : "*",
+      "Access-Control-Allow-Credentials" : "true",
+      "Access-Control-Allow-Methods" : "GET, POST"
+    }
+  },
+  "uuid" : "5d65432c-b461-4dbf-9235-b36545bd6588",
+  "persistent" : true,
+  "insertionIndex" : 1
+}

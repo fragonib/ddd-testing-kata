@@ -19,6 +19,7 @@ ext {
     set("assertjVersion", "3.11.1")
     set("jsonUnitVersion", "2.24.0")
     set("pactVersion", "4.5.6")
+    set("wiremockVersion", "3.0.0-beta-8")
 }
 
 dependencyManagement {
@@ -67,14 +68,21 @@ testing {
                 implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
                 implementation("org.apache.groovy:groovy")
                 implementation(platform("org.spockframework:spock-bom:$spockVersion"))
-                implementation("org.spockframework:spock-core:$spockVersion")
+                implementation("org.spockframework:spock-core:$spockVersion") // Versión needed to enforce Spock
+                implementation("org.spockframework:spock-spring)
                 runtimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
                 runtimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
-                runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.63.Final")
+                val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
+                val architecture = System.getProperty("os.arch").toLowerCase()
+                if (isMacOS && architecture == "aarch64") {
+                    runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
+                }
 
                 // SpringBoot Test
+                val wiremockVersion: String by project.ext
                 implementation("org.springframework.boot:spring-boot-starter-test")
                 implementation("io.projectreactor:reactor-test")
+                implementation("com.github.tomakehurst:wiremock-standalone:$wiremockVersion")
 
             }
         }
@@ -104,11 +112,14 @@ testing {
 
             applySpockBasedTestingDependencies(this)
 
-            // In this project ITs doesn't have indenpendent source folder, they´re collocated with unit test and
+            // In this project ITs doesn't have independent source folder, they´re collocated with unit test and
             // distinguished by the name of the class (ending with IT)
             sources {
                 groovy {
                     setSrcDirs(listOf("src/test/groovy"))
+                }
+                resources {
+                    setSrcDirs(listOf("src/test/resources"))
                 }
             }
 
@@ -223,9 +234,7 @@ tasks {
     }
 
     check {
-        if (project.hasProperty("integrationTests")) {
-            dependsOn(testing.suites.named("integrationTest"))
-        }
+        dependsOn(testing.suites.named("integrationTest"))
     }
 
     withType<Delete> {
