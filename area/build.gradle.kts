@@ -1,6 +1,3 @@
-import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
-import org.gradle.api.tasks.testing.logging.TestLogEvent.*
-
 plugins {
     groovy
     kotlin("plugin.spring")          // SpringBoot visibility (open) over Kotlin classes
@@ -152,15 +149,7 @@ testing {
                 all {
                     testTask.configure {
                         shouldRunAfter(test)
-                        filter {
-                            isFailOnNoMatchingTests = false
-                        }
-                        testLogging {
-                            exceptionFormat = FULL
-                            showExceptions = true
-                            showStandardStreams = true
-                            events(PASSED, FAILED, SKIPPED, STANDARD_OUT, STANDARD_ERROR)
-                        }
+                        filter { isFailOnNoMatchingTests = false }
                     }
                 }
             }

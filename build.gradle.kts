@@ -1,6 +1,9 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinVersion.KOTLIN_1_8
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
+import org.gradle.api.tasks.testing.logging.TestLogEvent.*
+
 
 plugins {
     kotlin("jvm") version "1.8.20" apply false
@@ -45,6 +48,15 @@ subprojects {
             languageVersion.set(KOTLIN_1_8)
             jvmTarget.set(JvmTarget.JVM_17)
             freeCompilerArgs.set(listOf("-Xjsr305=strict"))
+        }
+    }
+
+    tasks.withType<Test> {
+        testLogging {
+            exceptionFormat = FULL
+            showExceptions = true
+            showStandardStreams = true
+            events(PASSED, FAILED, SKIPPED, STANDARD_ERROR)
         }
     }
 
