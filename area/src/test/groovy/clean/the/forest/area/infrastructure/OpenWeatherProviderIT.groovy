@@ -1,7 +1,6 @@
 package clean.the.forest.area.infrastructure
 
 import clean.the.forest.area.model.GeoPos
-import clean.the.forest.shared.testing.TestClassification
 import clean.the.forest.shared.testing.integration.CollaboratorLifecycle
 import clean.the.forest.shared.testing.integration.RestCollaborators
 import org.springframework.beans.factory.annotation.Autowired

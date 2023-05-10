@@ -7,20 +7,13 @@
 * Gradle (for building project)
 * Kotlin (for production code)
 * Groovy (for testing with Spock)
-* Cucumber (for functional test)
+* Cucumber (for functional testing)
 * PACT (for contract testing)
-* Hexagonal architecture
-* Reactive modules
-
-=== Focused on
-
-* Design patterns
-* SOLID
-* Testing techniques
+* WebFlux + Reactor (for reactive implementation)
 
 === Requirements
 
-. Has at least JVM 11 to build and run the project
+. Has at least JVM 17 to build and run the project
 
 . You should set up you own OpenWeather APIKEY as an environment variable:
 
@@ -44,7 +37,7 @@ To build the entire app but without running any tests:
 
 [source,shell]
 ----
-./gradlew clean build -x test -x contractTest
+./gradlew build -x test -x contractTest
 ----
 
 To publish artifacts (including app fat jar and server stubs):
@@ -54,11 +47,11 @@ To publish artifacts (including app fat jar and server stubs):
 ./gradlew build publishToMavenLocal
 ----
 
-To run integration tests (right now they depend on third parties):
+To run integration tests:
 
 [source,shell]
 ----
-./gradlew check -DintegrationTests
+./gradlew integrationTests
 ----
 
 To run contract tests:
@@ -68,7 +61,7 @@ To run contract tests:
 ./gradlew contractTest
 ----
 
-To run functional tests (cucumber base):
+To run functional tests:
 
 [source,shell]
 ----
@@ -77,14 +70,14 @@ To run functional tests (cucumber base):
 
 NOTE: Requires application running on localhost
 
-To run the entire app (in localhost):
+To run the entire app _in localhost_:
 
 [source,shell]
 ----
 ./gradlew bootRun
 ----
 
-Once up &amp; running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[this web UI]:
+Once up & running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[this web UI]:
 
 
 === Insights
@@ -98,7 +91,9 @@ To print what will be the task graph planned by gradle when targeting a specific
 
 === KNOWN errors
 
-* Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration). As a workaorunf
+* Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified with tag `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration). As a workaround I'm using classification by name:
+    - Unit tests named as `*Test`
+    - Integration tests name as `*IT`
 
 === What could be improved?
 
@@ -107,5 +102,5 @@ To print what will be the task graph planned by gradle when targeting a specific
 * Providing _secrets_ in a secured way
 * Use Factories for test data fixtures
 * Embrace variability (ie.: _Time provider_, Variable Weather conditions)
-* Use `TestContainers` (to up &amp; run application) and `WireMock` (to double third parties) when running _Functional_ tests
+* Use `TestContainers` (to up &amp; run application) when running _Functional_ tests
 * Review the possibility of https://springframework.guru/defining-spring-cloud-contracts-in-open-api/[mixing both Contract and API definition] as single source of truth

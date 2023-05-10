@@ -1,4 +1,4 @@
-= DDD &amp; Testing strategy
+= DDD & Testing strategy
 
 You're working in organization that fights fires in forest areas in a preventive way.
 
@@ -24,7 +24,7 @@ Currently, they work on 3 specific areas:
   countryCode: ES
 ----
 
-== TO DO
+== To do
 
 . We need an endpoint to know the weather data of all managed locations
 
@@ -35,5 +35,12 @@ You can obtain the weather data from https://openweathermap.org/api[Open Weather
 
 . Organization is growing, so you need an API to manage new areas.
 
+=== Goals
+
+You should make focus on:
+
+* Hexagonal architecture
+* Domain Driven Design
+* Testing techniques
 
 xref:TECHNICAL.adoc[View technical info]
