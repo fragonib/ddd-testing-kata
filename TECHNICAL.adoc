@@ -80,13 +80,20 @@ To run the entire app _in localhost_:
 Once up & running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[this web UI]:
 
 
-=== Insights
+=== Get Technical Insights
 
 To print what will be the task graph planned by gradle when targeting a specific task:
 
 [source,shell]
 ----
 ./gradlew tiTree [target task]
+----
+
+To get dependencies report of every configuration set:
+
+[source,shell]
+----
+./gradlew htmlDependencyReport
 ----
 
 === KNOWN errors
