@@ -5,31 +5,48 @@ import com.github.tomakehurst.wiremock.client.WireMock
 import com.github.tomakehurst.wiremock.common.ConsoleNotifier
 import com.github.tomakehurst.wiremock.common.SingleRootFileSource
 import com.github.tomakehurst.wiremock.core.WireMockConfiguration
+import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder
 import com.github.tomakehurst.wiremock.recording.RecordSpec
 import com.github.tomakehurst.wiremock.recording.RecordingStatus.Recording
 
-class CollaboratorLifecycle(private val collaboratorsConfig: RestCollaborators) {
+class CollaboratorLifecycle(collaboratorsConfig: CollaboratorsConfig) {
 
-    private var collaboratorMocks: List<WireMockServer> = listOf()
+    private var collaboratorDefinitions: Map<String, RestCollaboratorDefinition> = collaboratorsConfig.collaborators
+    private var collaboratorMocks: Map<String, WireMockServer> = collaboratorDefinitions
+        .mapValues { (name, definition) -> buildMockRestServer(name, definition) }
+
+    fun collaboratorMock(name: String) = collaboratorMocks[name]!!
 
     fun setupCollaborators() {
-        collaboratorMocks = collaboratorsConfig.collaborators.map { (name, definition) ->
-            val wireMockServer = buildMockRestServer(name, definition)
-            wireMockServer.start()
+        collaboratorMocks.forEach { (name, mockServer) ->
+            mockServer.start()
+            val definition = collaboratorDefinitions[name]!!
             if (definition.recording) {
-                wireMockServer.startRecording(recordingConfig(definition.recordingUrl))
+                mockServer.startRecording(recordingConfig(definition.recordingUrl!!))
             }
-            wireMockServer
         }
     }
 
     fun teardownCollaborators() {
-        collaboratorMocks.forEach { mockServer ->
+        collaboratorMocks.forEach { (_, mockServer) ->
             if (mockServer.recordingStatus.status == Recording)
                 mockServer.stopRecording()
             mockServer.stop()
         }
+    }
+
+    private fun buildMockRestServer(name: String, definition: RestCollaboratorDefinition): WireMockServer {
+        return WireMockServer(
+            WireMockConfiguration.options()
+                .fileSource(SingleRootFileSource("src/test/resources/collaborators/$name"))
+                .notifier(ConsoleNotifier(true))
+                .apply {
+                    if (definition.dynamicPort) dynamicPort()
+                    else port(definition.port)
+                }
+                .extensions(ResponseTemplateTransformer(false))
+        )
     }
 
     private fun recordingConfig(targetURL: String): RecordSpec {
@@ -40,13 +57,6 @@ class CollaboratorLifecycle(private val collaboratorsConfig: RestCollaborators) 
             .ignoreRepeatRequests()
             .matchRequestBodyWithEqualToJson(true, true)
             .build()
-    }
-
-    private fun buildMockRestServer(name: String, collaboratorDefinition: RestCollaborator): WireMockServer {
-        return WireMockServer(WireMockConfiguration.options()
-            .port(collaboratorDefinition.port)
-            .fileSource(SingleRootFileSource("src/test/resources/collaborators/$name"))
-            .notifier(ConsoleNotifier(true)))
     }
 
 }

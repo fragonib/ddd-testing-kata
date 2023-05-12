@@ -1,6 +1,6 @@
 collaborators-config:
   collaborators:
-    openweather:
-      port: 10081
+    open_weather:
+      dynamicPort: true
       recording: false
       recordingUrl: https://api.openweathermap.org/data/2.5

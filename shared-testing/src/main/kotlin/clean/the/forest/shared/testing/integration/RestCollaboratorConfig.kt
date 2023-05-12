@@ -1,11 +1,12 @@
 package clean.the.forest.shared.testing.integration
 
-data class RestCollaborators (
-    val collaborators: Map<String, RestCollaborator>
+data class CollaboratorsConfig (
+    val collaborators: Map<String, RestCollaboratorDefinition>
 )
 
-data class RestCollaborator(
-    val port: Int,
-    val recording: Boolean,
-    val recordingUrl: String,
+data class RestCollaboratorDefinition(
+    val port: Int = 0,
+    val dynamicPort: Boolean = true,
+    val recording: Boolean = false,
+    val recordingUrl: String? = null,
 )
