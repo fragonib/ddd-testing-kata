@@ -77,7 +77,7 @@ NOTE: Functional tests are running the entire app inside a docker container, so 
 ./gradlew bootRun
 ----
 
-Once up & running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[OpenAPI UI]
+Once up & running you can check and interact with the REST API using http://localhost:8080/ddd-app/swagger-ui.html[OpenAPI UI]
 
 - To build a DOCKER image with the app fat jar:
 
@@ -102,7 +102,7 @@ Once up & running you can check and interact with the REST API using http://loca
 ./gradlew htmlDependencyReport
 ----
 
-If you run app in DEV mode you can also see all insights offered by http://localhost:8080/actuator[actuator]:
+If you run app in DEV mode you can also see all insights offered by http://localhost:8080/ddd-app/actuator[Actuator]:
 
 [source,shell]
 ----

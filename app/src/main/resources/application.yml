@@ -1,10 +1,13 @@
 spring:
+  webflux:
+    base-path: /ddd-app
   jackson:
     serialization:
       write_dates_as_timestamps: false
 
 springdoc:
   api-docs:
+    enabled: true
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
