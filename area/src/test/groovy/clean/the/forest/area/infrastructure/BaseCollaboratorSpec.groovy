@@ -11,7 +11,7 @@ import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
 @ContextConfiguration(classes = [TestConfig])
-class CollaboratorSpec extends Specification {
+class BaseCollaboratorSpec extends Specification {
 
     CollaboratorLifecycle collaboratorLifecycle
 
