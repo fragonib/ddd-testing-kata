@@ -18,6 +18,7 @@ ext {
     set("jsonUnitVersion", "2.24.0")
     set("pactVersion", "4.5.6")
     set("wiremockVersion", "3.0.0-beta-8")
+    set("testContainersVersion", "1.18.1")
 }
 
 dependencyManagement {
@@ -66,12 +67,12 @@ testing {
                 implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
                 implementation("org.apache.groovy:groovy")
                 implementation(platform("org.spockframework:spock-bom:$spockVersion"))
-                implementation("org.spockframework:spock-core:$spockVersion") // Versión needed to enforce Spock
+                implementation("org.spockframework:spock-core:$spockVersion") // Version needed to enforce Spock
                 implementation("org.spockframework:spock-spring")
                 runtimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
                 runtimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
                 val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
-                val architecture = System.getProperty("os.arch").toLowerCase()
+                val architecture = System.getProperty("os.arch").lowercase()
                 if (isMacOS && architecture == "aarch64") {
                     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
                 }
@@ -104,6 +105,7 @@ testing {
         }
 
         // Integration tests suite
+        @Suppress("unused")
         val integrationTest by registering(JvmTestSuite::class) {
 
             useJUnitJupiter()
@@ -174,21 +176,23 @@ cucumber {
         "clean.the.forest.shared.testing.functional.AppContainerLifeCycle"
     )
     ignoreFailures = false
-
     dependencies {
+        val functionalTestImplementation by configurations
+        functionalTestImplementation(project(":shared-testing"))
         val cucumberVersion: String by project.ext
         val assertjVersion: String by project.ext
         val jsonUnitVersion: String by project.ext
-        val functionalTestImplementation by configurations
-        functionalTestImplementation(project(":shared-testing"))
+        val wiremockVersion: String by project.ext
+        val testContainersVersion: String by project.ext
         functionalTestImplementation("io.cucumber:cucumber-java8:$cucumberVersion")
         functionalTestImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
         functionalTestImplementation("io.cucumber:cucumber-picocontainer:$cucumberVersion")
         functionalTestImplementation("org.assertj:assertj-core:$assertjVersion")
         functionalTestImplementation("com.jayway.jsonpath:json-path")
         functionalTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
+        functionalTestImplementation("com.github.tomakehurst:wiremock-standalone:$wiremockVersion")
+        functionalTestImplementation("org.testcontainers:testcontainers:${testContainersVersion}")
     }
-
 }
 
 pact {

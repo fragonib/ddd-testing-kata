@@ -7,8 +7,8 @@
 * Gradle (for building project)
 * Kotlin (for production code)
 * Groovy (for testing with Spock)
-* Cucumber (for functional testing)
 * PACT (for contract testing)
+* Cucumber (for functional testing)
 * WebFlux + Reactor (for reactive implementation)
 
 === Requirements
@@ -26,88 +26,99 @@ NOTE: You can create you onw key https://home.openweathermap.org/api_keys[here]
 
 == Running
 
-To build the entire app with:
+- To build the entire app with:
 
 [source,shell]
 ----
 ./gradlew build
 ----
 
-To build the entire app but without running any tests:
+- To build the entire app but without running any tests:
 
 [source,shell]
 ----
 ./gradlew build -x test -x contractTest
 ----
 
-To publish artifacts (including app fat jar and server stubs):
-
-[source,shell]
-----
-./gradlew build publishToMavenLocal
-----
-
-To run integration tests:
+- To run _integration tests_:
 
 [source,shell]
 ----
 ./gradlew integrationTests
 ----
 
-To run contract tests:
+- To run _contract tests_:
 
 [source,shell]
 ----
 ./gradlew contractTest
 ----
 
-To run functional tests:
+- To run _functional tests_:
 
 [source,shell]
 ----
 ./gradlew functionalTest
 ----
 
-NOTE: Requires application running on localhost
+NOTE: Functional tests are running the entire app inside a docker container, so it requires a up & running docker environment
 
-To run the entire app _in localhost_:
+- To publish artifacts (including app fat jar and server stubs):
+
+[source,shell]
+----
+./gradlew build publishToMavenLocal
+----
+
+- To run the entire app _in localhost_:
 
 [source,shell]
 ----
 ./gradlew bootRun
 ----
 
-Once up & running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[this web UI]:
+Once up & running you can check and interact with the REST API using http://localhost:8080/swagger-ui.html[OpenAPI UI]
 
+- To build a DOCKER image with the app fat jar:
 
-=== Get Technical Insights
+[source,shell]
+----
+./gradlew app:bootBuildImage
+----
 
-To print what will be the task graph planned by gradle when targeting a specific task:
+=== Getting Technical Insights
+
+- To print what will be the task graph planned by gradle when targeting a specific task:
 
 [source,shell]
 ----
 ./gradlew tiTree [target task]
 ----
 
-To get dependencies report of every configuration set:
+- To get dependencies report of every configuration set:
 
 [source,shell]
 ----
 ./gradlew htmlDependencyReport
 ----
 
+If you run app in DEV mode you can also see all insights offered by http://localhost:8080/actuator[actuator]:
+
+[source,shell]
+----
+SPRING_PROFILES_ACTIVE=dev ./gradlew bootRun
+----
+
 === KNOWN errors
 
-* Integration tests written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified with tag `@Tag(TestClassification.INTEGRATION)` (possible BUG on Spock - Gradle integration). As a workaround I'm using classification by name:
+* _Integration tests_ written using Spock are running during gradle `test` task instead of `integrationTest` task despite being correctly classified with tag `@Tag(TestClassification.INTEGRATION)`. As a workaround I'm using classification by name to distinguish them:
     - Unit tests named as `*Test`
     - Integration tests name as `*IT`
 
 === What could be improved?
 
-* Docker file to containerize app
 * GITHUB base CI pipeline
 * Providing _secrets_ in a secured way
 * Use Factories for test data fixtures
-* Embrace variability (ie.: _Time provider_, Variable Weather conditions)
-* Use `TestContainers` (to up &amp; run application) when running _Functional_ tests
+* Embrace variability in tests (i.e.: _Time provider_, Variable Weather conditions)
 * Review the possibility of https://springframework.guru/defining-spring-cloud-contracts-in-open-api/[mixing both Contract and API definition] as single source of truth

@@ -1,6 +1,7 @@
 plugins {
     kotlin("plugin.spring")
     id("org.springframework.boot")
+    id("io.spring.dependency-management")
 }
 
 ext {
@@ -9,8 +10,6 @@ ext {
 }
 
 dependencies {
-
-    // = Dependencies
 
     // - Modules
     runtimeOnly(project(":area"))
@@ -23,7 +22,8 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    runtimeOnly("org.springdoc:springdoc-openapi-webflux-ui:$openApiVersion")
+    runtimeOnly("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
+    runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
 
 }
 
@@ -34,7 +34,7 @@ tasks {
     }
 
     bootBuildImage {
-        imageName.set("clean-the-forest/${rootProject.name}-${project.name}")
+        imageName.set("${rootProject.name}/${project.name}")
     }
 
 }
