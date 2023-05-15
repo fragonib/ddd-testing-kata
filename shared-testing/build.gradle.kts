@@ -1,6 +1,6 @@
 ext {
     set("kotlin.version", "1.8.20")
-    set("testContainersVersion", "1.17.6")
+    set("testContainersVersion", "1.18.1")
     set("cucumberVersion", "7.11.1")
     set("wiremockVersion", "3.0.0-beta-8")
 }

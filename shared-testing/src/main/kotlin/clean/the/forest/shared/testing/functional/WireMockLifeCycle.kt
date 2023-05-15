@@ -1,8 +1,9 @@
 package clean.the.forest.shared.testing.functional
 
-import com.github.tomakehurst.wiremock.WireMockServer
-import com.github.tomakehurst.wiremock.core.WireMockConfiguration
-import com.github.tomakehurst.wiremock.extension.responsetemplating.ResponseTemplateTransformer
+import clean.the.forest.shared.testing.Collaborator.OPEN_WEATHER
+import clean.the.forest.shared.testing.integration.CollaboratorLifecycle
+import clean.the.forest.shared.testing.integration.RestCollaboratorDefinition
+import clean.the.forest.shared.testing.integration.CollaboratorsConfig
 import io.cucumber.plugin.EventListener
 import io.cucumber.plugin.Plugin
 import io.cucumber.plugin.event.EventHandler
@@ -14,10 +15,13 @@ import io.cucumber.plugin.event.TestRunStarted
 open class WireMockLifeCycle : Plugin, EventListener {
 
     companion object {
-        val wireMockServer: WireMockServer =
-            WireMockServer(WireMockConfiguration.wireMockConfig()
-                .dynamicPort()
-                .extensions(ResponseTemplateTransformer(false)))
+        val collaboratorLifecycle = CollaboratorLifecycle(
+            CollaboratorsConfig(
+                mapOf(
+                    OPEN_WEATHER.literal to RestCollaboratorDefinition(dynamicPort = true, recording = false)
+                )
+            )
+        )
     }
 
     override fun setEventPublisher(publisher: EventPublisher) {
@@ -26,11 +30,11 @@ open class WireMockLifeCycle : Plugin, EventListener {
     }
 
     private val setup = EventHandler { _: TestRunStarted ->
-        wireMockServer.start()
+        collaboratorLifecycle.setupCollaborators()
     }
 
     private val teardown = EventHandler { _: TestRunFinished ->
-        wireMockServer.stop()
+        collaboratorLifecycle.teardownCollaborators()
     }
 
 }

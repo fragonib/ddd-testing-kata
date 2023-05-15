@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
 
+private const val GIVEN_KNOWN_AREAS = "givenKnownAreas"
+private const val ADD_NEW_RESPONSE = "addNewResponse"
 
 class AreaSteps(
     private val scenarioState: ScenarioState,
@@ -21,54 +23,51 @@ class AreaSteps(
 
     init {
 
-        Given("following \"known areas\":") { data: DataTable ->
-            val knownAreas = data.cells()
-                .drop(/* header size */ 1)
-                .map { (areaName, lat, lon, countryCode) ->
+        Given("following \"known areas\":") { dataTable: DataTable ->
+            scenarioState[GIVEN_KNOWN_AREAS] = dataTable.extract { (areaName, lat, lon, countryCode) ->
                     Area(areaName, lat.toDouble(), lon.toDouble(), countryCode)
                 }
                 .associateBy { it.name }
-            scenarioState["knownAreas"] = knownAreas
         }
 
-        When("add area {string} with data:") { newAreaLocator: String, data: DataTable ->
+        When("add area {string} with data:") { newAreaLocator: String, dataTable: DataTable ->
 
             // New area data
-            val newArea = data.cells()
-                .drop(/* header size */ 1)
-                .map { (areaName, lat, lon, country) ->
-                    AreaDTO(areaName, lat.toDouble(), lon.toDouble(), country)
+            scenarioState[newAreaLocator] = dataTable.extract { (areaName, lat, lon, countryCode) ->
+                    AreaDTO(areaName, lat.toDouble(), lon.toDouble(), countryCode)
                 }
                 .first()
-            scenarioState[newAreaLocator] = newArea.toModel()
+                .toModel()
 
             // Add new Area
             try {
-                val addResponse = testClient
-                    .postForEntity(baseUrl, newArea, Area::class.java)
-                scenarioState["addNewResponse"] = addResponse
-            }
-            catch(e: HttpStatusCodeException) {
-                scenarioState["addNewResponse"] = ResponseEntity
-                    .status(e.getRawStatusCode())
-                    .headers(e.getResponseHeaders())
-                    .body(e.getResponseBodyAsString());
+                scenarioState[ADD_NEW_RESPONSE] = testClient.postForEntity(
+                    baseUrl,
+                    dataTable.extract { (areaName, lat, lon, countryCode) ->
+                        AreaDTO(areaName, lat.toDouble(), lon.toDouble(), countryCode)
+                    }
+                        .first(),
+                    Area::class.java
+                )
+            } catch (e: HttpStatusCodeException) {
+                scenarioState[ADD_NEW_RESPONSE] =
+                    ResponseEntity.status(e.statusCode.value()).headers(e.responseHeaders).body(e.responseBodyAsString)
             }
         }
 
         Then("known areas should contain {string} and previous ones") { newAreaLocator: String ->
 
             // Assert new area has been added
-            val responseEntity: ResponseEntity<Area> = scenarioState["addNewResponse"]!!
+            val responseEntity: ResponseEntity<Area> = scenarioState[ADD_NEW_RESPONSE]
             assertThat(responseEntity.statusCode).isEqualTo(HttpStatus.CREATED)
 
             //
-            val newArea: Area = scenarioState[newAreaLocator]!!
+            val newArea: Area = scenarioState[newAreaLocator]
             assertThat(responseEntity.body).isEqualTo(newArea)
         }
 
         Then("complain about previously existing area") {
-            val jsonResponse: ResponseEntity<String> = scenarioState["addNewResponse"]!!
+            val jsonResponse: ResponseEntity<String> = scenarioState[ADD_NEW_RESPONSE]
             assertThat(jsonResponse.statusCode).isEqualTo(HttpStatus.CONFLICT)
         }
 

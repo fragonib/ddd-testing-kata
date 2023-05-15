@@ -11,9 +11,9 @@ class ScenarioState {
         state[key] = value
     }
 
-    operator fun <T> get(key: String): T? {
+    operator fun <T> get(key: String): T {
         @Suppress("UNCHECKED_CAST")
-        return state[key] as T
+        return state[key]!! as T
     }
 
 }
