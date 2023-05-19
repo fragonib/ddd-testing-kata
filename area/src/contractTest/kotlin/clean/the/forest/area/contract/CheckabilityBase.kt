@@ -1,6 +1,6 @@
 package clean.the.forest.area.contract
 
-import clean.the.forest.area.application.ReportCheckabilityOfParticularAreaUseCase
+import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.infrastructure.WeatherController
 import clean.the.forest.area.model.Area
@@ -13,7 +13,7 @@ import org.mockito.Mockito.`when`
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
-import org.springframework.boot.web.server.LocalServerPort
+import org.springframework.boot.test.web.server.LocalServerPort
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import reactor.core.publisher.Mono
 import java.time.LocalDateTime
@@ -30,7 +30,7 @@ abstract class CheckabilityBase {
     private lateinit var reportAllKnownAreasUseCase: ReportWeatherOfAllKnownAreasUseCase
 
     @MockBean
-    private lateinit var reportCheckabilityOfParticularAreaUseCase: ReportCheckabilityOfParticularAreaUseCase
+    private lateinit var reportParticularAreaUseCase: ReportWeatherOfParticularAreaUseCase
 
     @LocalServerPort
     var port = 0
@@ -44,7 +44,7 @@ abstract class CheckabilityBase {
     }
 
     private fun stubResponseOnGivenArea(areaName: String, weatherCondition: WeatherCondition) {
-        `when`(reportCheckabilityOfParticularAreaUseCase.report(areaName))
+        `when`(reportParticularAreaUseCase.report(areaName))
             .thenReturn(Mono.just(WeatherReport(
                 area = Area(areaName, 39.67, -0.43, "ES"),
                 weatherCondition = weatherCondition,
@@ -53,7 +53,7 @@ abstract class CheckabilityBase {
     }
 
     private fun stubResponseOnNonKnownArea(areaName: String,) {
-        `when`(reportCheckabilityOfParticularAreaUseCase.report(areaName))
+        `when`(reportParticularAreaUseCase.report(areaName))
             .thenReturn(Mono.error(IllegalArgumentException("There is no area called [$areaName]")))
     }
 

@@ -1,6 +1,6 @@
 package clean.the.forest.area.functional
 
-import clean.the.forest.area.infrastructure.AreaDTO
+import clean.the.forest.area.infrastructure.CreateAreaDTO
 import clean.the.forest.area.model.Area
 import clean.the.forest.shared.testing.functional.ScenarioState
 import io.cucumber.datatable.DataTable
@@ -34,7 +34,7 @@ class AreaSteps(
 
             // New area data
             scenarioState[newAreaLocator] = dataTable.extract { (areaName, lat, lon, countryCode) ->
-                    AreaDTO(areaName, lat.toDouble(), lon.toDouble(), countryCode)
+                    CreateAreaDTO(areaName, lat.toDouble(), lon.toDouble(), countryCode)
                 }
                 .first()
                 .toModel()
@@ -44,7 +44,7 @@ class AreaSteps(
                 scenarioState[ADD_NEW_RESPONSE] = testClient.postForEntity(
                     baseUrl,
                     dataTable.extract { (areaName, lat, lon, countryCode) ->
-                        AreaDTO(areaName, lat.toDouble(), lon.toDouble(), countryCode)
+                        CreateAreaDTO(areaName, lat.toDouble(), lon.toDouble(), countryCode)
                     }
                         .first(),
                     Area::class.java

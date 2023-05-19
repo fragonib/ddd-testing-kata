@@ -1,6 +1,6 @@
 package clean.the.forest.area.contract
 
-import clean.the.forest.area.application.ReportCheckabilityOfParticularAreaUseCase
+import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.infrastructure.WeatherController
 import clean.the.forest.area.model.Area
@@ -29,7 +29,7 @@ abstract class WeatherBase {
     private lateinit var reportAllKnownAreasUseCase: ReportWeatherOfAllKnownAreasUseCase
 
     @MockBean
-    private lateinit var reportCheckabilityOfParticularAreaUseCase: ReportCheckabilityOfParticularAreaUseCase
+    private lateinit var reportParticularAreaUseCase: ReportWeatherOfParticularAreaUseCase
 
     @LocalServerPort
     var port = 0

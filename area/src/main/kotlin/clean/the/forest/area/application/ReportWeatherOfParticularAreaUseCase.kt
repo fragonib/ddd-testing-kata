@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono
 import java.time.LocalDateTime
 
 
-open class ReportCheckabilityOfParticularAreaUseCase(
+open class ReportWeatherOfParticularAreaUseCase(
     private val areaRepository: AreaRepository,
     private val weatherProvider: WeatherProvider
 ) {

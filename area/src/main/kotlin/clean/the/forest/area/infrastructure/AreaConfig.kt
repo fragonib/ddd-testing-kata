@@ -1,7 +1,7 @@
 package clean.the.forest.area.infrastructure
 
 import clean.the.forest.area.application.AddAreaUseCase
-import clean.the.forest.area.application.ReportCheckabilityOfParticularAreaUseCase
+import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
@@ -36,8 +36,8 @@ class AreaConfig {
     fun reportOfParticularAreaUseCase(
         areaRepository: AreaRepository,
         weatherProvider: WeatherProvider
-    ): ReportCheckabilityOfParticularAreaUseCase {
-        return ReportCheckabilityOfParticularAreaUseCase(areaRepository, weatherProvider)
+    ): ReportWeatherOfParticularAreaUseCase {
+        return ReportWeatherOfParticularAreaUseCase(areaRepository, weatherProvider)
     }
 
     @Bean
