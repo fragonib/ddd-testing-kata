@@ -22,8 +22,8 @@ ext {
 }
 
 dependencyManagement {
-    val springCloudVersion: String by project
     imports {
+        val springCloudVersion: String by project
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
     }
 }
@@ -34,7 +34,7 @@ dependencies {
     implementation(project(":shared-testing"))
 
     // Spring
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
+    api("org.springframework.boot:spring-boot-starter-webflux")
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
@@ -53,7 +53,7 @@ testing {
                 implementation(project())
                 implementation(project(":shared-testing"))
 
-                // JUnit 5
+                // Assertions set
                 val assertjVersion: String by project.ext
                 val jsonUnitVersion: String by project.ext
                 implementation("org.assertj:assertj-core:$assertjVersion")
@@ -61,29 +61,35 @@ testing {
 
                 // Spock
                 val groovyVersion: String by project.ext
+                implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
+                implementation("org.apache.groovy:groovy")
+
                 val spockVersion: String by project.ext
                 val byteBuddyVersion: String by project.ext
                 val objenesisVersion: String by project.ext
-                implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
-                implementation("org.apache.groovy:groovy")
                 implementation(platform("org.spockframework:spock-bom:$spockVersion"))
                 implementation("org.spockframework:spock-core:$spockVersion") // Version needed to enforce Spock
-                implementation("org.spockframework:spock-spring")
+                implementation("org.spockframework:spock-spring:$spockVersion")
                 runtimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
                 runtimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
+
+                // Nettys native libs to be loaded on Apple Silicon
                 val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
-                val architecture = System.getProperty("os.arch").lowercase()
-                if (isMacOS && architecture == "aarch64") {
+                val isArm64 = System.getProperty("os.arch").lowercase() == "aarch64"
+                if (isMacOS && isArm64) {
                     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
                 }
 
                 // SpringBoot Test
-                val wiremockVersion: String by project.ext
                 implementation("org.springframework.boot:spring-boot-starter-test")
                 implementation("io.projectreactor:reactor-test")
+
+                // REST Collaborators mocking
+                val wiremockVersion: String by project.ext
                 implementation("com.github.tomakehurst:wiremock-standalone:$wiremockVersion")
 
             }
+
         }
 
         // Unit tests suite
