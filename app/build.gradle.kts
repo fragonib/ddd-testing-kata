@@ -6,7 +6,7 @@ plugins {
 
 ext {
     set("kotlin.version", "1.8.20")
-    set("openApiVersion", "1.5.4")
+    set("openApiVersion", "2.1.0")
 }
 
 dependencies {
@@ -22,7 +22,7 @@ dependencies {
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
     implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
     implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    runtimeOnly("org.springdoc:springdoc-openapi-starter-webflux-ui:2.1.0")
+    runtimeOnly("org.springdoc:springdoc-openapi-starter-webflux-ui:$openApiVersion")
     runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
 
 }
