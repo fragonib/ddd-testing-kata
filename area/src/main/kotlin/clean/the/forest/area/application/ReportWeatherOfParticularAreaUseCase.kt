@@ -5,7 +5,6 @@ import clean.the.forest.area.infrastructure.WeatherProvider
 import clean.the.forest.area.model.AreaName
 import clean.the.forest.area.model.WeatherReport
 import reactor.core.publisher.Mono
-import java.time.LocalDateTime
 
 
 open class ReportWeatherOfParticularAreaUseCase(
@@ -20,13 +19,7 @@ open class ReportWeatherOfParticularAreaUseCase(
                     weatherProvider.byGeoPosition(area.position)
                             .map { weatherCondition -> Pair(area, weatherCondition) }
                 }
-                .map { (area, weatherCondition) ->
-                    WeatherReport(
-                            area = area,
-                            weatherCondition = weatherCondition,
-                            date = LocalDateTime.now()
-                    )
-                }
+                .map { (area, weatherCondition) -> WeatherReport(area = area, weatherCondition = weatherCondition) }
     }
 
 }

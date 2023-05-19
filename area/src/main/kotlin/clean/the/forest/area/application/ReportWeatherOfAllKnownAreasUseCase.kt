@@ -18,9 +18,7 @@ open class ReportWeatherOfAllKnownAreasUseCase(
                     weatherProvider.byGeoPosition(area.position)
                             .map { weatherCondition -> Pair(area, weatherCondition) }
                 }
-                .map { (area, weatherCondition) ->
-                    WeatherReport(area = area, weatherCondition = weatherCondition)
-                }
+                .map { (area, weatherCondition) -> WeatherReport(area = area, weatherCondition = weatherCondition) }
     }
 
 }
