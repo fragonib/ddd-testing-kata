@@ -8,6 +8,7 @@ import net.javacrumbs.jsonunit.core.Option
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
+import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
@@ -90,7 +91,7 @@ class WeatherControllerIT extends Specification {
         )
 
         when:
-        def responseBody = webTestClient.get()
+        def exchange = webTestClient.get()
                 .uri { uriBuilder ->
                     uriBuilder
                             .path('/weather')
@@ -98,11 +99,12 @@ class WeatherControllerIT extends Specification {
                             .build()
                 }
                 .exchange()
+
+        then:
+        def responseBody = exchange
                 .expectStatus().is2xxSuccessful()
                 .expectHeader().contentType(MediaType.APPLICATION_JSON)
                 .expectBody().returnResult().responseBody
-
-        then:
         assertThatJson(new String(responseBody, 'UTF-8'))
                 .whenIgnoringPaths('[*].date')
                 .isEqualTo('''
@@ -118,6 +120,28 @@ class WeatherControllerIT extends Specification {
                         }
                     ]
                 '''.stripIndent())
+    }
+
+
+
+    def "when reporting PARTICULAR area don't exists, then 404"() {
+        given:
+        particularAreaUseCase.report('Calderona') >> Mono.error(
+                new AreaNotPresent('Calderona')
+        )
+
+        when:
+        def exchange = webTestClient.get()
+                .uri { uriBuilder ->
+                    uriBuilder
+                            .path('/weather')
+                            .queryParam('location', 'Calderona')
+                            .build()
+                }
+                .exchange()
+
+        then:
+        exchange.expectStatus().isNotFound()
     }
 
 }

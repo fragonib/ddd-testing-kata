@@ -33,7 +33,7 @@ class WeatherController(
         return areasWeather
                 .collectList()
                 .map { ResponseEntity.ok(it) }
-                .onErrorResume(IllegalArgumentException::class.java) {
+                .onErrorResume(AreaNotPresent::class.java) {
                     Mono.just(ResponseEntity.status(HttpStatus.NOT_FOUND).build())
                 }
     }
