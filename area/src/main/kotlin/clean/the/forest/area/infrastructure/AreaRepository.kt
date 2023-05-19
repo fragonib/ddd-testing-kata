@@ -20,7 +20,7 @@ interface AreaRepository {
      *
      * @return Area data if known
      *
-     * @throws IllegalArgumentException If there is no area known with given name
+     * @throws AreaNotPresent If there is no area known with given name
      */
     fun findByName(name: String): Mono<Area>
 
@@ -37,4 +37,5 @@ interface AreaRepository {
 
 }
 
-class ConflictWithExistingArea(message:String): RuntimeException(message)
+class ConflictWithExistingArea(message: String): RuntimeException(message)
+class AreaNotPresent(message: String): RuntimeException(message)

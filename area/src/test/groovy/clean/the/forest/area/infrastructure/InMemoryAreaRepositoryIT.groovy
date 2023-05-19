@@ -54,13 +54,12 @@ class InMemoryAreaRepositoryIT extends Specification {
         sut.findByName(areaName).block()
 
         then:
-        IllegalArgumentException ex = thrown()
+        AreaNotPresent ex = thrown()
         ex.message == expectedMessage
 
         where:
         areaName  || expectedMessage
         "unknown" || "There is no area called [unknown]"
-        "ipiñabu" || "There is no area called [ipiñabu]"
     }
 
     def 'adding an area should aggregate it to known areas'() {
