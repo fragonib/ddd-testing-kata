@@ -2,7 +2,7 @@ package clean.the.forest.area.contract
 
 import clean.the.forest.area.application.AddAreaUseCase
 import clean.the.forest.area.infrastructure.AreaController
-import clean.the.forest.area.infrastructure.ConflictWithExistingArea
+import clean.the.forest.area.application.ConflictWithExistingArea
 import clean.the.forest.area.model.Area
 import io.restassured.RestAssured
 import org.junit.jupiter.api.BeforeEach

@@ -1,5 +1,6 @@
 package clean.the.forest.area.infrastructure
 
+import clean.the.forest.area.application.AreaNotPresent
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
 import clean.the.forest.area.model.WeatherReport

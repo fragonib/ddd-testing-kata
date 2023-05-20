@@ -1,6 +1,7 @@
 package clean.the.forest.area.infrastructure
 
 import clean.the.forest.area.application.AddAreaUseCase
+import clean.the.forest.area.application.ConflictWithExistingArea
 import clean.the.forest.area.model.Area
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired

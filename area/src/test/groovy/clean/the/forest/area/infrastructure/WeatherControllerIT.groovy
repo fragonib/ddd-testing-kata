@@ -1,5 +1,6 @@
 package clean.the.forest.area.infrastructure
 
+import clean.the.forest.area.application.AreaNotPresent
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
 import clean.the.forest.area.model.Area
@@ -8,7 +9,6 @@ import net.javacrumbs.jsonunit.core.Option
 import org.spockframework.spring.SpringBean
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest
-import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.test.context.ContextConfiguration
 import org.springframework.test.web.reactive.server.WebTestClient
