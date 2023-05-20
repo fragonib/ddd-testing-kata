@@ -1,7 +1,7 @@
 package clean.the.forest.area.infrastructure
 
 import clean.the.forest.area.application.WeatherProvider
-import clean.the.forest.area.model.GeoPos
+import clean.the.forest.area.domain.GeoPos
 import clean.the.forest.shared.testing.Collaborator
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles

@@ -1,4 +1,4 @@
-package clean.the.forest.area.model
+package clean.the.forest.area.domain
 
 import java.time.LocalDateTime
 

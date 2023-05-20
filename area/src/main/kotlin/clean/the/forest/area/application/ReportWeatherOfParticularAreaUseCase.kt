@@ -1,7 +1,7 @@
 package clean.the.forest.area.application
 
-import clean.the.forest.area.model.AreaName
-import clean.the.forest.area.model.WeatherReport
+import clean.the.forest.area.domain.AreaName
+import clean.the.forest.area.domain.WeatherReport
 import reactor.core.publisher.Mono
 
 

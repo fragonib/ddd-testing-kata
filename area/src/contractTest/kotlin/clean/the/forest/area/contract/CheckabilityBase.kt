@@ -3,9 +3,9 @@ package clean.the.forest.area.contract
 import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.infrastructure.WeatherController
-import clean.the.forest.area.model.Area
-import clean.the.forest.area.model.WeatherCondition
-import clean.the.forest.area.model.WeatherReport
+import clean.the.forest.area.domain.Area
+import clean.the.forest.area.domain.WeatherCondition
+import clean.the.forest.area.domain.WeatherReport
 import io.restassured.RestAssured
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.extension.ExtendWith

@@ -3,7 +3,7 @@ package clean.the.forest.area.infrastructure
 import clean.the.forest.area.application.AreaNotPresent
 import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
 import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
-import clean.the.forest.area.model.WeatherReport
+import clean.the.forest.area.domain.WeatherReport
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity

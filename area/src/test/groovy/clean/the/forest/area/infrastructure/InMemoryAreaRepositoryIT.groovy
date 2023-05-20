@@ -3,9 +3,9 @@ package clean.the.forest.area.infrastructure
 import clean.the.forest.area.application.AreaNotPresent
 import clean.the.forest.area.application.AreaRepository
 import clean.the.forest.area.application.ConflictWithExistingArea
-import clean.the.forest.area.model.Area
-import clean.the.forest.area.model.Country
-import clean.the.forest.area.model.GeoPos
+import clean.the.forest.area.domain.Area
+import clean.the.forest.area.domain.Country
+import clean.the.forest.area.domain.GeoPos
 import spock.lang.Specification
 
 

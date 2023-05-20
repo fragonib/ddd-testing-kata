@@ -1,8 +1,8 @@
 package clean.the.forest.area.application
 
 
-import clean.the.forest.area.model.Area
-import clean.the.forest.area.model.GeoPos
+import clean.the.forest.area.domain.Area
+import clean.the.forest.area.domain.GeoPos
 import reactor.core.publisher.Mono
 import spock.lang.Specification
 import spock.lang.Subject

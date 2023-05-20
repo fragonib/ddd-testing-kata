@@ -1,8 +1,9 @@
 package clean.the.forest.area.application
 
-import clean.the.forest.area.model.Area
+import clean.the.forest.area.domain.Area
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
+
 
 interface AreaRepository {
 

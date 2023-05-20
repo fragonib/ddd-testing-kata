@@ -1,8 +1,8 @@
 package clean.the.forest.area.infrastructure
 
 import clean.the.forest.area.application.WeatherProvider
-import clean.the.forest.area.model.GeoPos
-import clean.the.forest.area.model.WeatherCondition
+import clean.the.forest.area.domain.GeoPos
+import clean.the.forest.area.domain.WeatherCondition
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.http.MediaType
 import org.springframework.http.client.reactive.ReactorClientHttpConnector

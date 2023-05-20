@@ -2,7 +2,7 @@ package clean.the.forest.area.infrastructure
 
 import clean.the.forest.area.application.AddAreaUseCase
 import clean.the.forest.area.application.ConflictWithExistingArea
-import clean.the.forest.area.model.*
+import clean.the.forest.area.domain.*
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType.APPLICATION_JSON_VALUE
 import org.springframework.http.ResponseEntity
