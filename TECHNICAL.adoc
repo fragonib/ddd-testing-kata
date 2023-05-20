@@ -62,6 +62,7 @@ NOTE: You can create you onw key https://home.openweathermap.org/api_keys[here]
 ----
 
 NOTE: Functional tests are running the entire app inside a docker container, so it requires a up & running docker environment
+and an app image built previously (see below)
 
 - To publish artifacts (including app fat jar and server stubs):
 
