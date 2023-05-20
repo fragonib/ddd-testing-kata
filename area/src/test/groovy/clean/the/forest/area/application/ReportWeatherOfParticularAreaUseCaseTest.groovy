@@ -1,7 +1,6 @@
 package clean.the.forest.area.application
 
-import clean.the.forest.area.infrastructure.AreaRepository
-import clean.the.forest.area.infrastructure.WeatherProvider
+
 import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.GeoPos
 import reactor.core.publisher.Mono

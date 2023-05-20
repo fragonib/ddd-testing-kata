@@ -1,7 +1,5 @@
 package clean.the.forest.area.application
 
-import clean.the.forest.area.infrastructure.AreaRepository
-import clean.the.forest.area.infrastructure.WeatherProvider
 import clean.the.forest.area.model.WeatherReport
 import reactor.core.publisher.Flux
 

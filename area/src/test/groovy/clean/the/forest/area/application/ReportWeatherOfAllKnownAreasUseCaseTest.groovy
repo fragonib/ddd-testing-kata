@@ -1,11 +1,8 @@
 package clean.the.forest.area.application
 
-import clean.the.forest.area.infrastructure.AreaRepository
-import clean.the.forest.area.infrastructure.WeatherProvider
+
 import clean.the.forest.area.model.Area
 import clean.the.forest.area.model.GeoPos
-import clean.the.forest.shared.testing.TestClassification
-import org.junit.jupiter.api.Tag
 import reactor.core.publisher.Flux
 import reactor.core.publisher.Mono
 import spock.lang.Specification

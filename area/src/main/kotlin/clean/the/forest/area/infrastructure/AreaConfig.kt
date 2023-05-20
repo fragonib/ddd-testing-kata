@@ -1,8 +1,6 @@
 package clean.the.forest.area.infrastructure
 
-import clean.the.forest.area.application.AddAreaUseCase
-import clean.the.forest.area.application.ReportWeatherOfParticularAreaUseCase
-import clean.the.forest.area.application.ReportWeatherOfAllKnownAreasUseCase
+import clean.the.forest.area.application.*
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
