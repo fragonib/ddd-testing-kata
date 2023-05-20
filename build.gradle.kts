@@ -42,6 +42,16 @@ subprojects {
 
     }
 
+    tasks.withType<JavaCompile> {
+        sourceCompatibility = JavaVersion.VERSION_17.toString()
+        targetCompatibility = JavaVersion.VERSION_17.toString()
+    }
+
+    tasks.withType<GroovyCompile> {
+        sourceCompatibility = JavaVersion.VERSION_17.toString()
+        targetCompatibility = JavaVersion.VERSION_17.toString()
+    }
+
     tasks.withType<KotlinCompile> {
         compilerOptions {
             apiVersion.set(KOTLIN_1_8)

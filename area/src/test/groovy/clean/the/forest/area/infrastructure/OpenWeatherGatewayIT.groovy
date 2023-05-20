@@ -3,13 +3,14 @@ package clean.the.forest.area.infrastructure
 import clean.the.forest.area.application.WeatherGateway
 import clean.the.forest.area.domain.GeoPos
 import clean.the.forest.shared.testing.Collaborator
+import clean.the.forest.shared.testing.integration.SprinDefinedCollaboratorSpec
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 import spock.lang.Subject
 
 @SpringBootTest
 @ActiveProfiles("isolated")
-class OpenWeatherGatewayIT extends BaseCollaboratorSpec {
+class OpenWeatherGatewayIT extends SprinDefinedCollaboratorSpec {
 
     @Subject
     WeatherGateway sut

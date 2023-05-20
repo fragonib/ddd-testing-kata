@@ -1,7 +1,5 @@
-package clean.the.forest.area.infrastructure
+package clean.the.forest.shared.testing.integration
 
-import clean.the.forest.shared.testing.integration.CollaboratorLifecycle
-import clean.the.forest.shared.testing.integration.CollaboratorsConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.bind.Binder
 import org.springframework.context.annotation.Bean
@@ -10,8 +8,8 @@ import org.springframework.core.env.Environment
 import org.springframework.test.context.ContextConfiguration
 import spock.lang.Specification
 
-@ContextConfiguration(classes = [TestConfig])
-class BaseCollaboratorSpec extends Specification {
+@ContextConfiguration(classes = [CollaboratorConfig])
+class SprinDefinedCollaboratorSpec extends Specification {
 
     CollaboratorLifecycle collaboratorLifecycle
 
@@ -28,7 +26,7 @@ class BaseCollaboratorSpec extends Specification {
     private CollaboratorsConfig collaboratorsConfig
 
     @Configuration
-    static class TestConfig {
+    static class CollaboratorConfig {
         @Bean
         CollaboratorsConfig collaboratorsConfig(Environment env) {
             Binder.get(env).bindOrCreate('collaborators-config', CollaboratorsConfig)
