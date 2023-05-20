@@ -21,4 +21,5 @@ rootProject.name = "clean-the-forest"
 
 include("app")
 include("area")
+include("shared")
 include("shared-testing")
