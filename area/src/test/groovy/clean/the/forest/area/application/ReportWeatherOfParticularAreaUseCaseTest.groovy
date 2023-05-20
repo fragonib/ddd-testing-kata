@@ -12,7 +12,7 @@ import spock.lang.Unroll
 class ReportWeatherOfParticularAreaUseCaseTest extends Specification {
 
     AreaRepository areaRepository = Mock()
-    WeatherProvider weatherProvider = Mock()
+    WeatherGateway weatherProvider = Mock()
 
     @Subject
     def sut = new ReportWeatherOfParticularAreaUseCase(areaRepository, weatherProvider)

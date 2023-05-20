@@ -6,14 +6,14 @@ import reactor.core.publisher.Flux
 
 open class ReportWeatherOfAllKnownAreasUseCase(
         private val areaRepository: AreaRepository,
-        private val weatherProvider: WeatherProvider
+        private val weatherGateway: WeatherGateway
 ) {
 
     open fun report(): Flux<WeatherReport> {
 
         return areaRepository.allKnown()
                 .flatMap { area ->
-                    weatherProvider.byGeoPosition(area.position)
+                    weatherGateway.byGeoPosition(area.position)
                             .map { weatherCondition -> Pair(area, weatherCondition) }
                 }
                 .map { (area, weatherCondition) -> WeatherReport(area = area, weatherCondition = weatherCondition) }

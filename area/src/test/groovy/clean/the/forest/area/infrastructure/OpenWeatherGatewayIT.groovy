@@ -1,6 +1,6 @@
 package clean.the.forest.area.infrastructure
 
-import clean.the.forest.area.application.WeatherProvider
+import clean.the.forest.area.application.WeatherGateway
 import clean.the.forest.area.domain.GeoPos
 import clean.the.forest.shared.testing.Collaborator
 import org.springframework.boot.test.context.SpringBootTest
@@ -9,15 +9,15 @@ import spock.lang.Subject
 
 @SpringBootTest
 @ActiveProfiles("isolated")
-class OpenWeatherProviderIT extends BaseCollaboratorSpec {
+class OpenWeatherGatewayIT extends BaseCollaboratorSpec {
 
     @Subject
-    WeatherProvider sut
+    WeatherGateway sut
 
     def setup() {
         def openWeatherMockBaseUrl = collaboratorLifecycle.collaboratorMock(Collaborator.OPEN_WEATHER.literal).baseUrl()
         def openWeatherApiKey = 'dummy_api_key'
-        sut = new OpenWeatherProvider(openWeatherMockBaseUrl, openWeatherApiKey)
+        sut = new OpenWeatherGateway(openWeatherMockBaseUrl, openWeatherApiKey)
     }
 
     def "weather of #name by geo position"() {

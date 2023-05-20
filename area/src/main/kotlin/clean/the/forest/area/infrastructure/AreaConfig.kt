@@ -18,24 +18,24 @@ class AreaConfig {
     fun openWeatherProvider(
         @Value("\${open-weather-map.base-url}") baseUrl: String,
         @Value("\${open-weather-map.api-key}") apiKey: String
-    ): WeatherProvider {
-        return OpenWeatherProvider(baseUrl, apiKey)
+    ): WeatherGateway {
+        return OpenWeatherGateway(baseUrl, apiKey)
     }
 
     @Bean
     fun reportOfAllKnownAreasUseCase(
-        areaRepository: AreaRepository,
-        weatherProvider: WeatherProvider
+            areaRepository: AreaRepository,
+            weatherGateway: WeatherGateway
     ): ReportWeatherOfAllKnownAreasUseCase {
-        return ReportWeatherOfAllKnownAreasUseCase(areaRepository, weatherProvider)
+        return ReportWeatherOfAllKnownAreasUseCase(areaRepository, weatherGateway)
     }
 
     @Bean
     fun reportOfParticularAreaUseCase(
-        areaRepository: AreaRepository,
-        weatherProvider: WeatherProvider
+            areaRepository: AreaRepository,
+            weatherGateway: WeatherGateway
     ): ReportWeatherOfParticularAreaUseCase {
-        return ReportWeatherOfParticularAreaUseCase(areaRepository, weatherProvider)
+        return ReportWeatherOfParticularAreaUseCase(areaRepository, weatherGateway)
     }
 
     @Bean

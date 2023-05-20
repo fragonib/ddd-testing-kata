@@ -1,6 +1,6 @@
 package clean.the.forest.area.infrastructure
 
-import clean.the.forest.area.application.WeatherProvider
+import clean.the.forest.area.application.WeatherGateway
 import clean.the.forest.area.domain.GeoPos
 import clean.the.forest.area.domain.WeatherCondition
 import org.springframework.core.ParameterizedTypeReference
@@ -11,10 +11,10 @@ import reactor.core.publisher.Mono
 import reactor.netty.http.client.HttpClient
 
 
-class OpenWeatherProvider(
+class OpenWeatherGateway(
     private val baseUrl: String,
     private val apiKey: String
-) : WeatherProvider {
+) : WeatherGateway {
 
     /**
      * Weather by geographic coordinates using OpenWeatherMap
