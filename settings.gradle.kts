@@ -8,9 +8,9 @@ pluginManagement {
         gradlePluginPortal()
     }
     resolutionStrategy {
-        val bootVersion: String by settings
         eachPlugin {
             if (requested.id.id == "org.springframework.boot") {
+                val bootVersion: String by settings
                 useModule("org.springframework.boot:spring-boot-gradle-plugin:$bootVersion")
             }
         }
