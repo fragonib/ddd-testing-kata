@@ -31,7 +31,7 @@ dependencyManagement {
 dependencies {
 
     // Modules
-    implementation(project(":shared-testing"))
+    implementation(project(":shared"))
 
     // Spring
     api("org.springframework.boot:spring-boot-starter-webflux")
