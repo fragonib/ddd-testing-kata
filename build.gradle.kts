@@ -23,6 +23,7 @@ subprojects {
     apply {
         plugin("org.jetbrains.kotlin.jvm")
         plugin("io.spring.dependency-management")
+        plugin("project-report")
     }
 
     repositories {
