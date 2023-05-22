@@ -1,8 +1,8 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    kotlin("plugin.spring")
-    id("org.springframework.boot")
+    alias(libs.plugins.kotlin.spring)
+    alias(libs.plugins.spring.boot)
     id("test-report-aggregation")
     id("jacoco-report-aggregation")
 }

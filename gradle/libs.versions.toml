@@ -1,7 +1,8 @@
 [versions]
-kotlin = "1.8.20"
+kotlin = "1.8.21"
 
-bootVersion = "3.0.6"
+springBoot = "3.0.6"
+springDependencyManagement = "1.1.0"
 openApi = "2.1.0"
 
 testContainers = "1.18.1"
@@ -21,18 +22,22 @@ pact = "4.5.6"
 
 reactor = "3.4.9"
 reactorKotlinExtensions = "1.2.2"
-reactorKotlinCoroutines = "1.6.4"
+reactorKotlinCoroutines = "1.7.1"
 
 [libraries]
+kotlin-bom = { module = "org.jetbrains.kotlin:kotlin-bom", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
+kotlin-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin" }
+
 springdoc-openapi = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "openApi" }
-spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "bootVersion" }
+spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "springBoot" }
 spring-context = { module = "org.springframework:spring-context" }
 spring-test = { module = "org.springframework:spring-test" }
 
 reactor-core = { module = "io.projectreactor:reactor-core", version.ref = "reactor" }
 reactor-test = { module = "io.projectreactor:reactor-test", version.ref = "reactor" }
 reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions", version.ref = "reactorKotlinExtensions" }
-reactor-kotlin-coroutines-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-coroutines-extensions", version.ref = "reactorKotlinCoroutines" }
+reactor-kotlin-coroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-reactor", version.ref = "reactorKotlinCoroutines" }
 
 jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
 jackson-module-parameter-names = { module = "com.fasterxml.jackson.module:jackson-module-parameter-names" }
@@ -56,7 +61,7 @@ json-unit = { module = "net.javacrumbs.json-unit:json-unit-assertj", version.ref
 wiremock = { module = "com.github.tomakehurst:wiremock-standalone", version.ref = "wiremock" }
 
 cucumber = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
-cucumber-picocontainer = { module = "io.cucumber:cucumber-picoontainer", version.ref = "cucumber" }
+cucumber-picocontainer = { module = "io.cucumber:cucumber-picocontainer", version.ref = "cucumber" }
 
 testContainers = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
 junit4Mock = { module = "io.quarkus:quarkus-junit4-mock", version.ref = "junitMock" }
@@ -66,11 +71,20 @@ pact-provider-spring = { module = "au.com.dius.pact.provider:spring", version.re
 
 [bundles]
 jackson = ["jackson-module-kotlin", "jackson-module-parameter-names", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
-reactor = ["reactor-core", "reactor-kotlin-extensions"]
+reactor = ["reactor-core", "reactor-kotlin-extensions", "reactor-kotlin-coroutines"]
 spock = ["groovy", "spock-core", "spock-spring", "bytebuddy", "objenesis"]
 assertions = ["asserj-core", "json-unit"]
 testContainers = ["testContainers", "junit4Mock"]
 pact = ["pact-consumer-junit5", "pact-provider-spring"]
 cucumber = ["cucumber", "cucumber-picocontainer"]
+kotlin = ["kotlin-stdlib", "kotlin-reflect"]
 
 [plugins]
+groovy = { id = "org.gradle.groovy", version = "3.0.8" }
+kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
+kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" } # SpringBoot visibility (open) over Kotlin classes
+spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" } # SpringBoot task to manage project
+spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
+cucumber-jvm = { id = "com.patdouble.cucumber-jvm", version = "0.20" } # Functional tests with Cucumber
+pact = { id = "au.com.dius.pact", version = "4.3.10" }
+taskinfo = { id = "org.barfuin.gradle.taskinfo", version = "2.1.0" }

@@ -6,14 +6,16 @@ import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 
 plugins {
-    kotlin("jvm") version "1.8.20" apply false
-    kotlin("plugin.spring") version "1.7.22" apply false
-    id("org.springframework.boot") version "3.0.5" apply false
-    id("io.spring.dependency-management") version "1.1.0"
-    id("com.patdouble.cucumber-jvm") version "0.20" apply false
-    id("au.com.dius.pact") version "4.3.10" apply false
-    id("org.barfuin.gradle.taskinfo") version "2.1.0"
+    alias(libs.plugins.kotlin.jvm).apply(false)
+    alias(libs.plugins.kotlin.spring).apply(false)
+    alias(libs.plugins.spring.boot).apply(false)
+    alias(libs.plugins.spring.dependency.management).apply(false)
+    alias(libs.plugins.cucumber.jvm).apply(false)
+    alias(libs.plugins.pact).apply(false)
+    alias(libs.plugins.taskinfo).apply(true)
 }
+
+val catalog = libs
 
 subprojects {
 
@@ -21,8 +23,11 @@ subprojects {
     version = "0.0.1-SNAPSHOT"
 
     apply {
-        plugin("org.jetbrains.kotlin.jvm")
-        plugin("io.spring.dependency-management")
+        plugin("groovy")
+        plugin(catalog.plugins.kotlin.jvm.get().pluginId)
+        plugin(catalog.plugins.kotlin.spring.get().pluginId)
+        plugin(catalog.plugins.spring.dependency.management.get().pluginId)
+        plugin(catalog.plugins.taskinfo.get().pluginId)
         plugin("project-report")
     }
 
@@ -32,15 +37,8 @@ subprojects {
     }
 
     dependencies {
-
-        // - Kotlin
         val implementation by configurations
-        implementation(platform(kotlin("bom")))
-        implementation(kotlin("stdlib"))
-        implementation(kotlin("reflect"))
-        implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor:1.6.4")
-        implementation("io.projectreactor.kotlin:reactor-kotlin-extensions:1.2.2")
-
+        catalog.bundles.kotlin.get().forEach { implementation(it) }
     }
 
     tasks.withType<JavaCompile> {
@@ -71,10 +69,12 @@ subprojects {
         }
     }
 
-    dependencyManagement {
-        imports {
-            mavenBom("io.spring.platform:platform-bom:2.0.8.RELEASE")
-        }
+    // Task info plugin configuration
+    taskinfo {
+        isClipped = false
+        isColor = true
+        isShowTaskTypes = true
+        isInternal = false
     }
 
 }
@@ -85,12 +85,4 @@ configurations {
         exclude(group = "junit", module = "junit")
         exclude(group = "org.junit.vintage", module = "junit-vintage-engine")
     }
-}
-
-// Task info plugin configuration
-taskinfo {
-    isClipped = false
-    isColor = true
-    isShowTaskTypes = true
-    isInternal = false
 }

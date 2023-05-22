@@ -1,9 +1,7 @@
 plugins {
-    groovy
-    kotlin("plugin.spring")          // SpringBoot visibility (open) over Kotlin classes
-    id("org.springframework.boot")   // SpringBoot task to manage project
-    id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
-    id("au.com.dius.pact")           // Contract tests with Pact
+    alias(libs.plugins.spring.boot)
+    alias(libs.plugins.cucumber.jvm)
+    alias(libs.plugins.pact)
 }
 
 ext {
@@ -14,6 +12,7 @@ dependencies {
     implementation(project(":shared"))
     api(libs.starter.webflux)
     implementation(libs.bundles.jackson)
+    implementation(libs.bundles.reactor)
 }
 
 testing {
