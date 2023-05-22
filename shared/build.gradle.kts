@@ -1,8 +1,11 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 ext {
-    set("kotlin.version", "1.8.20")
+    set("kotlin.version", libs.versions.kotlin.get())
 }
 
 dependencies {
-    val reactorVersion: String by project
-    implementation("io.projectreactor:reactor-core:$reactorVersion")
+    implementation(platform(SpringBootPlugin.BOM_COORDINATES))
+    implementation(libs.reactor.core)
+    implementation(libs.reactor.kotlin.extensions)
 }

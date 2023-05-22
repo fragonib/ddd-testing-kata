@@ -1,0 +1,76 @@
+[versions]
+kotlin = "1.8.20"
+
+bootVersion = "3.0.6"
+openApi = "2.1.0"
+
+testContainers = "1.18.1"
+cucumber = "7.11.1"
+wiremock = "3.0.0-beta-8"
+junitMock = "2.11.2.Final"
+
+assertj = "3.24.2"
+jsonUnit = "2.38.0"
+
+groovy = "4.0.12"
+spock = "2.3-groovy-4.0"
+byteBuddy = "1.12.17"
+objenesis = "3.3"
+
+pact = "4.5.6"
+
+reactor = "3.4.9"
+reactorKotlinExtensions = "1.2.2"
+reactorKotlinCoroutines = "1.6.4"
+
+[libraries]
+springdoc-openapi = { module = "org.springdoc:springdoc-openapi-starter-webflux-ui", version.ref = "openApi" }
+spring-boot = { module = "org.springframework.boot:spring-boot", version.ref = "bootVersion" }
+spring-context = { module = "org.springframework:spring-context" }
+spring-test = { module = "org.springframework:spring-test" }
+
+reactor-core = { module = "io.projectreactor:reactor-core", version.ref = "reactor" }
+reactor-test = { module = "io.projectreactor:reactor-test", version.ref = "reactor" }
+reactor-kotlin-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-extensions", version.ref = "reactorKotlinExtensions" }
+reactor-kotlin-coroutines-extensions = { module = "io.projectreactor.kotlin:reactor-kotlin-coroutines-extensions", version.ref = "reactorKotlinCoroutines" }
+
+jackson-module-kotlin = { module = "com.fasterxml.jackson.module:jackson-module-kotlin" }
+jackson-module-parameter-names = { module = "com.fasterxml.jackson.module:jackson-module-parameter-names" }
+jackson-datatype-jdk8 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jdk8" }
+jackson-datatype-jsr310 = { module = "com.fasterxml.jackson.datatype:jackson-datatype-jsr310" }
+
+starter-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux" }
+starter-actuator = { module = "org.springframework.boot:spring-boot-starter-actuator" }
+starter-test = { module = "org.springframework.boot:spring-boot-starter-test" }
+
+groovy = { module = "org.apache.groovy:groovy", version.ref = "groovy" }
+spock-core = { module = "org.spockframework:spock-core", version.ref = "spock" }
+spock-spring = { module = "org.spockframework:spock-spring", version.ref = "spock" }
+bytebuddy = { module = "net.bytebuddy:byte-buddy", version.ref = "byteBuddy" }
+objenesis = { module = "org.objenesis:objenesis", version.ref = "objenesis" }
+
+mockito-core = { module = "org.mockito:mockito-core" }
+asserj-core = { module = "org.assertj:assertj-core", version.ref = "assertj" }
+json-unit = { module = "net.javacrumbs.json-unit:json-unit-assertj", version.ref = "jsonUnit" }
+
+wiremock = { module = "com.github.tomakehurst:wiremock-standalone", version.ref = "wiremock" }
+
+cucumber = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
+cucumber-picocontainer = { module = "io.cucumber:cucumber-picoontainer", version.ref = "cucumber" }
+
+testContainers = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
+junit4Mock = { module = "io.quarkus:quarkus-junit4-mock", version.ref = "junitMock" }
+
+pact-consumer-junit5 = { module = "au.com.dius.pact.consumer:junit5", version.ref = "pact" }
+pact-provider-spring = { module = "au.com.dius.pact.provider:spring", version.ref = "pact" }
+
+[bundles]
+spockBundle = ["groovy", "spock-core", "spock-spring", "bytebuddy", "objenesis"]
+testContainersBundle = ["testContainers", "junit4Mock"]
+jacksonBundle = ["jackson-module-kotlin", "jackson-module-parameter-names", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+reactorBundle = ["reactor-core", "reactor-kotlin-extensions"]
+pactBundle = ["pact-consumer-junit5", "pact-provider-spring"]
+cucumberBundle = ["cucumber", "cucumber-picocontainer"]
+assertionsBundle = ["asserj-core", "json-unit"]
+
+[plugins]

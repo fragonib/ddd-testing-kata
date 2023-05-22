@@ -1,37 +1,31 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     groovy
     kotlin("jvm")
 }
 
 ext {
-    set("kotlin.version", "1.8.20")
-    set("testContainersVersion", "1.18.1")
-    set("cucumberVersion", "7.11.1")
-    set("wiremockVersion", "3.0.0-beta-8")
-    set("spockVersion", "2.3-groovy-4.0")
+    set("kotlin.version", libs.versions.kotlin.get())
 }
 
 dependencies {
 
+    implementation(platform(SpringBootPlugin.BOM_COORDINATES))
+
     // - Integration testing
-    implementation("org.mockito:mockito-core")
-    val wiremockVersion: String by project.ext
-    implementation("com.github.tomakehurst:wiremock-standalone:${wiremockVersion}")
+    implementation(libs.wiremock)
+    implementation(libs.mockito.core)
 
     // -- Collaborator support
-    val spockVersion: String by project.ext
-    implementation("org.spockframework:spock-core:$spockVersion")
-    val bootVersion: String by project
-    implementation("org.springframework.boot:spring-boot:$bootVersion")
-    implementation("org.springframework:spring-context")
-    implementation("org.springframework:spring-test")
+    implementation(libs.bundles.spockBundle)
+    implementation(libs.spring.boot)
+    implementation(libs.spring.context)
+    implementation(libs.spring.test)
 
     // - Functional testing
-    val cucumberVersion: String by project.ext
-    val testContainersVersion: String by project.ext
-    implementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
-    implementation("org.testcontainers:testcontainers:$testContainersVersion")
-    implementation("io.quarkus:quarkus-junit4-mock:2.11.2.Final")  // Avoid Testcontainers JUnit4 dependency
+    implementation(libs.cucumber)
+    implementation(libs.bundles.testContainersBundle)
 
 }
 

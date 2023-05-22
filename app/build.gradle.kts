@@ -1,29 +1,28 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     kotlin("plugin.spring")
     id("org.springframework.boot")
-    id("io.spring.dependency-management")
+    id("test-report-aggregation")
+    id("jacoco-report-aggregation")
 }
 
 ext {
-    set("kotlin.version", "1.8.20")
-    set("openApiVersion", "2.1.0")
+    set("kotlin.version", libs.versions.kotlin.get())
 }
 
 dependencies {
+
+    implementation(platform(SpringBootPlugin.BOM_COORDINATES))
 
     // - Modules
     runtimeOnly(project(":area"))
 
     // - Spring
-    val openApiVersion: String by project.extra
-    implementation("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-    implementation("io.projectreactor.kotlin:reactor-kotlin-extensions")
-    runtimeOnly("org.springdoc:springdoc-openapi-starter-webflux-ui:$openApiVersion")
-    runtimeOnly("org.springframework.boot:spring-boot-starter-actuator")
+    implementation(libs.starter.webflux)
+    implementation(libs.bundles.jacksonBundle)
+    runtimeOnly(libs.starter.actuator)
+    runtimeOnly(libs.springdoc.openapi)
 
 }
 
@@ -35,6 +34,11 @@ tasks {
 
     bootBuildImage {
         imageName.set("${rootProject.name}/${project.name}")
+    }
+
+    check {
+        dependsOn(named<TestReport>("testAggregateTestReport"))
+        dependsOn(named<JacocoReport>("testCodeCoverageReport"))
     }
 
 }

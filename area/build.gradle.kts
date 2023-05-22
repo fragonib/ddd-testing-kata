@@ -4,42 +4,16 @@ plugins {
     id("org.springframework.boot")   // SpringBoot task to manage project
     id("com.patdouble.cucumber-jvm") // Functional tests with Cucumber
     id("au.com.dius.pact")           // Contract tests with Pact
-    id("project-report")
 }
 
 ext {
-    set("kotlin.version", "1.8.20")
-    set("groovyVersion", "4.0.5")
-    set("spockVersion", "2.3-groovy-4.0")
-    set("byteBuddyVersion", "1.12.17")
-    set("objenesisVersion", "3.3")
-    set("cucumberVersion", "6.10.0")
-    set("assertjVersion", "3.11.1")
-    set("jsonUnitVersion", "2.24.0")
-    set("pactVersion", "4.5.6")
-    set("wiremockVersion", "3.0.0-beta-8")
-    set("testContainersVersion", "1.18.1")
-}
-
-dependencyManagement {
-    imports {
-        val springCloudVersion: String by project
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:$springCloudVersion")
-    }
+    set("kotlin.version", libs.versions.kotlin.get())
 }
 
 dependencies {
-
-    // Modules
     implementation(project(":shared"))
-
-    // Spring
-    api("org.springframework.boot:spring-boot-starter-webflux")
-    implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-    implementation("com.fasterxml.jackson.module:jackson-module-parameter-names")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jsr310")
-
+    api(libs.starter.webflux)
+    implementation(libs.bundles.jacksonBundle)
 }
 
 testing {
@@ -53,40 +27,23 @@ testing {
                 implementation(project())
                 implementation(project(":shared-testing"))
 
-                // Assertions set
-                val assertjVersion: String by project.ext
-                val jsonUnitVersion: String by project.ext
-                implementation("org.assertj:assertj-core:$assertjVersion")
-                implementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
-
                 // Spock
-                val groovyVersion: String by project.ext
-                implementation(platform("org.apache.groovy:groovy-bom:$groovyVersion"))
-                implementation("org.apache.groovy:groovy")
+                implementation.bundle(libs.bundles.spockBundle)
+                implementation.bundle(libs.bundles.assertionsBundle)
 
-                val spockVersion: String by project.ext
-                val byteBuddyVersion: String by project.ext
-                val objenesisVersion: String by project.ext
-                implementation(platform("org.spockframework:spock-bom:$spockVersion"))
-                implementation("org.spockframework:spock-core:$spockVersion") // Version needed to enforce Spock
-                implementation("org.spockframework:spock-spring:$spockVersion")
-                runtimeOnly("net.bytebuddy:byte-buddy:$byteBuddyVersion") // allows mocking of classes in addition to interfaces
-                runtimeOnly("org.objenesis:objenesis:$objenesisVersion")  // allows mocking of classes without default constructor (together with ByteBuddy or CGLIB)
+                // SpringBoot Test
+                implementation(libs.starter.test)
+                implementation(libs.reactor.test)
 
-                // Nettys native libs to be loaded on Apple Silicon
+                // REST Collaborators mocking
+                implementation(libs.wiremock)
+
+                // Nettys native libs to be loaded only on Apple Silicon
                 val isMacOS = System.getProperty("os.name").startsWith("Mac OS X")
                 val isArm64 = System.getProperty("os.arch").lowercase() == "aarch64"
                 if (isMacOS && isArm64) {
                     runtimeOnly("io.netty:netty-resolver-dns-native-macos:4.1.90.Final:osx-aarch_64")
                 }
-
-                // SpringBoot Test
-                implementation("org.springframework.boot:spring-boot-starter-test")
-                implementation("io.projectreactor:reactor-test")
-
-                // REST Collaborators mocking
-                val wiremockVersion: String by project.ext
-                implementation("com.github.tomakehurst:wiremock-standalone:$wiremockVersion")
 
             }
 
@@ -147,10 +104,8 @@ testing {
             applySpockBasedTestingDependencies(this)
 
             dependencies {
-                val pactVersion: String by project.ext
                 implementation(project(":shared-testing"))
-                implementation("au.com.dius.pact.consumer:junit5:$pactVersion")
-                implementation("au.com.dius.pact.provider:spring:$pactVersion")
+                implementation.bundle(libs.bundles.pactBundle)
             }
 
             targets {
@@ -185,19 +140,10 @@ cucumber {
     dependencies {
         val functionalTestImplementation by configurations
         functionalTestImplementation(project(":shared-testing"))
-        val cucumberVersion: String by project.ext
-        val assertjVersion: String by project.ext
-        val jsonUnitVersion: String by project.ext
-        val wiremockVersion: String by project.ext
-        val testContainersVersion: String by project.ext
-        functionalTestImplementation("io.cucumber:cucumber-java8:$cucumberVersion")
-        functionalTestImplementation("io.cucumber:cucumber-junit-platform-engine:$cucumberVersion")
-        functionalTestImplementation("io.cucumber:cucumber-picocontainer:$cucumberVersion")
-        functionalTestImplementation("org.assertj:assertj-core:$assertjVersion")
-        functionalTestImplementation("com.jayway.jsonpath:json-path")
-        functionalTestImplementation("net.javacrumbs.json-unit:json-unit-assertj:$jsonUnitVersion")
-        functionalTestImplementation("com.github.tomakehurst:wiremock-standalone:$wiremockVersion")
-        functionalTestImplementation("org.testcontainers:testcontainers:${testContainersVersion}")
+        functionalTestImplementation(libs.bundles.cucumberBundle)
+        functionalTestImplementation(libs.bundles.assertionsBundle)
+        functionalTestImplementation(libs.bundles.testContainersBundle)
+        functionalTestImplementation(libs.wiremock)
     }
 }
 
