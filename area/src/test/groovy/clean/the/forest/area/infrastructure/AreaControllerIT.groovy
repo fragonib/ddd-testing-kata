@@ -16,6 +16,8 @@ import spock.lang.Specification
 
 @WebFluxTest(AreaController)
 @ContextConfiguration(classes = [AreaController])
+// Not every annotation is supported by Spock, be careful:
+// https://spockframework.org/spock/docs/2.3/module_spring.html
 class AreaControllerIT extends Specification {
 
     @Autowired
