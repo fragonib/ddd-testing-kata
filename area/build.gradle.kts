@@ -13,7 +13,7 @@ ext {
 dependencies {
     implementation(project(":shared"))
     api(libs.starter.webflux)
-    implementation(libs.bundles.jacksonBundle)
+    implementation(libs.bundles.jackson)
 }
 
 testing {
@@ -28,8 +28,8 @@ testing {
                 implementation(project(":shared-testing"))
 
                 // Spock
-                implementation.bundle(libs.bundles.spockBundle)
-                implementation.bundle(libs.bundles.assertionsBundle)
+                implementation.bundle(libs.bundles.spock)
+                implementation.bundle(libs.bundles.assertions)
 
                 // SpringBoot Test
                 implementation(libs.starter.test)
@@ -105,7 +105,7 @@ testing {
 
             dependencies {
                 implementation(project(":shared-testing"))
-                implementation.bundle(libs.bundles.pactBundle)
+                implementation.bundle(libs.bundles.pact)
             }
 
             targets {
@@ -140,9 +140,9 @@ cucumber {
     dependencies {
         val functionalTestImplementation by configurations
         functionalTestImplementation(project(":shared-testing"))
-        functionalTestImplementation(libs.bundles.cucumberBundle)
-        functionalTestImplementation(libs.bundles.assertionsBundle)
-        functionalTestImplementation(libs.bundles.testContainersBundle)
+        functionalTestImplementation(libs.bundles.cucumber)
+        functionalTestImplementation(libs.bundles.assertions)
+        functionalTestImplementation(libs.bundles.testContainers)
         functionalTestImplementation(libs.wiremock)
     }
 }

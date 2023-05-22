@@ -6,6 +6,5 @@ ext {
 
 dependencies {
     implementation(platform(SpringBootPlugin.BOM_COORDINATES))
-    implementation(libs.reactor.core)
-    implementation(libs.reactor.kotlin.extensions)
+    implementation(libs.bundles.reactor)
 }

@@ -20,7 +20,7 @@ dependencies {
 
     // - Spring
     implementation(libs.starter.webflux)
-    implementation(libs.bundles.jacksonBundle)
+    implementation(libs.bundles.jackson)
     runtimeOnly(libs.starter.actuator)
     runtimeOnly(libs.springdoc.openapi)
 

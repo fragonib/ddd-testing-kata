@@ -1,6 +1,6 @@
 package clean.the.forest.shared.testing.functional
 
-import clean.the.forest.shared.testing.Collaborator.OPEN_WEATHER
+import clean.the.forest.shared.testing.integration.Collaborator.OPEN_WEATHER
 import clean.the.forest.shared.testing.integration.CollaboratorLifecycle
 import clean.the.forest.shared.testing.integration.RestCollaboratorDefinition
 import clean.the.forest.shared.testing.integration.CollaboratorsConfig

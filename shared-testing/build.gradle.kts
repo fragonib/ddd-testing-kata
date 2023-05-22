@@ -15,17 +15,16 @@ dependencies {
 
     // - Integration testing
     implementation(libs.wiremock)
-    implementation(libs.mockito.core)
 
     // -- Collaborator support
-    implementation(libs.bundles.spockBundle)
+    implementation(libs.bundles.spock)
     implementation(libs.spring.boot)
     implementation(libs.spring.context)
     implementation(libs.spring.test)
 
     // - Functional testing
     implementation(libs.cucumber)
-    implementation(libs.bundles.testContainersBundle)
+    implementation(libs.bundles.testContainers)
 
 }
 

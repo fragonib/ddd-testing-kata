@@ -65,12 +65,12 @@ pact-consumer-junit5 = { module = "au.com.dius.pact.consumer:junit5", version.re
 pact-provider-spring = { module = "au.com.dius.pact.provider:spring", version.ref = "pact" }
 
 [bundles]
-spockBundle = ["groovy", "spock-core", "spock-spring", "bytebuddy", "objenesis"]
-testContainersBundle = ["testContainers", "junit4Mock"]
-jacksonBundle = ["jackson-module-kotlin", "jackson-module-parameter-names", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
-reactorBundle = ["reactor-core", "reactor-kotlin-extensions"]
-pactBundle = ["pact-consumer-junit5", "pact-provider-spring"]
-cucumberBundle = ["cucumber", "cucumber-picocontainer"]
-assertionsBundle = ["asserj-core", "json-unit"]
+jackson = ["jackson-module-kotlin", "jackson-module-parameter-names", "jackson-datatype-jdk8", "jackson-datatype-jsr310"]
+reactor = ["reactor-core", "reactor-kotlin-extensions"]
+spock = ["groovy", "spock-core", "spock-spring", "bytebuddy", "objenesis"]
+assertions = ["asserj-core", "json-unit"]
+testContainers = ["testContainers", "junit4Mock"]
+pact = ["pact-consumer-junit5", "pact-provider-spring"]
+cucumber = ["cucumber", "cucumber-picocontainer"]
 
 [plugins]
