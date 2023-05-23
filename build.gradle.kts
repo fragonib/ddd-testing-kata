@@ -5,17 +5,22 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
 
+
 plugins {
+
+    // Plugins version management
     alias(libs.plugins.kotlin.jvm).apply(false)
     alias(libs.plugins.kotlin.spring).apply(false)
     alias(libs.plugins.spring.boot).apply(false)
     alias(libs.plugins.spring.dependency.management).apply(false)
-    alias(libs.plugins.cucumber.jvm).apply(false)
+    alias(libs.plugins.cucumber).apply(false)
     alias(libs.plugins.pact).apply(false)
+
+    // Applied plugins
     alias(libs.plugins.taskinfo).apply(true)
 }
 
-val catalog = libs
+val catalog = libs // DO not why you can use libs (version catalog) inside subproject block
 
 subprojects {
 
@@ -23,6 +28,8 @@ subprojects {
     version = "0.0.1-SNAPSHOT"
 
     apply {
+
+        // Common plugin for all modules
         plugin("groovy")
         plugin(catalog.plugins.kotlin.jvm.get().pluginId)
         plugin(catalog.plugins.kotlin.spring.get().pluginId)

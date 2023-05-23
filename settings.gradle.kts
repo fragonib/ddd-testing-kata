@@ -7,14 +7,6 @@ pluginManagement {
         maven { url = uri("https://repo.spring.io/snapshot") }
         gradlePluginPortal()
     }
-    resolutionStrategy {
-        eachPlugin {
-            if (requested.id.id == "org.springframework.boot") {
-                val springBoot: String by settings
-                useModule("org.springframework.boot:spring-boot-gradle-plugin:$springBoot")
-            }
-        }
-    }
 }
 
 rootProject.name = "clean-the-forest"

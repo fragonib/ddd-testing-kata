@@ -1,7 +1,6 @@
 import org.springframework.boot.gradle.plugin.SpringBootPlugin
 
 plugins {
-    alias(libs.plugins.kotlin.spring)
     alias(libs.plugins.spring.boot)
     id("test-report-aggregation")
     id("jacoco-report-aggregation")
@@ -15,10 +14,10 @@ dependencies {
 
     implementation(platform(SpringBootPlugin.BOM_COORDINATES))
 
-    // - Modules
+    // Domains
     runtimeOnly(project(":area"))
 
-    // - Spring
+    // Spring
     implementation(libs.starter.webflux)
     implementation(libs.bundles.jackson)
     runtimeOnly(libs.starter.actuator)

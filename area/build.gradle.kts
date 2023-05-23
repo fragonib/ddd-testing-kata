@@ -1,6 +1,8 @@
+import org.springframework.boot.gradle.plugin.SpringBootPlugin
+
 plugins {
     alias(libs.plugins.spring.boot)
-    alias(libs.plugins.cucumber.jvm)
+    alias(libs.plugins.cucumber)
     alias(libs.plugins.pact)
 }
 
@@ -9,6 +11,7 @@ ext {
 }
 
 dependencies {
+    implementation(platform(SpringBootPlugin.BOM_COORDINATES))
     implementation(project(":shared"))
     api(libs.starter.webflux)
     implementation(libs.bundles.jackson)

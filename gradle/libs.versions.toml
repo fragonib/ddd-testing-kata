@@ -85,6 +85,6 @@ kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin" }
 kotlin-spring = { id = "org.jetbrains.kotlin.plugin.spring", version.ref = "kotlin" } # SpringBoot visibility (open) over Kotlin classes
 spring-boot = { id = "org.springframework.boot", version.ref = "springBoot" } # SpringBoot task to manage project
 spring-dependency-management = { id = "io.spring.dependency-management", version.ref = "springDependencyManagement" }
-cucumber-jvm = { id = "com.patdouble.cucumber-jvm", version = "0.20" } # Functional tests with Cucumber
+cucumber = { id = "com.patdouble.cucumber-jvm", version = "0.20" } # Functional tests with Cucumber
 pact = { id = "au.com.dius.pact", version = "4.3.10" }
 taskinfo = { id = "org.barfuin.gradle.taskinfo", version = "2.1.0" }
