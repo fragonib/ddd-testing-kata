@@ -1,11 +1,12 @@
 package clean.the.forest.area.functional
 
-import clean.the.forest.area.model.Area
-import clean.the.forest.area.model.AreaName
-import clean.the.forest.area.model.WeatherCondition
+import clean.the.forest.area.domain.Area
+import clean.the.forest.area.domain.AreaName
+import clean.the.forest.area.domain.WeatherCondition
 import clean.the.forest.shared.testing.integration.Collaborator
 import clean.the.forest.shared.testing.functional.ScenarioState
 import clean.the.forest.shared.testing.functional.WireMockLifeCycle.Companion.collaboratorLifecycle
+import clean.the.forest.shared.testing.functional.extract
 import com.github.tomakehurst.wiremock.client.WireMock.aResponse
 import com.github.tomakehurst.wiremock.client.WireMock.get
 import com.github.tomakehurst.wiremock.client.WireMock.urlMatching

@@ -3,13 +3,14 @@ package clean.the.forest.area.functional
 import clean.the.forest.area.infrastructure.CreateAreaDTO
 import clean.the.forest.area.domain.Area
 import clean.the.forest.shared.testing.functional.ScenarioState
+import clean.the.forest.shared.testing.functional.extract
 import io.cucumber.datatable.DataTable
-import io.cucumber.java8.En
 import org.assertj.core.api.Assertions.assertThat
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.client.HttpStatusCodeException
 import org.springframework.web.client.RestTemplate
+import io.cucumber.java8.En
 
 private const val GIVEN_KNOWN_AREAS = "givenKnownAreas"
 private const val ADD_NEW_RESPONSE = "addNewResponse"

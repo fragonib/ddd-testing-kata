@@ -1,4 +1,4 @@
-package clean.the.forest.area.functional
+package clean.the.forest.shared.testing.functional
 
 import io.cucumber.datatable.DataTable
 

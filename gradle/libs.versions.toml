@@ -6,7 +6,7 @@ springDependencyManagement = "1.1.0"
 openApi = "2.1.0"
 
 testContainers = "1.18.1"
-cucumber = "7.11.1"
+cucumber = "6.10.0"
 wiremock = "3.0.0-beta-8"
 junitMock = "2.11.2.Final"
 
@@ -62,6 +62,7 @@ wiremock = { module = "com.github.tomakehurst:wiremock-standalone", version.ref 
 
 cucumber = { module = "io.cucumber:cucumber-junit-platform-engine", version.ref = "cucumber" }
 cucumber-picocontainer = { module = "io.cucumber:cucumber-picocontainer", version.ref = "cucumber" }
+cucumber-java8 = { module = "io.cucumber:cucumber-java8", version.ref = "cucumber" }
 
 testContainers = { module = "org.testcontainers:testcontainers", version.ref = "testContainers" }
 junit4Mock = { module = "io.quarkus:quarkus-junit4-mock", version.ref = "junitMock" }
@@ -76,7 +77,7 @@ spock = ["groovy", "spock-core", "spock-spring", "bytebuddy", "objenesis"]
 assertions = ["asserj-core", "json-unit"]
 testContainers = ["testContainers", "junit4Mock"]
 pact = ["pact-consumer-junit5", "pact-provider-spring"]
-cucumber = ["cucumber", "cucumber-picocontainer"]
+cucumber = ["cucumber", "cucumber-picocontainer", "cucumber-java8"]
 kotlin = ["kotlin-stdlib", "kotlin-reflect"]
 
 [plugins]
