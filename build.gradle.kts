@@ -4,8 +4,6 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat.*
 import org.gradle.api.tasks.testing.logging.TestLogEvent.*
 
-
-
 plugins {
 
     // Plugins version management
@@ -20,7 +18,7 @@ plugins {
     alias(libs.plugins.taskinfo).apply(true)
 }
 
-val catalog = libs // DO not why you can use libs (version catalog) inside subproject block
+val catalog = libs // Workaround: Don't know why you can't use libs (version catalog) inside subproject block
 
 subprojects {
 
