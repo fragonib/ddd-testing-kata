@@ -44,7 +44,7 @@ NOTE: You can create you onw key https://home.openweathermap.org/api_keys[here]
 
 [source,shell]
 ----
-./gradlew integrationTests
+./gradlew integrationTest
 ----
 
 - To run _contract tests_:
